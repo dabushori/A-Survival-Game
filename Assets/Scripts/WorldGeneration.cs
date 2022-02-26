@@ -23,9 +23,9 @@ public class WorldGeneration : MonoBehaviour
             for (int zTileIndex = 0; zTileIndex < mapDepthInTiles; zTileIndex++)
             {
                 // calculate the tile position based on the X and Z indices
-                Vector3 tilePosition = new Vector3(this.gameObject.transform.position.x + xTileIndex * tileWidth,
-                  this.gameObject.transform.position.y,
-                  this.gameObject.transform.position.z + zTileIndex * tileDepth);
+                Vector3 tilePosition = new Vector3(gameObject.transform.position.x + xTileIndex * tileWidth,
+                  gameObject.transform.position.y,
+                  gameObject.transform.position.z + zTileIndex * tileDepth);
                 // instantiate a new Tile
                 GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
                 // update the world seed

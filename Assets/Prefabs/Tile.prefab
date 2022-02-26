@@ -125,3 +125,4 @@ MonoBehaviour:
     frequency: 0.25
     amplitude: 4
   heightMultiplier: 5
+  colorMap: {fileID: 2800000, guid: a995f21ed021f664fb78cf66a5e80fef, type: 3}
