@@ -2,13 +2,6 @@ using UnityEngine;
 
 public class TileGeneration : MonoBehaviour
 {
-    [System.Serializable]
-    public class Wave
-    {
-        public float seed;
-        public float frequency;
-        public float amplitude;
-    }
 
     [SerializeField]
     private MeshRenderer tileRenderer;
@@ -21,10 +14,8 @@ public class TileGeneration : MonoBehaviour
     
     [SerializeField]
     private float mapScale;
-    public float worldSeed;
 
-    [SerializeField]
-    private Wave[] waves;
+    public int worldSeed;
 
     [SerializeField]
     private float heightMultiplier;
@@ -32,31 +23,17 @@ public class TileGeneration : MonoBehaviour
     [SerializeField]
     private Texture2D colorMap;
 
-    public float[,] GenerateNoiseMap(int mapDepth, int mapWidth, float scale, float offsetX, float offsetZ, Wave[] waves)
+    public class TileData
     {
-        // create an empty noise map with the mapDepth and mapWidth coordinates
-        float[,] noiseMap = new float[mapDepth, mapWidth];
-        for (int zIndex = 0; zIndex < mapDepth; zIndex++)
+        public float[,] heightMap;
+        public Mesh mesh;
+        public TileData(float[,] heightMap, Mesh mesh)
         {
-            for (int xIndex = 0; xIndex < mapWidth; xIndex++)
-            {
-                // calculate sample indices based on the coordinates, the scale and the offset
-                float sampleX = (xIndex + offsetX) / scale;
-                float sampleZ = (zIndex + offsetZ) / scale;
-                float noise = 0f;
-                float normalization = 0f;
-                foreach (Wave wave in waves)
-                {
-                    // generate noise value using PerlinNoise for a given Wave
-                    noise += wave.amplitude * Mathf.PerlinNoise(sampleX * wave.frequency + wave.seed + worldSeed, sampleZ * wave.frequency + wave.seed + worldSeed);
-                    normalization += wave.amplitude;
-                }
-                // normalize the noise value so that it is within 0 and 1
-                noiseMap[zIndex, xIndex] = noise / normalization;
-            }
+            this.heightMap = heightMap;
+            this.mesh = mesh;
         }
-        return noiseMap;
     }
+
 
     private Color GetColor(float height)
     {
@@ -104,7 +81,7 @@ public class TileGeneration : MonoBehaviour
                 float height = heightMap[zIndex, xIndex];
                 Vector3 vertex = meshVertices[vertexIndex];
                 // change the vertex Y coordinate, proportional to the height value
-                meshVertices[vertexIndex] = new Vector3(vertex.x, height * heightMultiplier, vertex.z);
+                meshVertices[vertexIndex] = new Vector3(vertex.x, height, vertex.z);
                 vertexIndex++;
             }
         }
@@ -116,8 +93,9 @@ public class TileGeneration : MonoBehaviour
         meshCollider.sharedMesh = meshFilter.mesh;
     }
 
-    public void GenerateTile()
+    public TileData GenerateTile(int mapScale, NoiseMapGeneration.Wave[] waves)
     {
+        this.mapScale = mapScale;
         // calculate tile depth and width based on the mesh vertices
         Vector3[] meshVertices = meshFilter.mesh.vertices;
         int tileDepth = (int)Mathf.Sqrt(meshVertices.Length);
@@ -126,12 +104,22 @@ public class TileGeneration : MonoBehaviour
         float offsetX = -gameObject.transform.position.x;
         float offsetZ = -gameObject.transform.position.z;
         // generate a heightMap using noise
-        float[,] heightMap = GenerateNoiseMap(tileDepth, tileWidth, mapScale, offsetX, offsetZ, waves);
+        float[,] heightMap = NoiseMapGeneration.GenerateNoiseMap(tileDepth, tileWidth, mapScale, offsetX, offsetZ, waves, worldSeed);
 
         // build a Texture2D from the height map
         tileRenderer.material.mainTexture = BuildTexture(heightMap);
 
+        for (int i = 0; i < heightMap.GetLength(0); ++i)
+        {
+            for (int j = 0; j < heightMap.GetLength(1); ++j)
+            {
+                heightMap[i, j] *= heightMultiplier;
+            }
+        }
+
         // update the tile mesh vertices according to the height map
         UpdateMeshVertices(heightMap);
+
+        return new TileData(heightMap, meshFilter.mesh);
     }
 }
