@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3935098571071159349}
   - component: {fileID: 3935098571071159306}
   - component: {fileID: 3935098571071159307}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,15 +114,5 @@ MonoBehaviour:
   meshCollider: {fileID: 3935098571071159306}
   mapScale: 5
   worldSeed: 0
-  waves:
-  - seed: 5613
-    frequency: 1
-    amplitude: 1
-  - seed: 9551
-    frequency: 0.5
-    amplitude: 2
-  - seed: 6712
-    frequency: 0.25
-    amplitude: 4
   heightMultiplier: 5
   colorMap: {fileID: 2800000, guid: a995f21ed021f664fb78cf66a5e80fef, type: 3}

@@ -178,7 +178,7 @@ public class WorldGeneration : MonoBehaviour
                 {
                     Vector3 position = new Vector3(xIndex * distanceBetweenVertices, 1000, zIndex * distanceBetweenVertices); // finding the tree's future location using raycast
 
-                    if (Physics.Raycast(position, Vector3.down, out RaycastHit hit))
+                    if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, float.MaxValue, (1 << 6))) // 6 is the surface layer, so here we will only find hits with the surface layer
                     {
                         GameObject tree = Instantiate(treePrefabs[random.Next(0, treePrefabs.Length)], hit.point, Quaternion.identity) as GameObject;
                         tree.transform.localScale = Vector3.one * 0.5f;
@@ -224,7 +224,7 @@ public class WorldGeneration : MonoBehaviour
                 {
                     Vector3 position = new Vector3(xIndex * distanceBetweenVertices, 1000, zIndex * distanceBetweenVertices); // finding the rock's future location using raycast
 
-                    if (Physics.Raycast(position, Vector3.down, out RaycastHit hit))
+                    if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, float.MaxValue, (1 << 6))) // 6 is the surface layer, so here we will only find hits with the surface layer
                     {
                         GameObject rock = Instantiate(rockPrefabs[random.Next(0, rockPrefabs.Length)], hit.point, Quaternion.identity) as GameObject;
                         rock.transform.localScale = Vector3.one * 0.5f;
@@ -234,11 +234,15 @@ public class WorldGeneration : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private GameObject playerPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
         random = new System.Random(worldSeed);
         worldSeed %= 1000000;
         GenerateWorld();
+        // Instantiate(playerPrefab, new Vector3(0,100,0), Quaternion.identity);
     }
 }
