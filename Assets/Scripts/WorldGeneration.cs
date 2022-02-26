@@ -17,17 +17,14 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField]
     private int worldSeed;
 
-    
-
     [SerializeField]
     private NoiseMapGeneration.Wave[] waves;
 
     [SerializeField]
     private GameObject[] treePrefabs;
 
-
     [SerializeField]
-    private GameObject[] mapObjects; // game objects like trees, rocks etc..
+    private GameObject[] rockPrefabs;
 
     public class TileCoordinate
     {
@@ -110,6 +107,7 @@ public class WorldGeneration : MonoBehaviour
 
         float distanceBetweenVertices = (float)tileDepth / (float)tileDepthInVertices;
         GenerateTrees(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
+        GenerateRocks(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
     }
 
     /* void GenerateRandomObjects(float distanceBetweenVertices)
@@ -142,13 +140,12 @@ public class WorldGeneration : MonoBehaviour
          }
      }*/
 
+    System.Random random;
+
     public void GenerateTrees(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices, int neighborRadius = 2)
     {
-        System.Random random = new System.Random(worldSeed);
         // generate a tree noise map using Perlin Noise
-        float[,] treeMap = NoiseMapGeneration.GenerateNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, this.waves, worldSeed);
-        float levelSizeX = levelWidth * distanceBetweenVertices;
-        float levelSizeZ = levelDepth * distanceBetweenVertices;
+        float[,] treeMap = NoiseMapGeneration.GenerateNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, this.waves, random.Next(0, 1000000));
         for (int zIndex = 0; zIndex < levelDepth; zIndex++)
         {
             for (int xIndex = 0; xIndex < levelWidth; xIndex++)
@@ -157,14 +154,6 @@ public class WorldGeneration : MonoBehaviour
                 TileCoordinate tileCoordinate = worldData.ConvertToTileCoordinate(zIndex, xIndex);
                 TileGeneration.TileData tileData = worldData.tilesData[tileCoordinate.tileZIndex, tileCoordinate.tileXIndex];
 
-                int tileDepth = tileData.heightMap.GetLength(0);
-                int tileWidth = tileData.heightMap.GetLength(1);
-                // calculate the mesh vertex index
-                Vector3[] meshVertices = tileData.mesh.vertices;
-                /*Debug.Log("tileCoordinate.coordinateZIndex = " + tileCoordinate.coordinateZIndex + "tileCoordinate.coordinateXIndex = " + tileCoordinate.coordinateXIndex);
-                Debug.Log("ZIndex = " + zIndex + "XIndex = " + xIndex);*/
-                int vertexIndex = tileCoordinate.coordinateZIndex * tileWidth + tileCoordinate.coordinateXIndex;
-                // check if it is a water terrain. Trees cannot be placed over the water
                 float treeValue = treeMap[zIndex, xIndex];
                 // compares the current tree noise value to the neighbor ones
                 int neighborZBegin = (int)Mathf.Max(0, zIndex - neighborRadius);
@@ -194,16 +183,52 @@ public class WorldGeneration : MonoBehaviour
                         GameObject tree = Instantiate(treePrefabs[random.Next(0, treePrefabs.Length)], hit.point, Quaternion.identity) as GameObject;
                         tree.transform.localScale = Vector3.one * 0.5f;
                     }
+                }
+            }
+        }
+    }
 
-                    /*
-                    Debug.Log("tileData.heightMap[" + tileCoordinate.coordinateZIndex + " , " + tileCoordinate.coordinateXIndex + "] = " + tileData.heightMap[tileCoordinate.coordinateZIndex, tileCoordinate.coordinateXIndex]);
-                    Vector3 treePosition = new Vector3(xIndex * distanceBetweenVertices - tileWidth * distanceBetweenVertices / 2, tileData.heightMap[tileCoordinate.coordinateZIndex, tileCoordinate.coordinateXIndex], zIndex * distanceBetweenVertices - tileDepth * distanceBetweenVertices / 2);
-                    Debug.Log(treePosition);
-                    Debug.Log("xIndex = "+xIndex+" and zIndex = "+zIndex);
-                    // Vector3 treePosition = new Vector3(xIndex * distanceBetweenVertices, meshVertices[vertexIndex].y, zIndex * distanceBetweenVertices);
-                    GameObject tree = Instantiate(treePrefabs[random.Next(0, treePrefabs.Length)], treePosition, Quaternion.identity) as GameObject;
-                    tree.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    */
+    public void GenerateRocks(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices, int neighborRadius = 2)
+    {
+        // generate a rock noise map using Perlin Noise
+        float[,] rocksMap = NoiseMapGeneration.GenerateNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, this.waves, random.Next(0, 1000000));
+        for (int zIndex = 0; zIndex < levelDepth; zIndex++)
+        {
+            for (int xIndex = 0; xIndex < levelWidth; xIndex++)
+            {
+                // convert from Level Coordinate System to Tile Coordinate System and retrieve the corresponding TileData
+                TileCoordinate tileCoordinate = worldData.ConvertToTileCoordinate(zIndex, xIndex);
+                TileGeneration.TileData tileData = worldData.tilesData[tileCoordinate.tileZIndex, tileCoordinate.tileXIndex];
+
+                float rockValue = rocksMap[zIndex, xIndex];
+                // compares the current rock noise value to the neighbor ones
+                int neighborZBegin = (int)Mathf.Max(0, zIndex - neighborRadius);
+                int neighborZEnd = (int)Mathf.Min(levelDepth - 1, zIndex + neighborRadius);
+                int neighborXBegin = (int)Mathf.Max(0, xIndex - neighborRadius);
+                int neighborXEnd = (int)Mathf.Min(levelWidth - 1, xIndex + neighborRadius);
+                float maxValue = 0f;
+                for (int neighborZ = neighborZBegin; neighborZ <= neighborZEnd; neighborZ++)
+                {
+                    for (int neighborX = neighborXBegin; neighborX <= neighborXEnd; neighborX++)
+                    {
+                        float neighborValue = rocksMap[neighborZ, neighborX];
+                        // saves the maximum tree noise value in the radius
+                        if (neighborValue >= maxValue)
+                        {
+                            maxValue = neighborValue;
+                        }
+                    }
+                }
+                // if the current rock noise value is the maximum one, place a rock in this location
+                if (rockValue == maxValue)
+                {
+                    Vector3 position = new Vector3(xIndex * distanceBetweenVertices, 1000, zIndex * distanceBetweenVertices); // finding the rock's future location using raycast
+
+                    if (Physics.Raycast(position, Vector3.down, out RaycastHit hit))
+                    {
+                        GameObject rock = Instantiate(rockPrefabs[random.Next(0, rockPrefabs.Length)], hit.point, Quaternion.identity) as GameObject;
+                        rock.transform.localScale = Vector3.one * 0.5f;
+                    }
                 }
             }
         }
@@ -212,7 +237,8 @@ public class WorldGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        random = new System.Random(worldSeed);
+        worldSeed %= 1000000;
         GenerateWorld();
-        
     }
 }

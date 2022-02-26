@@ -308,7 +308,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2905144375732305610, guid: a7c61b7e9ce1dd644a15a564cae48ef6, type: 3}
       propertyPath: worldSeed
-      value: 123456
+      value: 324637632
       objectReference: {fileID: 0}
     - target: {fileID: 2905144375732305610, guid: a7c61b7e9ce1dd644a15a564cae48ef6, type: 3}
       propertyPath: tilePrefab
@@ -316,11 +316,11 @@ PrefabInstance:
       objectReference: {fileID: 3935098571071159304, guid: 6524f92b73226e24fad4dad78a01c951, type: 3}
     - target: {fileID: 2905144375732305610, guid: a7c61b7e9ce1dd644a15a564cae48ef6, type: 3}
       propertyPath: mapDepthInTiles
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2905144375732305610, guid: a7c61b7e9ce1dd644a15a564cae48ef6, type: 3}
       propertyPath: mapWidthInTiles
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2905144375732305610, guid: a7c61b7e9ce1dd644a15a564cae48ef6, type: 3}
       propertyPath: waves.Array.size
