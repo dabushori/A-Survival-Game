@@ -28,7 +28,10 @@ public class WorldGeneration : MonoBehaviour
                   this.gameObject.transform.position.z + zTileIndex * tileDepth);
                 // instantiate a new Tile
                 GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
+                // update the world seed
                 tile.GetComponent<TileGeneration>().worldSeed = worldSeed;
+                // generate the tile considering the world seed
+                tile.GetComponent<TileGeneration>().GenerateTile();
             }
         }
     }
@@ -37,11 +40,5 @@ public class WorldGeneration : MonoBehaviour
     void Start()
     {
         GenerateWorld();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

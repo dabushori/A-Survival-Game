@@ -12,23 +12,22 @@ public class TileGeneration : MonoBehaviour
 
     [SerializeField]
     private MeshRenderer tileRenderer;
+    
     [SerializeField]
     private MeshFilter meshFilter;
+    
     [SerializeField]
     private MeshCollider meshCollider;
+    
     [SerializeField]
     private float mapScale;
     public float worldSeed;
 
-    
-
+    [SerializeField]
+    private Wave[] waves;
 
     [SerializeField]
     private float heightMultiplier;
-    void Start()
-    {
-        GenerateTile();
-    }
 
     public float[,] GenerateNoiseMap(int mapDepth, int mapWidth, float scale, float offsetX, float offsetZ, Wave[] waves)
     {
@@ -54,30 +53,6 @@ public class TileGeneration : MonoBehaviour
             }
         }
         return noiseMap;
-    }
-
-    
-
-    [SerializeField]
-    private Wave[] waves;
-    void GenerateTile()
-    {
-        // calculate tile depth and width based on the mesh vertices
-        Vector3[] meshVertices = this.meshFilter.mesh.vertices;
-        int tileDepth = (int)Mathf.Sqrt(meshVertices.Length);
-        int tileWidth = tileDepth;
-        // calculate the offsets based on the tile position
-        float offsetX = -this.gameObject.transform.position.x;
-        float offsetZ = -this.gameObject.transform.position.z;
-        // generate a heightMap using noise
-        float[,] heightMap = this.GenerateNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, waves);
-        
-        // build a Texture2D from the height map
-        // Texture2D tileTexture = BuildTexture(heightMap);
-        // this.tileRenderer.material.mainTexture = tileTexture;
-        
-        // update the tile mesh vertices according to the height map
-        UpdateMeshVertices(heightMap);
     }
 
     /*
@@ -132,5 +107,25 @@ public class TileGeneration : MonoBehaviour
         this.meshFilter.mesh.RecalculateNormals();
         // update the mesh collider
         this.meshCollider.sharedMesh = this.meshFilter.mesh;
+    }
+
+    public void GenerateTile()
+    {
+        // calculate tile depth and width based on the mesh vertices
+        Vector3[] meshVertices = this.meshFilter.mesh.vertices;
+        int tileDepth = (int)Mathf.Sqrt(meshVertices.Length);
+        int tileWidth = tileDepth;
+        // calculate the offsets based on the tile position
+        float offsetX = -this.gameObject.transform.position.x;
+        float offsetZ = -this.gameObject.transform.position.z;
+        // generate a heightMap using noise
+        float[,] heightMap = this.GenerateNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, waves);
+
+        // build a Texture2D from the height map
+        // Texture2D tileTexture = BuildTexture(heightMap);
+        // this.tileRenderer.material.mainTexture = tileTexture;
+
+        // update the tile mesh vertices according to the height map
+        UpdateMeshVertices(heightMap);
     }
 }
