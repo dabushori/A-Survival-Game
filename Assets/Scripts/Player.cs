@@ -25,9 +25,4 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-    private void Start()
-    {
-        // Camera.main.transform.forward = Vector3.forward;
-    }
 }
