@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23376214585744022}
   - component: {fileID: 7002870143246393552}
   - component: {fileID: 4638579162568219643}
-  - component: {fileID: 8955545454479050584}
+  - component: {fileID: -4010068971000747727}
   m_Layer: 7
   m_Name: pineTree05
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335620065128386}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3979852, y: 0, z: -5.3360214}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -96,7 +96,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 8821e6a51b1defd4db5c85af2f215af7, type: 3}
 --- !u!114 &4638579162568219643
@@ -113,19 +113,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   item: {fileID: 0}
---- !u!54 &8955545454479050584
-Rigidbody:
+--- !u!65 &-4010068971000747727
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335620065128386}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
-  m_Mass: 0.0000001
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
+  m_Size: {x: 3, y: 5, z: 3}
+  m_Center: {x: 0, y: 2, z: 0}
