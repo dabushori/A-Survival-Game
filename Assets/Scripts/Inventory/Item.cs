@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item 
+public abstract class Item 
 {
-    public Item(string name, string image)
-    {
-        this.name = name;
-        this.image = image;
-    }
+    public abstract bool CanBreak { get; }
+    public abstract bool CanBeBuilt { get; }
 
     public string name;
     public string image; // path to image 
@@ -16,5 +13,23 @@ public class Item
 
 public class Pickaxe : Item
 {
-    public Pickaxe() : base("Pickaxe", null) {}
+    public Pickaxe() {
+        name = "Pickaxe";
+        image = null;
+    }
+
+    public override bool CanBreak { 
+        get
+        {
+            return true;
+        }
+    }
+    public override bool CanBeBuilt { 
+        get
+        {
+            return false;
+        }
+    }
+
+
 }

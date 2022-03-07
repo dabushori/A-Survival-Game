@@ -37,16 +37,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    
-    private int GetPressedDigit()
+    private void Start()
     {
-        for (int number = 0; number <= 9; ++number)
-        {
-            if (Input.GetKeyDown(number.ToString()))
-                return number;
-        }
-
-        return -1;
+        Keyboard.current.onTextInput += OnTextInput;
     }
 
     private void Update()
@@ -55,19 +48,21 @@ public class Player : MonoBehaviour
         if (Pointer.current.press.isPressed && (lastClick + miningTime) < DateTime.Now)
         {
             lastClick = DateTime.Now;
-            Vector3 pos = gameObject.transform.position;
-            if (Physics.Raycast(pos, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
+            if (CurrentItem != null && CurrentItem.CanBreak && Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
             {
                 hit.transform.gameObject.GetComponent<Destructible>().Hit(50);
             }
         }
+    }
 
-        int pressedDigit = GetPressedDigit();
-        if (pressedDigit != -1)
+    private void OnTextInput(char c)
+    {
+        int inventorySlot = int.TryParse(c.ToString(), out int res) ? res : -1;
+        if (inventorySlot != -1)
         {
-            userInventory.ChooseItem((pressedDigit - 1) % 10); // this is to make 0 the last item
+            inventorySlot = (inventorySlot + 9) % 10;
+            userInventory.ChooseItem(inventorySlot);
             Debug.Log(CurrentItem?.name);
         }
-
     }
 }
