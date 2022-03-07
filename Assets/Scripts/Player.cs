@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
 
     bool isPressed = false;
     DateTime lastClick;
-    DateTime lastUnclick;
     TimeSpan miningTime = TimeSpan.FromSeconds(1);
 
     private void UpdatePressed()
@@ -22,7 +21,6 @@ public class Player : MonoBehaviour
         else if (isPressed && !Pointer.current.press.isPressed)
         {
             isPressed = false;
-            lastUnclick = DateTime.Now;
         }
     }
 
@@ -33,11 +31,8 @@ public class Player : MonoBehaviour
         {
             lastClick = DateTime.Now;
             Vector3 pos = gameObject.transform.position;
-            // if (Physics.Raycast(Camera.main.ScreenPointToRay(), out RaycastHit hit))
             if (Physics.Raycast(pos, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
             {
-                Debug.Log("Hit! HP = " + hit.transform.gameObject.GetComponent<Destructible>().HP);
-                Debug.Log(hit.transform.gameObject.GetComponent<Destructible>());
                 hit.transform.gameObject.GetComponent<Destructible>().Hit(50);
             }
         }
