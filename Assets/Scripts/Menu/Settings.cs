@@ -23,8 +23,8 @@ public class Settings : MonoBehaviour
         {
             string resolution = resolutions[i].width + " x " + resolutions[i].height + " @ " + resolutions[i].refreshRate + "hz";
             resolutionsList.Add(resolution);
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+            if (resolutions[i].width == Screen.width &&
+                resolutions[i].height == Screen.height)
             {
                 currentResolutionIndex = i;
             }
@@ -32,6 +32,7 @@ public class Settings : MonoBehaviour
         }
         resolutionDD.AddOptions(resolutionsList);
         resolutionDD.value = currentResolutionIndex;
+        resolutionDD.RefreshShownValue();
     }
 
     public void SetResolution(int resolutionIndex)

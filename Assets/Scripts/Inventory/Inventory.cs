@@ -1,44 +1,56 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Inventory
+public class Inventory : MonoBehaviour
 {
-
-    private Dictionary<Item, int> items;
-
-    private Item[] displayedItems;
-
-    private int maxItemsAmount;
-
-    private int currentItem;
-
-    public delegate void action();
-    public event action OnDesplayedItemsChange;
-
-    public Inventory(int maxItemsAmount)
+    #region Singleton
+    public static Inventory instance;
+    private void Awake()
     {
-        items = new Dictionary<Item, int>();
-        this.maxItemsAmount = maxItemsAmount;
-        displayedItems = new Item[10];
+        instance = this;
+    }
+    #endregion
 
-        // for test
-        AddToInventory(new Pickaxe(), 1);
+    public delegate void onItemChanged();
+    public onItemChanged onItemChangedCallback;
+
+
+    public Dictionary<Item, int> items = new Dictionary<Item, int>();
+
+    public Dictionary<Item, int> hotbar = new Dictionary<Item, int>();
+    public int hotbarSpace = 8;
+    public Item chosenItem;
+    public int space = 20;
+
+    public Item ChosenItem
+    {
+        get
+        {
+        return chosenItem;
+        }
+        set {
+            chosenItem = value;
+        }
     }
 
+    public void ChooseItem(int inventorySlot)
+    {
+        chosenItem = hotbar.Keys.ToArray()[inventorySlot];
+    }
     public void MoveItemToDisplayed(Item item, int slot)
     {
-        if (0 <=slot && slot < displayedItems.Length && items.ContainsKey(item))
+        if (0 <= slot && slot < hotbar.Count && items.ContainsKey(item))
         {
-            for (int i = 0; i < displayedItems.Length; ++i)
+            /*for (int i = 0; i < hotbar.Count; ++i)
             {
                 if (displayedItems[i] == item)
                 {
                     displayedItems[i] = null;
                 }
             }
-            displayedItems[slot] = item;
-            OnDesplayedItemsChange?.Invoke();
+            displayedItems[slot] = item;*/
         }
     }
 
@@ -50,17 +62,20 @@ public class Inventory
             items[item] += amount;
         } else
         {
-            if (items.Count > maxItemsAmount) return false;
+            if (items.Count > space) return false;
             items.Add(item, amount);
-            for (int i = 0; i < displayedItems.Length; ++i)
+            if (onItemChangedCallback != null)
+            {
+                onItemChangedCallback.Invoke();
+            }
+            /*for (int i = 0; i < displayedItems.Length; ++i)
             {
                 if (displayedItems[i] == null)
                 {
                     displayedItems[i] = item;
-                    OnDesplayedItemsChange?.Invoke();
                     break;
                 }
-            }
+            }*/
         }
         return true;
     }
@@ -77,16 +92,17 @@ public class Inventory
             else
             {
                 items.Remove(item);
-                bool removed = false;
-                for (int i = 0; i < displayedItems.Length; ++i)
+                if (onItemChangedCallback != null)
+                {
+                    onItemChangedCallback.Invoke();
+                }
+                /*for (int i = 0; i < displayedItems.Length; ++i)
                 {
                     if (displayedItems[i] == item)
                     {
                         displayedItems[i] = null;
-                        removed = true;
                     }
-                }
-                if (removed) OnDesplayedItemsChange?.Invoke();
+                }*/
             }
         } 
         else
@@ -95,25 +111,47 @@ public class Inventory
         }
         return true;
     }
-
-    public void ChooseItem(int index)
+    /*public void SwitchHotbarInventory(Item item, int amount)
     {
-        if (index >= 0 && index < maxItemsAmount) currentItem = index;
-    }
-
-    public Item ChosenItem
-    {
-        get
+        //inventory to hotbar, CHECK if we have enaugh space
+        foreach (Item i in items.Keys)
         {
-            return displayedItems[currentItem];
+            if (i == item)
+            {
+                if (hotbar.Count >= hotbarSpace)
+                {
+                    Debug.Log("No more slots available in hotbar");
+                    return;
+                }
+                else
+                {
+                    hotbar.Add(item, amount);
+                    RemoveFromInventory(item, amount);
+                    if (onItemChangedCallback != null)
+                    {
+                        onItemChangedCallback.Invoke();
+                    }
+                }
+            }
         }
-    }
-
-    public Item[] DisplayedItems
-    {
-        get
+        //hotbar to inventory
+        foreach (Item i in hotbar.Keys)
         {
-            return displayedItems;
+            if (i == item)
+            {
+                if (items.Count >= space)
+                {
+                    Debug.Log("No more slots available in hotbar");
+                    return;
+                }
+                hotbar.Remove(item);
+                items.Add(item, amount);
+                if (onItemChangedCallback != null)
+                {
+                    onItemChangedCallback.Invoke();
+                }
+                return;
+            }
         }
-    }
+    }*/
 }
