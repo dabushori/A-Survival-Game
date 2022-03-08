@@ -1,35 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Item 
+[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+public  class Item : ScriptableObject
 {
-    public abstract bool CanBreak { get; }
-    public abstract bool CanBeBuilt { get; }
-
-    public string name;
-    public string image; // path to image 
-}
-
-public class Pickaxe : Item
-{
-    public Pickaxe() {
-        name = "Pickaxe";
-        image = null;
-    }
-
-    public override bool CanBreak { 
-        get
-        {
-            return true;
-        }
-    }
-    public override bool CanBeBuilt { 
-        get
-        {
-            return false;
-        }
-    }
-
-
+    new public string name = "New Item";
+    public Sprite icon = null; // path to image 
+    public bool canBreak = true;
 }

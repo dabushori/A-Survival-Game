@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     TimeSpan miningTime = TimeSpan.FromSeconds(1);
 
     // user inventory
-    Inventory userInventory = new Inventory(10);
+    Inventory userInventory = Inventory.instance;
 
     public Item CurrentItem
     {
@@ -42,15 +42,38 @@ public class Player : MonoBehaviour
         Keyboard.current.onTextInput += OnTextInput;
     }
 
+    bool inventoryMode = false;
+    [SerializeField]
+    GameObject inventory;
     private void Update()
     {
-        UpdatePressed();
-        if (Pointer.current.press.isPressed && (lastClick + miningTime) < DateTime.Now)
+        if (Keyboard.current.eKey.isPressed)
         {
-            lastClick = DateTime.Now;
-            if (CurrentItem != null && CurrentItem.CanBreak && Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
+            inventoryMode = true;
+            inventory.SetActive(true);
+        }
+        if (Keyboard.current.escapeKey.isPressed)
+        {
+            if (inventoryMode)
             {
-                hit.transform.gameObject.GetComponent<Destructible>().Hit(50);
+                inventoryMode = false;
+                inventory.SetActive(false);
+            }
+            else
+            {
+                // pause logic
+            }
+        }
+        if (!inventoryMode)
+        {
+            UpdatePressed();
+            if (Pointer.current.press.isPressed && (lastClick + miningTime) < DateTime.Now)
+            {
+                lastClick = DateTime.Now;
+                if (CurrentItem != null && CurrentItem.canBreak && Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
+                {
+                    hit.transform.gameObject.GetComponent<Destructible>().Hit(50);
+                }
             }
         }
     }
