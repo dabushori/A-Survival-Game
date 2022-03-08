@@ -38,7 +38,7 @@ public class Inventory
                 }
             }
             displayedItems[slot] = item;
-            OnDesplayedItemsChange();
+            OnDesplayedItemsChange?.Invoke();
         }
     }
 
@@ -57,7 +57,7 @@ public class Inventory
                 if (displayedItems[i] == null)
                 {
                     displayedItems[i] = item;
-                    OnDesplayedItemsChange();
+                    OnDesplayedItemsChange?.Invoke();
                     break;
                 }
             }
@@ -86,7 +86,7 @@ public class Inventory
                         removed = true;
                     }
                 }
-                if (removed) OnDesplayedItemsChange();
+                if (removed) OnDesplayedItemsChange?.Invoke();
             }
         } 
         else
