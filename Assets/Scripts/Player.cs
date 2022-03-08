@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         Keyboard.current.onTextInput += OnTextInput;
+        // add an event for the displayed items change
     }
 
     private void Update()

@@ -13,11 +13,16 @@ public class Inventory
 
     private int currentItem;
 
+    public delegate void action();
+    public event action OnDesplayedItemsChange;
+
     public Inventory(int maxItemsAmount)
     {
         items = new Dictionary<Item, int>();
         this.maxItemsAmount = maxItemsAmount;
         displayedItems = new Item[10];
+
+        // for test
         AddToInventory(new Pickaxe(), 1);
     }
 
@@ -33,6 +38,7 @@ public class Inventory
                 }
             }
             displayedItems[slot] = item;
+            OnDesplayedItemsChange();
         }
     }
 
@@ -51,6 +57,7 @@ public class Inventory
                 if (displayedItems[i] == null)
                 {
                     displayedItems[i] = item;
+                    OnDesplayedItemsChange();
                     break;
                 }
             }
@@ -70,13 +77,16 @@ public class Inventory
             else
             {
                 items.Remove(item);
+                bool removed = false;
                 for (int i = 0; i < displayedItems.Length; ++i)
                 {
                     if (displayedItems[i] == item)
                     {
                         displayedItems[i] = null;
+                        removed = true;
                     }
                 }
+                if (removed) OnDesplayedItemsChange();
             }
         } 
         else
