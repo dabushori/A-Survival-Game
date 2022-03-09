@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
@@ -8,6 +9,33 @@ public class InventorySlot : MonoBehaviour
     public bool isHotbar = false;
     Item item;
     int amount;
+
+    public Item Item
+    {
+        get
+        {
+            return item;
+        }
+    }
+
+    public int Amount
+    {
+        get
+        {
+            return amount;
+        }
+    }
+
+    public void IncAmount(int amount = 1)
+    {
+        this.amount += amount;
+    }
+
+    public void DecAmount(int amount = 1)
+    {
+        this.amount += amount;
+        if (amount == 0) ClearSlot();
+    }
 
     public void AddItem(Item newItem, int newAmount)
     {
@@ -46,5 +74,18 @@ public class InventorySlot : MonoBehaviour
     public void onRemoveButton()
     {
         Inventory.Instance.RemoveFromInventory(item, 1);
+        // --amount;
+        // if (amount == 0) ClearSlot();
+    }
+
+    public void OnDrag(BaseEventData data)
+    {
+        Debug.Log(data);
+        Debug.Log("drag " + gameObject.name);
+    }
+    public void OnDrop(BaseEventData data)
+    {
+        Debug.Log(data);
+        Debug.Log("drop " + gameObject.name);
     }
 }

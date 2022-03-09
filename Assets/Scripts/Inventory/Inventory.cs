@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
-    private static Inventory instance;
+    private static Inventory instance = new Inventory();
+    private Inventory() { }
+    
 
-    private void Awake()
-    {
-        instance = this;
-    }
     public static Inventory Instance
     {
         get
@@ -22,101 +20,103 @@ public class Inventory : MonoBehaviour
     public delegate void onItemChanged();
     public onItemChanged onItemChangedCallback;
 
-    public Dictionary<Item, int> items = new Dictionary<Item, int>();
-    public Dictionary<Item, int> hotbar = new Dictionary<Item, int>();
+    public InventorySlot[] inventorySlots;
+    public InventorySlot[] hotbarSlots;
+
+    public void setSlots(InventorySlot[] inventorySlots, InventorySlot[] hotbarSlots)
+    {
+        this.inventorySlots = inventorySlots;
+        this.hotbarSlots = hotbarSlots;
+        Debug.Log("init");
+    }
+
+    // public Dictionary<Item, int> items = new Dictionary<Item, int>();
+    // public Dictionary<Item, int> hotbar = new Dictionary<Item, int>();
 
     public int hotbarSpace = 8;
-    public Item chosenItem;
+    private int chosenItemIdx = 0;
     public int space = 20;
 
     public Item ChosenItem
     {
         get
         {
-        return chosenItem;
-        }
-        set {
-            chosenItem = value;
+            return hotbarSlots[chosenItemIdx].Item;
         }
     }
 
-    public void ChooseItem(int inventorySlot)
+    public void ChooseItem(int slotIdx)
     {
-        chosenItem = hotbar.Keys.ToArray()[inventorySlot];
-    }
-
-    public void MoveItemToDisplayed(Item item, int slot)
-    {
-        if (0 <= slot && slot < hotbar.Count && items.ContainsKey(item))
-        {
-            /*for (int i = 0; i < hotbar.Count; ++i)
-            {
-                if (displayedItems[i] == item)
-                {
-                    displayedItems[i] = null;
-                }
-            }
-            displayedItems[slot] = item;*/
-        }
+        chosenItemIdx = slotIdx;
     }
 
     public bool AddToInventory(Item item, int amount)
     {
-        if (amount <= 0) return false;
-        if (items.ContainsKey(item))
+        if (amount < 0) return false;
+        if (amount == 0) return true;
+        foreach (InventorySlot slot in hotbarSlots)
         {
-            items[item] += amount;
-        } else
-        {
-            if (items.Count > space) return false;
-            items.Add(item, amount);
-            if (onItemChangedCallback != null)
+            if (slot.Item == item)
             {
-                onItemChangedCallback.Invoke();
+                slot.IncAmount(amount);
+                onItemChangedCallback?.Invoke();
+                return true;
             }
-            /*for (int i = 0; i < displayedItems.Length; ++i)
-            {
-                if (displayedItems[i] == null)
-                {
-                    displayedItems[i] = item;
-                    break;
-                }
-            }*/
         }
-        return true;
+        foreach (InventorySlot slot in inventorySlots) {
+            if (slot.Item == item)
+            {
+                slot.IncAmount(amount);
+                onItemChangedCallback?.Invoke();
+                return true;
+            }
+        }
+        foreach (InventorySlot slot in hotbarSlots)
+        {
+            if (slot.Item == null)
+            {
+                slot.AddItem(item, amount);
+                onItemChangedCallback?.Invoke();
+                return true;
+            }
+        }
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            if (slot.Item == null)
+            {
+                slot.AddItem(item, amount);
+                onItemChangedCallback?.Invoke();
+                return true;
+            }
+        }
+        return false;
     }
 
     public bool RemoveFromInventory(Item item, int amount)
     {
-        if (items.ContainsKey(item))
+        if (amount < 0) return false;
+        if (amount == 0) return true;
+        foreach (InventorySlot slot in hotbarSlots)
         {
-            if (items[item] < amount) return false;
-            else if (items[item] > amount)
+            if (slot.Item == item)
             {
-                items[item] -= amount;
-            } 
-            else
-            {
-                items.Remove(item);
-                if (onItemChangedCallback != null)
-                {
-                    onItemChangedCallback.Invoke();
-                }
-                /*for (int i = 0; i < displayedItems.Length; ++i)
-                {
-                    if (displayedItems[i] == item)
-                    {
-                        displayedItems[i] = null;
-                    }
-                }*/
+                slot.DecAmount(amount);
+                onItemChangedCallback?.Invoke();
+                return true;
             }
-        } 
-        else
-        {
-            return false;
         }
-        return true;
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            if (slot.Item == item)
+            {
+                slot.DecAmount(amount);
+                onItemChangedCallback?.Invoke();
+                return true;
+            }
+        }
+        return false;
     }
+
     /*public void SwitchHotbarInventory(Item item, int amount)
     {
         //inventory to hotbar, CHECK if we have enaugh space

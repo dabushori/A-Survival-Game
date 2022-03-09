@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.Controls;
 public class PlayerMovements : MonoBehaviour
 {
     public GameObject playerBody; // player's body to move (the whole prefab)
-    private Inventory inventory = Inventory.Instance;
+    private Inventory inventory;
 
     private float xRotation;
     [SerializeField]
@@ -90,10 +90,10 @@ public class PlayerMovements : MonoBehaviour
         // Hit Logic
         if (
             (Time.time - hitStartTime) > MINING_TIME && // will use item mining speed
-            inventory.chosenItem != null && inventory.chosenItem.breakDamage > 0 && 
+            inventory.ChosenItem != null && inventory.ChosenItem.breakDamage > 0 && 
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
         {
-            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.chosenItem.breakDamage); 
+            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.breakDamage); 
             // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
             hitStartTime = Time.time;
         }
@@ -128,8 +128,8 @@ public class PlayerMovements : MonoBehaviour
         if (ctx.performed)
         {
             string digit = ((KeyControl)ctx.control).keyCode.ToString();
-            if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed)) inventory.ChooseItem(digitPressed);
-            Debug.Log(inventory.chosenItem?.name);
+            if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed)) inventory.ChooseItem(digitPressed - 1);
+            Debug.Log(inventory.ChosenItem?.name);
         }
         // ctx.action.GetBindingIndex();
     }
@@ -150,6 +150,7 @@ public class PlayerMovements : MonoBehaviour
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        inventory = Inventory.Instance;
     }
 
 

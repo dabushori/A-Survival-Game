@@ -12,11 +12,13 @@ public class InventoryUI : MonoBehaviour
     void Start()
     {
         inventory = Inventory.Instance;
-        inventory.onItemChangedCallback += UpdateUI;
+        // inventory.onItemChangedCallback += UpdateUI;
 
         inventorySlots = itemsParent.GetComponentsInChildren<InventorySlot>();
         hotbarSlots = hotbarParent.GetComponentsInChildren<InventorySlot>();
+        inventory.setSlots(inventorySlots, hotbarSlots);
     }
+    /*
     void UpdateUI()
     {
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -29,7 +31,7 @@ public class InventoryUI : MonoBehaviour
                 inventorySlots[i].ClearSlot();
             }
         }
-        /*for (int i = 0; i < hotbarSlots.Length; i++)
+        for (int i = 0; i < hotbarSlots.Length; i++)
         {
             if (i < inventory.hotbar.Count)
             {
@@ -39,6 +41,6 @@ public class InventoryUI : MonoBehaviour
             {
                 hotbarSlots[i].ClearSlot();
             }
-        }*/
     }
+    */
 }

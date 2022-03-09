@@ -322,28 +322,6 @@
                     "action": "Choose Item",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fc7b6b49-48ba-4234-8b42-afe565f374a2",
-                    "path": "<Keyboard>/9",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mouse and Keyboard",
-                    "action": "Choose Item",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a483dcc1-3873-4aab-827e-21bc5b1020b7",
-                    "path": "<Keyboard>/0",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mouse and Keyboard",
-                    "action": "Choose Item",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }
