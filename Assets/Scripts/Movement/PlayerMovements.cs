@@ -8,7 +8,8 @@ public class PlayerMovements : MonoBehaviour
     public GameObject playerBody; // player's body to move (the whole prefab)
 
     private float xRotation;
-    private float mouseSensitivity = 20f;
+    [SerializeField]
+    private float mouseSensitivity;
     public void Look(InputAction.CallbackContext ctx)
     {
         Vector2 mouse = ctx.ReadValue<Vector2>();
@@ -21,8 +22,10 @@ public class PlayerMovements : MonoBehaviour
         playerBody.transform.Rotate(Vector3.up * mouse.x);
     }
 
-    private float speed = 12f;
-    private float sprintSpeed = 20f;
+    [SerializeField]
+    private float speed;
+    [SerializeField]
+    private float sprintSpeed;
     public CharacterController controller;
     private Vector2 movingDirection;
     public void Move(InputAction.CallbackContext ctx)
@@ -32,10 +35,10 @@ public class PlayerMovements : MonoBehaviour
     }
 
     [SerializeField]
-    private float gravity = -9.81f * 2;
+    private float gravity;
     private Vector3 velocity = Vector3.zero;
-
-    public LayerMask GROUND_LAYER;
+    [SerializeField]
+    private LayerMask GROUND_LAYER;
     void UpdateGravity()
     {
         if (Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = -2f;
@@ -44,7 +47,8 @@ public class PlayerMovements : MonoBehaviour
         // Debug.Log(velocity * Time.deltaTime);
     }
 
-    float jumpPower = 3f;
+    [SerializeField]
+    float jumpPower;
     public void Jump(InputAction.CallbackContext ctx)
     {
         // if (ctx.performed) controller.Move(Vector3.up * jumpPower);
@@ -57,49 +61,51 @@ public class PlayerMovements : MonoBehaviour
         isSprinting = !ctx.canceled;
     }
 
-    /*
+    [SerializeField]
     private LayerMask DISTRUCTABLE_LAYER;
-    private float MINING_DISTANCE = 2f;
-    */
+    [SerializeField]
+    private float MINING_DISTANCE;
     private bool isHit = false;
-    private double hitStartTime;
+    private float hitStartTime;
     public void Hit(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
         {
             isHit = true;
-            hitStartTime = ctx.startTime;
+            hitStartTime = Time.time;
         } else if (ctx.canceled)
         {
             isHit = false;
             hitStartTime = 0;
         }
+        // Debug.Log(Time.fixedTimeAsDouble);
     }
 
+    [SerializeField]
+    private float MINING_TIME;
     public void Hit()
     {
-        Debug.Log("hit");
         // Hit Logic
-        /*
         if (
-            CurrentItem != null && CurrentItem.CanBreak && 
+            (Time.time - hitStartTime) > MINING_TIME && // will use item mining speed
+            // CurrentItem != null && CurrentItem.breakDamage > 0 && 
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
         {
-            // hit logic
-            hit.transform.gameObject.GetComponent<Destructible>().Hit(50);
+            // hit.transform.gameObject.GetComponent<Destructible>().Hit(CurrentItem.breakDamage); 
+            hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
+            hitStartTime = Time.time;
         }
-        */
     }
 
     private bool isUse = false;
-    private double useStartTime;
+    private float useStartTime;
 
     public void Use(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
         {
             isUse = true;
-            useStartTime = ctx.startTime;
+            useStartTime = Time.time;
         }
         else if (ctx.canceled)
         {
@@ -111,6 +117,7 @@ public class PlayerMovements : MonoBehaviour
     {
         // use logic
         Debug.Log("use");
+        // something like currentItem.use
     }
 
     private void Update()
@@ -124,6 +131,11 @@ public class PlayerMovements : MonoBehaviour
         // Use Logic
         if (isUse) Use();
         
+    }
+
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
 

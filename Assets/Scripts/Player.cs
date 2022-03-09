@@ -71,10 +71,10 @@ public class Player : MonoBehaviour
             if (Pointer.current.press.isPressed && (lastClick + miningTime) < DateTime.Now)
             {
                 lastClick = DateTime.Now;
-                if (CurrentItem != null && CurrentItem.canBreak && Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
+                /*if (CurrentItem != null && CurrentItem.canBreak && Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
                 {
                     hit.transform.gameObject.GetComponent<Destructible>().Hit(50);
-                }
+                }*/
             }
         }
     }

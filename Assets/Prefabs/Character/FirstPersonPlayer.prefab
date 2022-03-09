@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 8710761594365420446}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 8710761594736655232}
   - {fileID: 8710761594916082488}
@@ -288,11 +288,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 8710761594365420446}
+  mouseSensitivity: 10
+  speed: 5
+  sprintSpeed: 10
   controller: {fileID: 8710761594365420441}
   gravity: -19.62
   GROUND_LAYER:
     serializedVersion: 2
     m_Bits: 192
+  jumpPower: 1
+  DISTRUCTABLE_LAYER:
+    serializedVersion: 2
+    m_Bits: 128
+  MINING_DISTANCE: 2
+  MINING_TIME: 1
 --- !u!1 &8710761594916082493
 GameObject:
   m_ObjectHideFlags: 0
