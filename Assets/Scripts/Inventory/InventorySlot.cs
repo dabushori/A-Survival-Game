@@ -9,6 +9,12 @@ public class InventorySlot : MonoBehaviour
     public bool isHotbar = false;
     Item item;
     int amount;
+    Inventory inventory;
+
+    private void Start()
+    {
+        inventory = Inventory.Instance;
+    }
 
     public Item Item
     {
@@ -91,15 +97,17 @@ public class InventorySlot : MonoBehaviour
 
     public void onRemoveButton()
     {
-        Inventory.Instance.RemoveFromInventory(item, 1);
+        inventory.RemoveFromInventory(item, 1);
     }
 
     public void OnDrag(BaseEventData data)
     {
         Debug.Log("drag " + gameObject.name);
+        inventory.selectedSlot = this;
     }
     public void OnDrop(BaseEventData data)
     {
         Debug.Log("drop " + gameObject.name);
+        inventory.SwitchItems(this);
     }
 }

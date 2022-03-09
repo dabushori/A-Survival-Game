@@ -118,8 +118,19 @@ public class Inventory
         return false;
     }
 
-    public void SwitchItems(InventorySlot i1, InventorySlot i2)
+    public InventorySlot selectedSlot;
+    // switch between selectedSlot and newSlot
+    public void SwitchItems(InventorySlot newSlot)
     {
+        Item i1 = selectedSlot.Item;
+        int amount1 = selectedSlot.Amount;
 
+        Item i2 = newSlot.Item;
+        int amount2 = newSlot.Amount;
+
+        if (i2 != null && amount2 > 0) selectedSlot.AddItem(i2, amount2);
+        else selectedSlot.ClearSlot();
+        if (i1 != null && amount1 > 0) newSlot.AddItem(i1, amount1);
+        else newSlot.ClearSlot();
     }
 }
