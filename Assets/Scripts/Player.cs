@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     TimeSpan miningTime = TimeSpan.FromSeconds(1);
 
     // user inventory
-    Inventory userInventory = Inventory.instance;
+    Inventory userInventory = Inventory.Instance;
 
     public Item CurrentItem
     {

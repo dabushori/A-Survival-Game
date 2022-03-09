@@ -5,21 +5,26 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    #region Singleton
-    public static Inventory instance;
+    private static Inventory instance;
+
     private void Awake()
     {
         instance = this;
     }
-    #endregion
+    public static Inventory Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
 
     public delegate void onItemChanged();
     public onItemChanged onItemChangedCallback;
 
-
     public Dictionary<Item, int> items = new Dictionary<Item, int>();
-
     public Dictionary<Item, int> hotbar = new Dictionary<Item, int>();
+
     public int hotbarSpace = 8;
     public Item chosenItem;
     public int space = 20;
@@ -39,6 +44,7 @@ public class Inventory : MonoBehaviour
     {
         chosenItem = hotbar.Keys.ToArray()[inventorySlot];
     }
+
     public void MoveItemToDisplayed(Item item, int slot)
     {
         if (0 <= slot && slot < hotbar.Count && items.ContainsKey(item))

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerMovements : MonoBehaviour
 {
     public GameObject playerBody; // player's body to move (the whole prefab)
+    private Inventory inventory = Inventory.Instance;
 
     private float xRotation;
     [SerializeField]
@@ -88,11 +90,11 @@ public class PlayerMovements : MonoBehaviour
         // Hit Logic
         if (
             (Time.time - hitStartTime) > MINING_TIME && // will use item mining speed
-            // CurrentItem != null && CurrentItem.breakDamage > 0 && 
+            inventory.chosenItem != null && inventory.chosenItem.breakDamage > 0 && 
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
         {
-            // hit.transform.gameObject.GetComponent<Destructible>().Hit(CurrentItem.breakDamage); 
-            hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
+            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.chosenItem.breakDamage); 
+            // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
             hitStartTime = Time.time;
         }
     }
@@ -117,7 +119,19 @@ public class PlayerMovements : MonoBehaviour
     {
         // use logic
         Debug.Log("use");
+        // if (inventory.chosenItem.usable) inventory.chosenItem.Use();
         // something like currentItem.use
+    }
+
+    public void ChooseItem(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            string digit = ((KeyControl)ctx.control).keyCode.ToString();
+            if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed)) inventory.ChooseItem(digitPressed);
+            Debug.Log(inventory.chosenItem?.name);
+        }
+        // ctx.action.GetBindingIndex();
     }
 
     private void Update()

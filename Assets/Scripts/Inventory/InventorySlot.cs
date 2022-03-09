@@ -8,7 +8,7 @@ public class InventorySlot : MonoBehaviour
     public bool isHotbar = false;
     Item item;
     int amount;
-    //bool isBeingDraged = false;
+
     public void AddItem(Item newItem, int newAmount)
     {
         item = newItem;
@@ -45,6 +45,6 @@ public class InventorySlot : MonoBehaviour
 
     public void onRemoveButton()
     {
-        Inventory.instance.RemoveFromInventory(item, 1);
+        Inventory.Instance.RemoveFromInventory(item, 1);
     }
 }

@@ -11,7 +11,7 @@ public class InventoryUI : MonoBehaviour
     InventorySlot[] hotbarSlots;
     void Start()
     {
-        inventory = Inventory.instance;
+        inventory = Inventory.Instance;
         inventory.onItemChangedCallback += UpdateUI;
 
         inventorySlots = itemsParent.GetComponentsInChildren<InventorySlot>();
