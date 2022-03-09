@@ -9,12 +9,7 @@ public class Testing : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 20; ++i)
-        {
-            Item it = new Item();
-            it.name = "Item number " + i.ToString();
-            items.Add(it);
-        }
+
     }
 
     void Update()

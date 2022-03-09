@@ -28,7 +28,6 @@ public class InventorySlot : MonoBehaviour
             {
                 icon.enabled = false; 
                 item = null;
-                Debug.Log("icon.enabled = " + icon.enabled + " item = " + item);
             }
             else
             {
@@ -102,12 +101,10 @@ public class InventorySlot : MonoBehaviour
 
     public void OnDrag(BaseEventData data)
     {
-        Debug.Log("drag " + gameObject.name);
         inventory.selectedSlot = this;
     }
     public void OnDrop(BaseEventData data)
     {
-        Debug.Log("drop " + gameObject.name);
         inventory.SwitchItems(this);
     }
 }

@@ -14,14 +14,17 @@ public class PlayerMovements : MonoBehaviour
     private float mouseSensitivity;
     public void Look(InputAction.CallbackContext ctx)
     {
-        Vector2 mouse = ctx.ReadValue<Vector2>();
-        mouse = mouse * Time.deltaTime * mouseSensitivity;
+        if (!isInInventory)
+        {
+            Vector2 mouse = ctx.ReadValue<Vector2>();
+            mouse = mouse * Time.deltaTime * mouseSensitivity;
 
-        xRotation -= mouse.y;
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
-        Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            xRotation -= mouse.y;
+            xRotation = Mathf.Clamp(xRotation, -90, 90);
+            Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
-        playerBody.transform.Rotate(Vector3.up * mouse.x);
+            playerBody.transform.Rotate(Vector3.up * mouse.x);
+        }
     }
 
     [SerializeField]
@@ -53,8 +56,11 @@ public class PlayerMovements : MonoBehaviour
     float jumpPower;
     public void Jump(InputAction.CallbackContext ctx)
     {
-        // if (ctx.performed) controller.Move(Vector3.up * jumpPower);
-        if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+        if (!isInInventory)
+        {
+            // if (ctx.performed) controller.Move(Vector3.up * jumpPower);
+            if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+        }
     }
 
     private bool isSprinting = false;
@@ -75,7 +81,8 @@ public class PlayerMovements : MonoBehaviour
         {
             isHit = true;
             hitStartTime = Time.time;
-        } else if (ctx.canceled)
+        }
+        else if (ctx.canceled)
         {
             isHit = false;
             hitStartTime = 0;
@@ -90,10 +97,10 @@ public class PlayerMovements : MonoBehaviour
         // Hit Logic
         if (
             (Time.time - hitStartTime) > MINING_TIME && // will use item mining speed
-            inventory.ChosenItem != null && inventory.ChosenItem.breakDamage > 0 && 
+            inventory.ChosenItem != null && inventory.ChosenItem.breakDamage > 0 &&
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
         {
-            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.breakDamage); 
+            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.breakDamage);
             // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
             hitStartTime = Time.time;
         }
@@ -115,7 +122,7 @@ public class PlayerMovements : MonoBehaviour
             useStartTime = 0;
         }
     }
-    public void Use() 
+    public void Use()
     {
         // use logic
         Debug.Log("use");
@@ -136,24 +143,56 @@ public class PlayerMovements : MonoBehaviour
 
     private void Update()
     {
-        controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x)); // moving
         // Gravity 
         UpdateGravity();
 
-        // Hit Logic
-        if (isHit) Hit();
-        // Use Logic
-        if (isUse) Use();
-        
+        if (!isInInventory)
+        {
+            controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x)); // moving
+            // Hit Logic
+            if (isHit) Hit();
+            // Use Logic
+            if (isUse) Use();
+        }
+
+    }
+
+    bool isInInventory = false;
+    public GameObject inventoryObject;
+    public void OpenInventory(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            isInInventory = true;
+            inventoryObject.SetActive(true);
+        }
+    }
+
+    public void CloseMenu(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            if (isInInventory)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                isInInventory = false;
+                inventoryObject.SetActive(false);
+            }
+            else
+            {
+                // pause logic
+            }
+        }
     }
 
     [SerializeField] private Transform itemsParent, hotbarParent;
     private void Awake()
     {
+
         Cursor.lockState = CursorLockMode.Locked;
         inventory = Inventory.Instance;
         inventory.setSlots(itemsParent.GetComponentsInChildren<InventorySlot>(), hotbarParent.GetComponentsInChildren<InventorySlot>());
+        inventoryObject.SetActive(false);
     }
-
-
 }
