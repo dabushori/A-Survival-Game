@@ -7,7 +7,7 @@ public class ControlsSettings : MonoBehaviour
     private float sensX = 10f;
     private float sensY = 10f;
     float sensMax = 15f;
-    float sensMin = 0f;
+    float sensMin = 1f;
 
     public TMPro.TMP_InputField inputX;
     public TMPro.TMP_InputField inputY;
@@ -24,7 +24,7 @@ public class ControlsSettings : MonoBehaviour
             num = sensMax;
         } else if (num < sensMin)
         {
-            num = 1f;
+            num = sensMin;
         }
         sensX = num;
     }
@@ -41,7 +41,7 @@ public class ControlsSettings : MonoBehaviour
         }
         else if (num < sensMin)
         {
-            num = 1f;
+            num = sensMin;
         }
         sensY = num;
     }
