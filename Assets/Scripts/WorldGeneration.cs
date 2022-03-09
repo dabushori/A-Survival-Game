@@ -14,8 +14,7 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField]
     private GameObject tilePrefab;
 
-    [SerializeField]
-    private int worldSeed;
+    public int worldSeed;
 
     [SerializeField]
     private NoiseMapGeneration.Wave[] waves;
@@ -240,8 +239,9 @@ public class WorldGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        random = new System.Random(worldSeed);
+        worldSeed = GameStateController.Seed;
         worldSeed %= 1000000;
+        random = new System.Random(worldSeed);
         GenerateWorld();
         // Instantiate(playerPrefab, new Vector3(0,100,0), Quaternion.identity);
     }

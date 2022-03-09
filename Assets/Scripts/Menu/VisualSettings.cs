@@ -1,25 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.UI;
-public class Settings : MonoBehaviour
+
+public class VisualSettings : MonoBehaviour
 {
-
-    public AudioMixer audioMixer;
-
     Resolution[] resolutions;
     public TMPro.TMP_Dropdown resolutionDD;
 
     void Start()
     {
         resolutions = Screen.resolutions;
-
         resolutionDD.ClearOptions();
         // resolution drop down only get lists
         List<string> resolutionsList = new List<string>();
         int currentResolutionIndex = 0;
-        for(int i = 0; i < resolutions.Length; i++)
+        for (int i = 0; i < resolutions.Length; i++)
         {
             string resolution = resolutions[i].width + " x " + resolutions[i].height + " @ " + resolutions[i].refreshRate + "hz";
             resolutionsList.Add(resolution);
@@ -37,7 +32,7 @@ public class Settings : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
-        Resolution r = resolutions[resolutionIndex]; 
+        Resolution r = resolutions[resolutionIndex];
         Screen.SetResolution(r.width, r.height, Screen.fullScreen);
     }
     public void SetQuality(int qualityIndex)
@@ -48,15 +43,5 @@ public class Settings : MonoBehaviour
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
-    }
-    
-    public void SetVolume(float volume)
-    {
-        audioMixer.SetFloat("volume", volume);
-    }
-
-    public void SetMusic(float music)
-    {
-        audioMixer.SetFloat("music", music);
     }
 }
