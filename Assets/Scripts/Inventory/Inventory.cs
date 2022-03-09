@@ -27,7 +27,6 @@ public class Inventory
     {
         this.inventorySlots = inventorySlots;
         this.hotbarSlots = hotbarSlots;
-        Debug.Log("init");
     }
 
     // public Dictionary<Item, int> items = new Dictionary<Item, int>();
@@ -54,6 +53,8 @@ public class Inventory
     {
         if (amount < 0) return false;
         if (amount == 0) return true;
+        // Debug.Log(hotbarSlots);
+        // Debug.Log(inventorySlots);
         foreach (InventorySlot slot in hotbarSlots)
         {
             if (slot.Item == item)
@@ -117,47 +118,8 @@ public class Inventory
         return false;
     }
 
-    /*public void SwitchHotbarInventory(Item item, int amount)
+    public void SwitchItems(InventorySlot i1, InventorySlot i2)
     {
-        //inventory to hotbar, CHECK if we have enaugh space
-        foreach (Item i in items.Keys)
-        {
-            if (i == item)
-            {
-                if (hotbar.Count >= hotbarSpace)
-                {
-                    Debug.Log("No more slots available in hotbar");
-                    return;
-                }
-                else
-                {
-                    hotbar.Add(item, amount);
-                    RemoveFromInventory(item, amount);
-                    if (onItemChangedCallback != null)
-                    {
-                        onItemChangedCallback.Invoke();
-                    }
-                }
-            }
-        }
-        //hotbar to inventory
-        foreach (Item i in hotbar.Keys)
-        {
-            if (i == item)
-            {
-                if (items.Count >= space)
-                {
-                    Debug.Log("No more slots available in hotbar");
-                    return;
-                }
-                hotbar.Remove(item);
-                items.Add(item, amount);
-                if (onItemChangedCallback != null)
-                {
-                    onItemChangedCallback.Invoke();
-                }
-                return;
-            }
-        }
-    }*/
+
+    }
 }

@@ -16,6 +16,21 @@ public class InventorySlot : MonoBehaviour
         {
             return item;
         }
+        private set
+        {
+            if (value == null)
+            {
+                icon.enabled = false; 
+                item = null;
+                Debug.Log("icon.enabled = " + icon.enabled + " item = " + item);
+            }
+            else
+            {
+                icon.sprite = value.icon;
+                icon.enabled = true;
+                item = value;
+            }
+        }
     }
 
     public int Amount
@@ -24,29 +39,38 @@ public class InventorySlot : MonoBehaviour
         {
             return amount;
         }
+        private set
+        {
+            if (value == 0)
+            {
+                amountView.text = "";
+                amountView.enabled = false;
+                amount = 0;
+            } 
+            else
+            {
+                amountView.text = value.ToString();
+                amountView.enabled = true;
+                amount = value;
+            }
+        }
     }
 
     public void IncAmount(int amount = 1)
     {
-        this.amount += amount;
+        Amount += amount;
     }
 
     public void DecAmount(int amount = 1)
     {
-        this.amount += amount;
-        if (amount == 0) ClearSlot();
+        Amount -= amount;
+        if (Amount == 0) ClearSlot();
     }
 
     public void AddItem(Item newItem, int newAmount)
     {
-        item = newItem;
-        amount = newAmount;
-
-        icon.sprite = item.icon;
-        icon.enabled = true;
-
-        amountView.text = amount.ToString();
-        amountView.enabled = true;
+        Item = newItem;
+        Amount = newAmount;
 
         if (!isHotbar)
         {
@@ -56,36 +80,26 @@ public class InventorySlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        item = null;
-        amount = 0;
-
-        amountView.text = "";
-        amountView.enabled = false;
-        
-        icon.sprite = null;
-        icon.enabled = false;
+        Item = null;
+        Amount = 0;
 
         if (!isHotbar)
         {
-        removeButton.interactable = false;
+            removeButton.interactable = false;
         }
     }
 
     public void onRemoveButton()
     {
         Inventory.Instance.RemoveFromInventory(item, 1);
-        // --amount;
-        // if (amount == 0) ClearSlot();
     }
 
     public void OnDrag(BaseEventData data)
     {
-        Debug.Log(data);
         Debug.Log("drag " + gameObject.name);
     }
     public void OnDrop(BaseEventData data)
     {
-        Debug.Log(data);
         Debug.Log("drop " + gameObject.name);
     }
 }

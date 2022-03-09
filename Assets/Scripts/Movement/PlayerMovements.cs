@@ -147,10 +147,12 @@ public class PlayerMovements : MonoBehaviour
         
     }
 
+    [SerializeField] private Transform itemsParent, hotbarParent;
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
         inventory = Inventory.Instance;
+        inventory.setSlots(itemsParent.GetComponentsInChildren<InventorySlot>(), hotbarParent.GetComponentsInChildren<InventorySlot>());
     }
 
 
