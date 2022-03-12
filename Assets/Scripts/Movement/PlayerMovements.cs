@@ -14,14 +14,17 @@ public class PlayerMovements : MonoBehaviour
     private float mouseXSensitivity, mouseYSensitivity;
     public void Look(InputAction.CallbackContext ctx)
     {
-        Vector2 mouse = ctx.ReadValue<Vector2>();
-        mouse = new Vector2(mouse.x * mouseXSensitivity, mouse.y * mouseYSensitivity) * Time.deltaTime;
+        if (!isInInventory)
+        {
+            Vector2 mouse = ctx.ReadValue<Vector2>();
+            mouse = new Vector2(mouse.x * mouseXSensitivity, mouse.y * mouseYSensitivity) * Time.deltaTime;
 
-        xRotation -= mouse.y;
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
-        Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            xRotation -= mouse.y;
+            xRotation = Mathf.Clamp(xRotation, -90, 90);
+            Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
-        playerBody.transform.Rotate(Vector3.up * mouse.x);
+            playerBody.transform.Rotate(Vector3.up * mouse.x);
+        }
     }
 
     [SerializeField]

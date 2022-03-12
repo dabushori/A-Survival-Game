@@ -6,6 +6,6 @@ public class GameStateController : MonoBehaviour
 {
     public static int Seed;
 
-    public static float SensitivityX;
-    public static float SensitivityY;
+    public static float SensitivityX = 10f;
+    public static float SensitivityY = 10f;
 }
