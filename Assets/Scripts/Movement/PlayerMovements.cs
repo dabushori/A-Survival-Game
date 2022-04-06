@@ -73,25 +73,35 @@ public class PlayerMovements : MonoBehaviour
     private LayerMask DISTRUCTABLE_LAYER;
     [SerializeField]
     private float MINING_DISTANCE;
-    private bool isHit = false;
+    [SerializeField]
+    private LayerMask MOBS_LAYER;
+    [SerializeField]
+    private float MOB_HITTING_DISTANCE;
+    private bool isHitKeyPressed = false;
     private float hitStartTime;
     public void Hit(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
         {
-            isHit = true;
+            isHitKeyPressed = true;
             hitStartTime = Time.time;
         }
         else if (ctx.canceled)
         {
-            isHit = false;
+            isHitKeyPressed = false;
             hitStartTime = 0;
         }
         // Debug.Log(Time.fixedTimeAsDouble);
     }
 
     [SerializeField]
-    private float MINING_TIME;
+    private float MINING_TIME, HITTING_TIME;
+    private bool isHit;
+    private void ResetHit()
+    {
+        isHit = false;
+    }
+
     public void Hit()
     {
         // Hit Logic
@@ -103,6 +113,16 @@ public class PlayerMovements : MonoBehaviour
             hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.breakDamage);
             // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
             hitStartTime = Time.time;
+        }
+
+
+        if (!isHit && // will use item mining speed
+            inventory.ChosenItem != null && inventory.ChosenItem.hitDamage > 0 &&
+            Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MINING_DISTANCE, MOBS_LAYER, QueryTriggerInteraction.Collide))
+        {
+            isHit = true;
+            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.hitDamage);
+            Invoke(nameof(ResetHit), HITTING_TIME);
         }
     }
 
@@ -151,7 +171,7 @@ public class PlayerMovements : MonoBehaviour
         {
             controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x)); // moving
             // Hit Logic
-            if (isHit) Hit();
+            if (isHitKeyPressed) Hit();
             // Use Logic
             if (isUse) Use();
         }

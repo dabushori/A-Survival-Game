@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WorldGeneration : MonoBehaviour
 {
@@ -97,12 +98,15 @@ public class WorldGeneration : MonoBehaviour
                   gameObject.transform.position.z + zTileIndex * tileDepth);
                 // instantiate a new Tile
                 GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
+                tile.transform.parent = gameObject.transform;
                 // update the world seed
                 tile.GetComponent<TileGeneration>().worldSeed = worldSeed;
                 // generate the tile considering the world seed
                 worldData.AddTileData(tile.GetComponent<TileGeneration>().GenerateTile(mapScale, waves), zTileIndex, xTileIndex);
             }
         }
+
+        gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
 
         float distanceBetweenVertices = (float)tileDepth / (float)tileDepthInVertices;
         GenerateTrees(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
