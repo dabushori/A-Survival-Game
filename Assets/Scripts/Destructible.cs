@@ -8,6 +8,9 @@ public class Destructible : MonoBehaviour
     [SerializeField]
     private int hp;
 
+    [SerializeField]
+    public GameObject floatingPointsPrefab;
+
     public int HP
     {
         get
@@ -24,11 +27,11 @@ public class Destructible : MonoBehaviour
         if (hp > 0)
         {
             hp -= damage;
+            PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
         }
         if (hp <= 0)
         {
             Destroy(gameObject);
-            Debug.Log("Destroyed");
             // GiveObjectToUser(); // give user whatever
         }
     }
