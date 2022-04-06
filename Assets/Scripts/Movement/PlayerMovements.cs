@@ -159,25 +159,8 @@ public class PlayerMovements : MonoBehaviour
 
     bool isInInventory = false;
     public GameObject inventoryObject;
-    public void OpenInventory(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            isInInventory = true;
-            inventoryObject.SetActive(true);
-        }
-    }
 
-    public void CloseMenu(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-        {
-            // pause game
-        }
-    }
-
-    public void CloseInventory(InputAction.CallbackContext ctx)
+    public void ToggleInventory(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
@@ -186,11 +169,21 @@ public class PlayerMovements : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 isInInventory = false;
                 inventoryObject.SetActive(false);
-            }
+            } 
             else
             {
-                // pause logic
+                Cursor.lockState = CursorLockMode.None;
+                isInInventory = true;
+                inventoryObject.SetActive(true);
             }
+        }
+    }
+
+    public void CloseMenu(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            // pause game
         }
     }
 
