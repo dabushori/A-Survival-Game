@@ -20,9 +20,11 @@ public class Destructible : MonoBehaviour
     }
 
     [SerializeField]
-    private GameObject item;
+    private Item[] items;
+    [SerializeField]
+    private int[] minItemsToGive, maxItemsToGive;
 
-    public void Hit(int damage)
+    public void Hit(int damage, Inventory inventory)
     {
         if (hp > 0)
         {
@@ -32,7 +34,10 @@ public class Destructible : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
-            // GiveObjectToUser(); // give user whatever
+            for (int i = 0; i < items.Length; ++i)
+            {
+                inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
+            }
         }
     }
 }

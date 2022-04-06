@@ -110,7 +110,7 @@ public class PlayerMovements : MonoBehaviour
             inventory.ChosenItem != null && inventory.ChosenItem.breakDamage > 0 &&
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
         {
-            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.breakDamage);
+            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.breakDamage, inventory);
             // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
             hitStartTime = Time.time;
         }
@@ -121,7 +121,7 @@ public class PlayerMovements : MonoBehaviour
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MINING_DISTANCE, MOBS_LAYER, QueryTriggerInteraction.Collide))
         {
             isHit = true;
-            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.hitDamage);
+            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.hitDamage, inventory);
             Invoke(nameof(ResetHit), HITTING_TIME);
         }
     }
