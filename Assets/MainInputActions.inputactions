@@ -78,12 +78,21 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Close Menu",
+                    "name": "Close Inventory",
                     "type": "Button",
                     "id": "e2f9a17d-ef2e-452f-8ed3-f772d6984a58",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Close Menu",
+                    "type": "Button",
+                    "id": "b450d02f-9961-4a6b-af46-e2859f8d6743",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -366,6 +375,28 @@
                 {
                     "name": "",
                     "id": "d144d9e2-5e9e-4c58-a175-84bdee751b00",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Close Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6cda5f09-ba55-4e91-9ba9-37399e923cc1",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Close Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32ca3baf-71c6-4606-93b4-c0329600149e",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

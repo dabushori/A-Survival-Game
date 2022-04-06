@@ -173,6 +173,14 @@ public class PlayerMovements : MonoBehaviour
     {
         if (ctx.performed)
         {
+            // pause game
+        }
+    }
+
+    public void CloseInventory(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
             if (isInInventory)
             {
                 Cursor.lockState = CursorLockMode.Locked;

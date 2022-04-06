@@ -856,7 +856,7 @@ PrefabInstance:
       objectReference: {fileID: 1544845079}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_ActionId
@@ -867,11 +867,19 @@ PrefabInstance:
       value: e2f9a17d-ef2e-452f-8ed3-f772d6984a58
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionId
+      value: b450d02f-9961-4a6b-af46-e2859f8d6743
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_ActionName
       value: Player/Open Inventory[/Keyboard/e,/Keyboard/i]
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_ActionName
+      value: Player/Close Menu[/Keyboard/escape]
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionName
       value: Player/Close Menu[/Keyboard/escape]
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
@@ -883,11 +891,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
@@ -899,6 +915,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 930611893}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 930611893}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -907,11 +927,19 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenInventory
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseInventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CloseMenu
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
@@ -923,11 +951,19 @@ PrefabInstance:
       value: PlayerMovements, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerMovements, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710761594736655261, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []

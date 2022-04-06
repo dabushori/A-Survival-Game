@@ -287,6 +287,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bbf71432-92ff-4a21-89d4-63d968ac5856
     m_ActionName: Player/Choose Item[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5,/Keyboard/6,/Keyboard/7,/Keyboard/8,/Keyboard/9,/Keyboard/0]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8710761594736655260}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: OpenInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 24861a22-a2ec-450a-825e-affec94b3ba4
+    m_ActionName: Player/Open Inventory[/Keyboard/e,/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8710761594736655260}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: CloseInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e2f9a17d-ef2e-452f-8ed3-f772d6984a58
+    m_ActionName: Player/Close Menu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8710761594736655260}
+        m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
+        m_MethodName: CloseMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b450d02f-9961-4a6b-af46-e2859f8d6743
+    m_ActionName: Player/Close Menu[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Mouse and Keyboard
   m_DefaultActionMap: Player
@@ -305,7 +353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 8710761594365420446}
-  mouseSensitivity: 10
+  mouseXSensitivity: 0
+  mouseYSensitivity: 0
   speed: 5
   sprintSpeed: 10
   controller: {fileID: 8710761594365420441}
@@ -319,6 +368,7 @@ MonoBehaviour:
     m_Bits: 128
   MINING_DISTANCE: 2
   MINING_TIME: 1
+  inventoryObject: {fileID: 8173266386832488454}
   itemsParent: {fileID: 8173266387250877039}
   hotbarParent: {fileID: 8173266388442943181}
 --- !u!1 &8710761594916082493
@@ -1173,6 +1223,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+--- !u!1 &8173266388382015156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4149125017744976603, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+  m_PrefabInstance: {fileID: 5258481711591093359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8173266388382015112 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4149125017744976615, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
@@ -1183,8 +1238,56 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4149125017630571170, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
   m_PrefabInstance: {fileID: 5258481711591093359}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8173266386832488454 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4149125016019799145, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+  m_PrefabInstance: {fileID: 5258481711591093359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8173266387250877039 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4149125016748615168, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
   m_PrefabInstance: {fileID: 5258481711591093359}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1442550559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173266388382015156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 8173266388382015156}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &1442550560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173266388382015156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
