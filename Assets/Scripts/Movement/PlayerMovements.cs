@@ -122,6 +122,7 @@ public class PlayerMovements : MonoBehaviour
             useStartTime = 0;
         }
     }
+
     public void Use()
     {
         // use logic
@@ -187,15 +188,12 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-    [SerializeField] private Transform itemsParent, hotbarParent;
     private void Awake()
     {
-
         Cursor.lockState = CursorLockMode.Locked;
         inventory = Inventory.Instance;
         mouseXSensitivity = GameStateController.SensitivityX;
         mouseYSensitivity = GameStateController.SensitivityY;
-        inventory.setSlots(itemsParent.GetComponentsInChildren<InventorySlot>(), hotbarParent.GetComponentsInChildren<InventorySlot>());
         inventoryObject.SetActive(false);
     }
 }

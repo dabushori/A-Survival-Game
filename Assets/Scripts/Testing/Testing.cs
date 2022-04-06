@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class Testing : MonoBehaviour
 {
     Inventory inventory;
     public List<Item> items;
-
-    private void Start()
-    {
-
-    }
+    public PlayerHealth health;
 
     void Update()
     {
