@@ -106,11 +106,10 @@ public class WorldGeneration : MonoBehaviour
             }
         }
 
-        gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
-
         float distanceBetweenVertices = (float)tileDepth / (float)tileDepthInVertices;
         GenerateTrees(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
         GenerateRocks(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
+        gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     /* void GenerateRandomObjects(float distanceBetweenVertices)
