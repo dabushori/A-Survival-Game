@@ -23,9 +23,13 @@ public class Destructible : MonoBehaviour
     private Item[] items;
     [SerializeField]
     private int[] minItemsToGive, maxItemsToGive;
+    [SerializeField]
+    private BreakLevel levelNeededToBreak;
 
     public void Hit(int damage, Inventory inventory)
     {
+        Item chosenItem = inventory.ChosenItem;
+        if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.MINING) || chosenItem.CanBreak(levelNeededToBreak)) return;
         if (hp > 0)
         {
             hp -= damage;
