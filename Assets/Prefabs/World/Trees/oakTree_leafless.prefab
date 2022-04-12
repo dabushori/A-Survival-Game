@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6976715509366558784}
   - component: {fileID: 8095219438619964355}
   - component: {fileID: 5146900294421109391}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: oakTree_leafless
   m_TagString: Untagged
   m_Icon: {fileID: 0}

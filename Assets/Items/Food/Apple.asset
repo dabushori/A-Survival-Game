@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58f363ef4a54e9498b7926d6cc1832f, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  name: New Item
-  job: 0
+  name: Apple
+  job: 7
   breakDamage: 0
   breakLevel: 0
   hitDamage: 0

@@ -107,7 +107,6 @@ public class PlayerMovements : MonoBehaviour
         // Hit Logic
         if (
             (Time.time - hitStartTime) > MINING_TIME && // will use item mining speed
-            inventory.ChosenItem != null && inventory.ChosenItem.breakDamage > 0 &&
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
         {
             hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.breakDamage, inventory);

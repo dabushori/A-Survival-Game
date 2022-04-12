@@ -21,4 +21,9 @@ public class Testing : MonoBehaviour
             items = null;
         }
     }
+
+    private void Start()
+    {
+        
+    }
 }

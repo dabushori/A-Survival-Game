@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6762176225543399925}
   - component: {fileID: -4390132514517296798}
   - component: {fileID: 392743422805584562}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: birchTree_leafless
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -115,7 +115,7 @@ MonoBehaviour:
   items: []
   minItemsToGive: 
   maxItemsToGive: 
-  levelNeededToBreak: 0
+  levelNeededToBreak: 2
 --- !u!65 &-1852978052953657047
 BoxCollider:
   m_ObjectHideFlags: 0

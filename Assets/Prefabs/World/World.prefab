@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5820209441825883803}
   - component: {fileID: 2905144375732305610}
+  - component: {fileID: 1586142678}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -43,9 +44,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88102359e0dd8e341916221b8496b2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapWidthInTiles: 0
-  mapDepthInTiles: 0
-  tilePrefab: {fileID: 0}
-  worldSeed: 0
-  treePrefabs: []
-  mapObjects: []
+  mapWidthInTiles: 50
+  mapDepthInTiles: 50
+  mapScale: 5
+  tilePrefab: {fileID: 3935098571071159304, guid: 6524f92b73226e24fad4dad78a01c951, type: 3}
+  worldSeed: 2147483647
+  waves:
+  - seed: 5613
+    frequency: 1
+    amplitude: 1
+  - seed: 9551
+    frequency: 0.5
+    amplitude: 2
+  - seed: 6712
+    frequency: 0.25
+    amplitude: 4
+  treePrefabs:
+  - {fileID: 1250690161900600, guid: e6f343cc46467004f811ce2ba3a3841b, type: 3}
+  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
+  - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
+  - {fileID: 1550140418629916, guid: 3e07483cd9aa6a141bb9c8e2d2c2bdad, type: 3}
+  - {fileID: 1020380390186232, guid: a1dee65b7ef7c344a97ff258503f49e7, type: 3}
+  - {fileID: 1656226002977108, guid: e191e21fcb275784a9f8b6d08dcd932c, type: 3}
+  - {fileID: 1561439388646736, guid: db15def326817084cb719e1c5f999b99, type: 3}
+  - {fileID: 1335620065128386, guid: abf04ed981f9b0e4daef0f76c3c9fc7c, type: 3}
+  - {fileID: 1335726306580732, guid: 23f312332b5cd5542ba196450880e89b, type: 3}
+  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
+  - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
+  rockPrefabs:
+  - {fileID: 1902742491923462, guid: b3d0e1c692a75b34d96fb84c9b431b64, type: 3}
+  - {fileID: 1296198054963878, guid: f76595434879f634c8b88f3cc4f08b2c, type: 3}
+  - {fileID: 1923948107188124, guid: f16d978b3d1fa984d82c01d30a1fb40a, type: 3}
+  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
+  - {fileID: 1643754901835350, guid: 8d8b11b2e2435cc4787335555d35714f, type: 3}
+  - {fileID: 1793648613423140, guid: 88cc729ed2bce0b458f679b575dab345, type: 3}
+  ironPrefabs:
+  - {fileID: 1902742491923462, guid: 495509cf35b7fe44ab2ac5169ece317d, type: 3}
+  - {fileID: 1296198054963878, guid: 0316f38713f5f95459e63f0ddb8399f6, type: 3}
+  - {fileID: 1923948107188124, guid: 5490e845d50e055439a860a4898a0c90, type: 3}
+  - {fileID: 1086353713108280, guid: 445f32f4e07856f4d812b19449cd0200, type: 3}
+  - {fileID: 1643754901835350, guid: 8b6ef268ca5658e4d80675ae293711bb, type: 3}
+  - {fileID: 1793648613423140, guid: d7bee9e1736ca88459270628705e8c36, type: 3}
+  goldPrefabs:
+  - {fileID: 1902742491923462, guid: bf514bad7b02dcd40a27e23115f00722, type: 3}
+  - {fileID: 1296198054963878, guid: 19f8a7a77a3d709428ee884dd443d449, type: 3}
+  - {fileID: 1923948107188124, guid: 4b137a0fd49cf334e92065cad99bfe1a, type: 3}
+  - {fileID: 1086353713108280, guid: efdfe7df88fd7e34596b45e624c94224, type: 3}
+  - {fileID: 1643754901835350, guid: 2f0055993cfd6534981979ba94368adf, type: 3}
+  - {fileID: 1793648613423140, guid: d6bb060b64dcfc94fbf7c3148be4ce64, type: 3}
+  diamondPrefabs:
+  - {fileID: 1902742491923462, guid: c03b4f441931a1c458b7358f58fcc72b, type: 3}
+  - {fileID: 1296198054963878, guid: 63d691b534caa7a44b21d2cce2b233a3, type: 3}
+  - {fileID: 1923948107188124, guid: 1ecd4793a283a2b4fb496a8b6e0fedb9, type: 3}
+  - {fileID: 1086353713108280, guid: 7ba70b28fceddc346bee6bedf71c91f3, type: 3}
+  - {fileID: 1643754901835350, guid: 68875f2c5ee02d441aaf524d7e43e090, type: 3}
+  - {fileID: 1793648613423140, guid: ed0f248cda9dcec43a6bbf053f247ae8, type: 3}
+--- !u!114 &1586142678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5820209441825883801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 0}

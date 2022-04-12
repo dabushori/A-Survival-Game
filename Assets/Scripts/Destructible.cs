@@ -29,7 +29,7 @@ public class Destructible : MonoBehaviour
     public void Hit(int damage, Inventory inventory)
     {
         Item chosenItem = inventory.ChosenItem;
-        if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.MINING) || chosenItem.CanBreak(levelNeededToBreak)) return;
+        if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.MINING) || !chosenItem.CanBreak(levelNeededToBreak)) return;
         if (hp > 0)
         {
             hp -= damage;

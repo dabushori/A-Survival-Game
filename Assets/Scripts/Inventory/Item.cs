@@ -1,19 +1,37 @@
 using UnityEngine;
+using UnityEditor;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
 public class Item : ScriptableObject
 {
     new public string name = "New Item"; // item name
 
-    [SerializeField]
-    private int job; // what the item can be used for
+    
+    public class EnumFlagsAttribute : PropertyAttribute
+    {
+        public EnumFlagsAttribute() { }
+    }
+    [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
+    public class EnumFlagsAttributeDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            property.intValue = EditorGUI.MaskField(position, label, property.intValue, property.enumNames);
+        }
+    }
+
+    
+    [EnumFlagsAttribute]
+    public Jobs job; // what the item can be used for
     public bool IsSuitableForJob(Jobs wantedJob)
     {
         int jobValue = (int)wantedJob;
-        return (job & (1 << jobValue)) != 0;
+        // return (job & (1 << jobValue)) != 0;
+        return (job & wantedJob) != 0;
     }
     
     // mining
+    [SerializeField]
     public int breakDamage; // amount of damage it deals when breaking
     public BreakLevel breakLevel;
 
@@ -36,7 +54,7 @@ public class Item : ScriptableObject
     public Sprite icon; // path to image (icon)
 }
 
-public enum Jobs { MINING, FIGHTING, FOOD, ARMOR }
+public enum Jobs { MINING = 1, FIGHTING = 2, FOOD = 4, ARMOR = 8 }
 public enum BreakLevel
 {
     WOOD, STONE, IRON, GOLD, DIAMOND
