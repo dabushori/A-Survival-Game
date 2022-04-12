@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Helmet
   job: 8
-  breakDamage: 20
+  breakDamage: 0
   breakLevel: 0
-  hitDamage: 20
+  hitDamage: 0
   hitLevel: 0
   bodyPart: 3
   defenseLevel: 10

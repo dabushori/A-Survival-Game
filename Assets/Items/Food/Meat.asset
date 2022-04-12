@@ -9,11 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9213810c245a2ea448ff66bb3c0e7795, type: 3}
+  m_Script: {fileID: 11500000, guid: e58f363ef4a54e9498b7926d6cc1832f, type: 3}
   m_Name: Meat
   m_EditorClassIdentifier: 
   name: Meat
-  breakDamage: 20
-  hitDamage: 20
-  icon: {fileID: 21300000, guid: 1bdb9c7d4ccd0dd40b80cc1f421d25b5, type: 3}
-  satisfiedLevel: 2
+  job: 4
+  breakDamage: 0
+  breakLevel: 0
+  hitDamage: 0
+  hitLevel: 0
+  bodyPart: 0
+  defenseLevel: 0
+  hpBonus: 10
+  icon: {fileID: 0}

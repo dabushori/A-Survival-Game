@@ -69,12 +69,12 @@ public class Destructible : MonoBehaviour
         // HitLevel toolHitLevel;
         if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.FIGHTING))
         {
-            damage = DEFAULT_BREAKING_DAMAGE;
+            damage = DEFAULT_HITTING_DAMAGE;
             // toolHitLevel = HitLevel.WOOD;
         }
         else
         {
-            damage = chosenItem.breakDamage;
+            damage = chosenItem.hitDamage;
             // toolHitLevel = chosenItem.hitLevel;
         }
 

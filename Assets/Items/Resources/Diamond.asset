@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Diamond
   m_EditorClassIdentifier: 
   name: Diamond
-  breakDamage: 20
-  hitDamage: 20
+  job: 0
+  breakDamage: 0
+  breakLevel: 0
+  hitDamage: 0
+  hitLevel: 0
+  bodyPart: 0
+  defenseLevel: 0
+  hpBonus: 0
   icon: {fileID: 21300000, guid: ab490490f27789f4988b37efe5ac76f7, type: 3}

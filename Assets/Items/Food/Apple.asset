@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: 
   name: Apple
-  job: 7
+  job: 4
   breakDamage: 0
   breakLevel: 0
   hitDamage: 0
   hitLevel: 0
   bodyPart: 0
   defenseLevel: 0
-  hpBonus: 0
+  hpBonus: 15
   icon: {fileID: 0}

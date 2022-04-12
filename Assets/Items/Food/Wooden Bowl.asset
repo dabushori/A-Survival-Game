@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Wooden Bowl
   m_EditorClassIdentifier: 
   name: Wooden Bowl
-  breakDamage: 50000
-  hitDamage: 200
+  job: 0
+  breakDamage: 0
+  breakLevel: 0
+  hitDamage: 0
+  hitLevel: 0
+  bodyPart: 0
+  defenseLevel: 0
+  hpBonus: 0
   icon: {fileID: 21300000, guid: 0a26957320a2c1544a728ed4d4787ad7, type: 3}

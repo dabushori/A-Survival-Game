@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Iron Ingot
   m_EditorClassIdentifier: 
   name: Iron Ingot
-  breakDamage: 20
-  hitDamage: 20
+  job: 0
+  breakDamage: 0
+  breakLevel: 0
+  hitDamage: 0
+  hitLevel: 0
+  bodyPart: 0
+  defenseLevel: 0
+  hpBonus: 0
   icon: {fileID: 21300000, guid: 97407133318d21d47b382319e58eb206, type: 3}
