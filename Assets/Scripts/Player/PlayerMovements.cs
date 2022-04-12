@@ -156,9 +156,18 @@ public class PlayerMovements : MonoBehaviour
         {
             string digit = ((KeyControl)ctx.control).keyCode.ToString();
             if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed)) inventory.ChooseItem(digitPressed - 1);
-            Debug.Log(inventory.ChosenItem?.name);
         }
         // ctx.action.GetBindingIndex();
+    }
+
+    public void ChangeItem(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            float scrollY = ctx.ReadValue<float>();
+            if (scrollY > 0) inventory.ChooseNextItem();
+            else if (scrollY < 0) inventory.ChoosePrevItem();
+        }
     }
 
     private void Update()

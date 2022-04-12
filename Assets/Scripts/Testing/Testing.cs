@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using static UnityEngine.InputSystem.InputAction;
 
 public class Testing : MonoBehaviour
 {
@@ -22,8 +23,8 @@ public class Testing : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Fun(CallbackContext ctx)
     {
-        
+        Debug.Log("Hi " + ctx.ReadValue<float>());
     }
 }

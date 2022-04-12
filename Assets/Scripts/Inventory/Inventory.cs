@@ -52,6 +52,16 @@ public class Inventory
         chosenItemIdx = slotIdx;
     }
 
+    public void ChooseNextItem()
+    {
+        chosenItemIdx = (chosenItemIdx + 1) % hotbarSpace;
+    }
+
+    public void ChoosePrevItem()
+    {
+        chosenItemIdx = (chosenItemIdx + hotbarSpace - 1) % hotbarSpace;
+    }
+
     public bool AddToInventory(Item item, int amount)
     {
         if (amount < 0) return false;
