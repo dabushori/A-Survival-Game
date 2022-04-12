@@ -7,9 +7,9 @@ public class InventorySlot : MonoBehaviour
     public Button removeButton;
     public TMPro.TMP_InputField amountView;
     public bool isHotbar = false;
-    Item item;
-    int amount;
-    Inventory inventory;
+    protected Item item;
+    protected int amount;
+    protected Inventory inventory;
 
     private void Start()
     {
@@ -103,7 +103,7 @@ public class InventorySlot : MonoBehaviour
     {
         inventory.selectedSlot = this;
     }
-    public void OnDrop(BaseEventData data)
+    public virtual void OnDrop(BaseEventData data)
     {
         inventory.SwitchItems(this);
     }

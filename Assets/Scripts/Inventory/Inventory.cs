@@ -22,11 +22,13 @@ public class Inventory
 
     public InventorySlot[] inventorySlots;
     public InventorySlot[] hotbarSlots;
+    public InventorySlot[] armorSlots;
 
-    public void setSlots(InventorySlot[] inventorySlots, InventorySlot[] hotbarSlots)
+    public void setSlots(InventorySlot[] inventorySlots, InventorySlot[] hotbarSlots, InventorySlot[] armorSlots)
     {
         this.inventorySlots = inventorySlots;
         this.hotbarSlots = hotbarSlots;
+        this.armorSlots = armorSlots;
     }
 
     // public Dictionary<Item, int> items = new Dictionary<Item, int>();
@@ -35,6 +37,7 @@ public class Inventory
     public int hotbarSpace = 8;
     private int chosenItemIdx = 0;
     public int space = 20;
+    public int armorSpace = 4;
 
     public Item ChosenItem
     {
@@ -60,7 +63,7 @@ public class Inventory
             if (slot.Item == item)
             {
                 slot.IncAmount(amount);
-                onItemChangedCallback?.Invoke();
+                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -68,7 +71,7 @@ public class Inventory
             if (slot.Item == item)
             {
                 slot.IncAmount(amount);
-                onItemChangedCallback?.Invoke();
+                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -77,7 +80,7 @@ public class Inventory
             if (slot.Item == null)
             {
                 slot.AddItem(item, amount);
-                onItemChangedCallback?.Invoke();
+                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -86,7 +89,7 @@ public class Inventory
             if (slot.Item == null)
             {
                 slot.AddItem(item, amount);
-                onItemChangedCallback?.Invoke();
+                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -102,7 +105,7 @@ public class Inventory
             if (slot.Item == item)
             {
                 slot.DecAmount(amount);
-                onItemChangedCallback?.Invoke();
+                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -111,7 +114,16 @@ public class Inventory
             if (slot.Item == item)
             {
                 slot.DecAmount(amount);
-                onItemChangedCallback?.Invoke();
+                //onItemChangedCallback?.Invoke();
+                return true;
+            }
+        }
+        foreach (InventorySlot slot in armorSlots)
+        {
+            if (slot.Item == item)
+            {
+                slot.DecAmount(amount);
+                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }

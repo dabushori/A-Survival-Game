@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9213810c245a2ea448ff66bb3c0e7795, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Zombie meat
   m_EditorClassIdentifier: 
-  name: Zombie meat
-  breakDamage: 20
-  hitDamage: 20
-  icon: {fileID: 21300000, guid: 20e06490328bdb64e8babce1431a2418, type: 3}
-  satisfiedLevel: 1
