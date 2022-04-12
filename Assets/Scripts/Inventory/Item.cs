@@ -35,9 +35,9 @@ public class Item : ScriptableObject
     public int breakDamage; // amount of damage it deals when breaking
     public BreakLevel breakLevel;
 
-    public bool CanBreak(BreakLevel levelNeededToBreak)
+    public static bool CanBreak(BreakLevel toolBreakLevel , BreakLevel levelNeededToBreak)
     {
-        return breakLevel >= levelNeededToBreak;
+        return BreakLevel.WOOD >= levelNeededToBreak;
     }
 
     // fighting

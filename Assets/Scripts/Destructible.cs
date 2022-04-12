@@ -26,22 +26,73 @@ public class Destructible : MonoBehaviour
     [SerializeField]
     private BreakLevel levelNeededToBreak;
 
-    public void Hit(int damage, Inventory inventory)
+    public int DEFAULT_BREAKING_DAMAGE = 20, DEFAULT_HITTING_DAMAGE = 20;
+
+    public void Break(Inventory inventory)
     {
         Item chosenItem = inventory.ChosenItem;
-        if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.MINING) || !chosenItem.CanBreak(levelNeededToBreak)) return;
-        if (hp > 0)
+        int damage;
+        BreakLevel toolBreakLevel;
+        if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.MINING))
         {
-            hp -= damage;
-            PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
+            damage = DEFAULT_BREAKING_DAMAGE;
+            toolBreakLevel = BreakLevel.WOOD;
+        } 
+        else
+        {
+            damage = chosenItem.breakDamage;
+            toolBreakLevel = chosenItem.breakLevel;
         }
-        if (hp <= 0)
+
+        if (Item.CanBreak(toolBreakLevel, levelNeededToBreak))
         {
-            Destroy(gameObject);
-            for (int i = 0; i < items.Length; ++i)
+            if (hp > 0)
             {
-                inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
+                hp -= damage;
+                PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
+            }
+            if (hp <= 0)
+            {
+                Destroy(gameObject);
+                for (int i = 0; i < items.Length; ++i)
+                {
+                    inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
+                }
             }
         }
+    }
+
+    public void Hit(Inventory inventory)
+    {
+        Item chosenItem = inventory.ChosenItem;
+        int damage;
+        // HitLevel toolHitLevel;
+        if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.FIGHTING))
+        {
+            damage = DEFAULT_BREAKING_DAMAGE;
+            // toolHitLevel = HitLevel.WOOD;
+        }
+        else
+        {
+            damage = chosenItem.breakDamage;
+            // toolHitLevel = chosenItem.hitLevel;
+        }
+
+        // if (Item.CanHit(...))
+        // {
+            if (hp > 0)
+            {
+                hp -= damage;
+                PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
+            }
+            if (hp <= 0)
+            {
+                Destroy(gameObject);
+                for (int i = 0; i < items.Length; ++i)
+                {
+                    inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
+                }
+            }
+        // }
     }
 }

@@ -102,6 +102,7 @@ public class PlayerMovements : MonoBehaviour
         isHit = false;
     }
 
+    public int DEFAULT_BREAKING_DAMAGE;
     public void Hit()
     {
         // Hit Logic
@@ -109,18 +110,17 @@ public class PlayerMovements : MonoBehaviour
             (Time.time - hitStartTime) > MINING_TIME && // will use item mining speed
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
         {
-            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.breakDamage, inventory);
+            hit.transform.gameObject.GetComponent<Destructible>().Break(inventory);
             // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
             hitStartTime = Time.time;
         }
 
 
         if (!isHit && // will use item mining speed
-            inventory.ChosenItem != null && inventory.ChosenItem.hitDamage > 0 &&
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MINING_DISTANCE, MOBS_LAYER, QueryTriggerInteraction.Collide))
         {
             isHit = true;
-            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory.ChosenItem.hitDamage, inventory);
+            hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory);
             Invoke(nameof(ResetHit), HITTING_TIME);
         }
     }
