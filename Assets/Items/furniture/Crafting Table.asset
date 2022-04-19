@@ -12,15 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58f363ef4a54e9498b7926d6cc1832f, type: 3}
   m_Name: Crafting Table
   m_EditorClassIdentifier: 
-  name: New Item
+  name: Crafting Table
   icon: {fileID: 0}
   job: 0
   breakDamage: 0
   breakLevel: 0
   hitDamage: 0
-  hitLevel: 0
   bodyPart: 0
   defenseLevel: 0
   hpBonus: 0
-  placeable: 0
+  placeable: 1
   placedObject: {fileID: 0}
