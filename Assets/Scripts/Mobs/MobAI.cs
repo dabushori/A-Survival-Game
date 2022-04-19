@@ -12,7 +12,6 @@ public class MobAI : MonoBehaviour
     public LayerMask WhatIsGround, WhatIsPlayer;
 
     // stats
-    public int health;
     public int damage; // projectile damage
 
 
@@ -101,16 +100,5 @@ public class MobAI : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-
-        if (health <= 0) Invoke(nameof(DestroyMob), 0.5f);
-    }
-    private void DestroyMob()
-    {
-        Destroy(gameObject);
     }
 }

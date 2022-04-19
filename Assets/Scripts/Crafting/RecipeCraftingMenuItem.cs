@@ -13,7 +13,6 @@ public class RecipeCraftingMenuItem : MonoBehaviour
     {
         SlotSetup s = Instantiate(ingredientSlot, transform).GetComponent<SlotSetup>();
         s.SetUp(recipe.amounts[0], recipe.ingredients[0].icon);
-        Debug.Log(recipe.ingredients[0].icon);
         int i;
         for (i = 1; i < recipe.ingredients.Length; ++i)
         {

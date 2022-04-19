@@ -37,12 +37,11 @@ public class Item : ScriptableObject
 
     public static bool CanBreak(BreakLevel toolBreakLevel , BreakLevel levelNeededToBreak)
     {
-        return BreakLevel.WOOD >= levelNeededToBreak;
+        return toolBreakLevel >= levelNeededToBreak;
     }
 
     // fighting
     public int hitDamage; // amount of damage it deals when hitting enemies
-    public HitLevel hitLevel;
 
     // armor
     public BodyPart bodyPart; // body part of the armor
@@ -59,10 +58,6 @@ public class Item : ScriptableObject
 public enum Jobs { MINING = 1, FIGHTING = 2, FOOD = 4, ARMOR = 8 }
 public enum BreakLevel
 {
-    WOOD, STONE, IRON, GOLD, DIAMOND
-}
-public enum HitLevel
-{
-    // to fill
+    WOOD, STONE, GOLD, IRON, DIAMOND
 }
 public enum BodyPart { HEAD = 0, CHEST = 1, LEGS = 2, FEET = 3}
