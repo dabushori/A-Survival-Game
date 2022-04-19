@@ -5,8 +5,10 @@ using System.Linq;
 
 public class RecipesDatabase
 {
-    public static List<Recipe> recipes = new List<Recipe>(Resources.LoadAll("Recipes", typeof(Recipe)).Cast<Recipe>());
-    public static List<Recipe> handRecipes = new List<Recipe>(Resources.LoadAll("Recipes", typeof(Recipe)).Cast<Recipe>());
+    public static List<Recipe> handRecipes = new List<Recipe>(Resources.LoadAll("Recipes/HandRecipes", typeof(Recipe)).Cast<Recipe>());
+    public static List<Recipe> craftingTableRecipes = new List<Recipe>(Resources.LoadAll("Recipes/CraftingTableRecipes", typeof(Recipe)).Cast<Recipe>());
+    public static List<Recipe> anvilRecipes = new List<Recipe>(Resources.LoadAll("Recipes/AnvilRecipes", typeof(Recipe)).Cast<Recipe>());
+    public static List<Recipe> furnaceRecipes = new List<Recipe>(Resources.LoadAll("Recipes/FurnaceRecipes", typeof(Recipe)).Cast<Recipe>());
 
     public static bool CanUserCraft(Inventory inventory, Recipe recipe)
     {

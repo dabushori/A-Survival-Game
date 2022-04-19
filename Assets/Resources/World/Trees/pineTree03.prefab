@@ -113,10 +113,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
-  items: []
-  minItemsToGive: 
-  maxItemsToGive: 
+  items:
+  - {fileID: 11400000, guid: 8eb0a497259e56040a72bf3e646644a1, type: 2}
+  minItemsToGive: 03000000
+  maxItemsToGive: 06000000
   levelNeededToBreak: 0
+  DEFAULT_BREAKING_DAMAGE: 20
+  DEFAULT_HITTING_DAMAGE: 20
 --- !u!65 &7955089413771180653
 BoxCollider:
   m_ObjectHideFlags: 0
