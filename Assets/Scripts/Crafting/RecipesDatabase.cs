@@ -8,7 +8,7 @@ public class RecipesDatabase
     public static List<Recipe> recipes = new List<Recipe>(Resources.LoadAll("Recipes", typeof(Recipe)).Cast<Recipe>());
     public static List<Recipe> handRecipes = new List<Recipe>(Resources.LoadAll("Recipes", typeof(Recipe)).Cast<Recipe>());
 
-    public bool CanUserCraft(Inventory inventory, Recipe recipe)
+    public static bool CanUserCraft(Inventory inventory, Recipe recipe)
     {
         for (int i = 0; i < recipe.ingredients.Length; ++i)
         {
@@ -17,7 +17,7 @@ public class RecipesDatabase
         return true;
     }
 
-    public bool Craft(Inventory inventory, Recipe recipe)
+    public static bool Craft(Inventory inventory, Recipe recipe)
     {
         if (!CanUserCraft(inventory, recipe)) return false;
         for (int i = 0; i < recipe.ingredients.Length; ++i)

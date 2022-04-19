@@ -207,6 +207,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 295564522, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 295564522, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 350
+      objectReference: {fileID: 0}
     - target: {fileID: 699951453, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -221,11 +229,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1106560004, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106560004, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1125766796, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125766796, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000030517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125766798, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+      propertyPath: m_Spacing.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774986466, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 739278945680028247, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1331,6 +1355,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1c966c3d386c5f4429c234fda2655870, type: 2}
   - {fileID: 11400000, guid: 86669e440d0ea574486ad8cb1f58f6e7, type: 2}
   - {fileID: 11400000, guid: 5df6435aec31d474e92a94bdc98e791d, type: 2}
+  - {fileID: 11400000, guid: 087c55f1867fa434f9a75de21e16905d, type: 2}
+  - {fileID: 11400000, guid: f344bd3da228374489f682574ec2cb44, type: 2}
+  - {fileID: 11400000, guid: 8025353fa51a4684ea7b7c80b81e8773, type: 2}
   - {fileID: 11400000, guid: 8025353fa51a4684ea7b7c80b81e8773, type: 2}
   health: {fileID: 1199991450}
   agents:

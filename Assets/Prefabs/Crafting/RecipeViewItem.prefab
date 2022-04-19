@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1814293639853832538}
   - component: {fileID: 2984608173220396700}
+  - component: {fileID: 3433714363373372655}
   - component: {fileID: 8254308725149229871}
-  - component: {fileID: 3807282242194632137}
   m_Layer: 5
   m_Name: RecipeViewItem
   m_TagString: Untagged
@@ -46,6 +46,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7558743467928497598}
   m_CullTransparentMesh: 1
+--- !u!114 &3433714363373372655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7558743467928497598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 1
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!114 &8254308725149229871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,31 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4305ca2486105b4d9054dc55c449352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot: {fileID: 8367968653802452014, guid: a6ee642e134f56b4d936ef1f96212859, type: 3}
+  ingredientSlot: {fileID: 8367968653802452014, guid: a6ee642e134f56b4d936ef1f96212859, type: 3}
+  resultSlot: {fileID: 8367968653802452014, guid: da6cf3e16d35b8f49a474b058e867d64, type: 3}
   plusSign: {fileID: 4308401915737357996, guid: 33fda559ad4e8bf42a7b5050db544688, type: 3}
   arrow: {fileID: 4308401915737357996, guid: 4472931b000bbf74fbdabae86e68ed12, type: 3}
   FIXED_SLOT_SIZE: 50
---- !u!114 &3807282242194632137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7558743467928497598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 2
-  m_ConstraintCount: 1

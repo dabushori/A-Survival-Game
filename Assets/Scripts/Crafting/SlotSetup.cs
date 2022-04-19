@@ -1,15 +1,16 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SlotSetup : MonoBehaviour
 {
     [SerializeField]
-    TMPro.TMP_InputField amount;
+    protected TMPro.TMP_InputField amount;
     [SerializeField]
-    Image icon;
+    protected Image icon;
 
-   public void SetUp(int amount, Sprite icon)
+    public void SetUp(int amount, Sprite icon)
     {
         this.amount.text = amount.ToString();
         this.icon.sprite = icon;
