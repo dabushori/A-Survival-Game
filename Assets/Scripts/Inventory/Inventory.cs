@@ -20,9 +20,9 @@ public class Inventory
     public delegate void onItemChanged();
     public onItemChanged onItemChangedCallback;
 
-    public InventorySlot[] inventorySlots;
-    public InventorySlot[] hotbarSlots;
-    public InventorySlot[] armorSlots;
+    [SerializeField] InventorySlot[] inventorySlots;
+    [SerializeField] InventorySlot[] hotbarSlots;
+    [SerializeField] InventorySlot[] armorSlots;
 
     public void setSlots(InventorySlot[] inventorySlots, InventorySlot[] hotbarSlots, InventorySlot[] armorSlots)
     {
@@ -31,13 +31,9 @@ public class Inventory
         this.armorSlots = armorSlots;
     }
 
-    // public Dictionary<Item, int> items = new Dictionary<Item, int>();
-    // public Dictionary<Item, int> hotbar = new Dictionary<Item, int>();
-
-    public int hotbarSpace = 8;
-    private int chosenItemIdx = 0;
-    public int space = 20;
-    public int armorSpace = 4;
+    [SerializeField]
+    int hotbarSpace = 8;
+    int chosenItemIdx = 0;
 
     public Item ChosenItem
     {
@@ -60,6 +56,25 @@ public class Inventory
     public void ChoosePrevItem()
     {
         chosenItemIdx = (chosenItemIdx + hotbarSpace - 1) % hotbarSpace;
+    }
+
+    public int GetAmountOfItem(Item item)
+    {
+        foreach (InventorySlot slot in hotbarSlots)
+        {
+            if (slot.Item == item)
+            {
+                return slot.Amount;
+            }
+        }
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            if (slot.Item == item)
+            {
+                return slot.Amount;
+            }
+        }
+        return 0;
     }
 
     public bool AddToInventory(Item item, int amount)

@@ -75,7 +75,7 @@ public class WorldGeneration : MonoBehaviour
         gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
-    public void GenerateObjects(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices, int neighborRadius, GameObject[] objectsList)
+    public void GenerateObjects(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices, int neighborRadius, Object[] objectsList)
     {
         // generate a noise map using Perlin Noise
         float[,] objectsMap = NoiseMapGeneration.GenerateNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, this.waves, random.Next(0, 1000000));
@@ -110,7 +110,7 @@ public class WorldGeneration : MonoBehaviour
 
                 if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, float.MaxValue, (1 << 6))) // 6 is the surface layer, so here we will only find hits with the surface layer
                 {
-                    GameObject obj = Instantiate(objectsList[random.Next(0, objectsList.Length)], hit.point, Quaternion.identity);
+                    GameObject obj = Instantiate((GameObject)objectsList[random.Next(0, objectsList.Length)], hit.point, Quaternion.identity);
                     obj.transform.localScale = Vector3.one * 0.5f;
                 }
             }
@@ -118,30 +118,13 @@ public class WorldGeneration : MonoBehaviour
     }
 
 
-
-    [SerializeField]
-    private GameObject[] treePrefabs;
-
-    [SerializeField]
-    private GameObject[] rockPrefabs;
-
-    [SerializeField]
-    private GameObject[] ironPrefabs;
-
-    [SerializeField]
-    private GameObject[] goldPrefabs;
-
-    [SerializeField]
-    private GameObject[] diamondPrefabs;
-
-
     public void GenerateGameObjects(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices)
     {
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, treePrefabs);
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, rockPrefabs);
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 10, ironPrefabs);
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 18, goldPrefabs);
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 30, diamondPrefabs);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, Resources.LoadAll("World/Trees"));
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, Resources.LoadAll("World/Rocks"));
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 10, Resources.LoadAll("World/Iron"));
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 18, Resources.LoadAll("World/Gold"));
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 30, Resources.LoadAll("World/Diamond"));
     }
 
     System.Random random;
@@ -149,6 +132,7 @@ public class WorldGeneration : MonoBehaviour
     {
         worldSeed = GameStateController.Seed % 1000000;
         random = new System.Random(worldSeed);
+
         GenerateWorld();
     }
 }

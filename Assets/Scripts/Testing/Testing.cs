@@ -29,6 +29,5 @@ public class Testing : MonoBehaviour
 
     public void Fun(CallbackContext ctx)
     {
-        Debug.Log("Hi " + ctx.ReadValue<float>());
     }
 }
