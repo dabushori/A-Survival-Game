@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e58f363ef4a54e9498b7926d6cc1832f, type: 3}
-  m_Name: Boots
+  m_Name: Diamond Leggings
   m_EditorClassIdentifier: 
   name: Helmet
   job: 8
@@ -18,7 +18,7 @@ MonoBehaviour:
   breakLevel: 0
   hitDamage: 0
   hitLevel: 0
-  bodyPart: 3
+  bodyPart: 2
   defenseLevel: 10
   hpBonus: 0
   icon: {fileID: 21300000, guid: 05b27fb71266bab4b8dad2317ff336ef, type: 3}
