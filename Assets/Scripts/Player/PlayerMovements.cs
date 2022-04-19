@@ -11,14 +11,13 @@ public class PlayerMovements : MonoBehaviour
     public PlayerHealth playerHealth;
 
     private float xRotation;
-    [SerializeField]
-    private float mouseXSensitivity, mouseYSensitivity;
+
     public void Look(InputAction.CallbackContext ctx)
     {
         if (!isInInventory && playerHealth.Health > 0 && !isInStopMenu)
         {
             Vector2 mouse = ctx.ReadValue<Vector2>();
-            mouse = new Vector2(mouse.x * mouseXSensitivity, mouse.y * mouseYSensitivity) * Time.deltaTime;
+            mouse = new Vector2(mouse.x * GameStateController.SensitivityX, mouse.y * GameStateController.SensitivityY) * Time.deltaTime;
 
             xRotation -= mouse.y;
             xRotation = Mathf.Clamp(xRotation, -90, 90);
@@ -295,8 +294,6 @@ public class PlayerMovements : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         inventory = Inventory.Instance;
-        mouseXSensitivity = GameStateController.SensitivityX;
-        mouseYSensitivity = GameStateController.SensitivityY;
         inventoryObject.SetActive(false);
         stopMenuObject.SetActive(false);
     }

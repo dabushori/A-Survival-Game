@@ -121,6 +121,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   health: 100
+  damage: 0
   walkPointRange: 10
   timeBetweenAttacks: 2
   sightRange: 10
@@ -161,7 +162,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 200
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
-  item: {fileID: 0}
+  items: []
+  minItemsToGive: 
+  maxItemsToGive: 
+  levelNeededToBreak: 0
+  DEFAULT_BREAKING_DAMAGE: 20
+  DEFAULT_HITTING_DAMAGE: 20
 --- !u!65 &3998730199834716214
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class Testing : MonoBehaviour
     Inventory inventory;
     public List<Item> items;
     public PlayerHealth health;
-
+    public List<GameObject> agents;
     void Update()
     {
         if(items != null)
@@ -20,6 +20,10 @@ public class Testing : MonoBehaviour
                 inventory.AddToInventory(i, 100);
             }
             items = null;
+            foreach (GameObject g in agents)
+            {
+                Instantiate(g, new Vector3(10, 10, 10), Quaternion.identity);
+            }
         }
     }
 
