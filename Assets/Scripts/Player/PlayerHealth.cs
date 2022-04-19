@@ -8,6 +8,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     Slider healthBar;
 
+    [SerializeField]
+    GameObject endScreen;
+
     public int Health
     {
         get
@@ -17,8 +20,10 @@ public class PlayerHealth : MonoBehaviour
         private set
         {
             healthBar.value = Mathf.Min(value, healthBar.maxValue);
-            // death logic
-            // if healthBar.value <= 0 { ... }
+            if (healthBar.value <= 0)
+            {
+                endScreen.SetActive(true);
+            }
         }
     }
 

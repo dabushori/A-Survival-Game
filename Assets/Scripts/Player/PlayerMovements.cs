@@ -15,7 +15,7 @@ public class PlayerMovements : MonoBehaviour
     private float mouseXSensitivity, mouseYSensitivity;
     public void Look(InputAction.CallbackContext ctx)
     {
-        if (!isInInventory)
+        if (!isInInventory && playerHealth.Health > 0)
         {
             Vector2 mouse = ctx.ReadValue<Vector2>();
             mouse = new Vector2(mouse.x * mouseXSensitivity, mouse.y * mouseYSensitivity) * Time.deltaTime;
@@ -212,6 +212,11 @@ public class PlayerMovements : MonoBehaviour
 
     private void Update()
     {
+        if (playerHealth.Health <= 0)
+        {
+            DeathHold();
+            return;
+        }
         // Gravity 
         UpdateGravity();
 
@@ -224,6 +229,11 @@ public class PlayerMovements : MonoBehaviour
             if (isUse) Use();
         }
 
+    }
+
+    public void DeathHold()
+    {
+        Cursor.lockState = CursorLockMode.None;
     }
 
     bool isInInventory = false;
