@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8710761594365420447}
   - component: {fileID: 8710761594365420441}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirstPersonPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 8710761594736655233}
   - component: {fileID: 8710761594736655261}
   - component: {fileID: 8710761594736655260}
+  - component: {fileID: 1199991450}
   m_Layer: 0
   m_Name: PlayerCapsule
   m_TagString: Untagged
@@ -318,6 +319,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b450d02f-9961-4a6b-af46-e2859f8d6743
     m_ActionName: Player/Close Menu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f14d8545-e72e-409d-9b52-753cc40c7d28
+    m_ActionName: Player/Change Item[/Mouse/scroll/y]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Mouse and Keyboard
   m_DefaultActionMap: Player
@@ -336,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 8710761594365420446}
+  playerHealth: {fileID: 1199991450}
   mouseXSensitivity: 0
   mouseYSensitivity: 0
   speed: 5
@@ -350,10 +356,28 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   MINING_DISTANCE: 2
+  MOBS_LAYER:
+    serializedVersion: 2
+    m_Bits: 512
+  MOB_HITTING_DISTANCE: 2
   MINING_TIME: 1
+  HITTING_TIME: 0.8
+  DEFAULT_BREAKING_DAMAGE: 0
+  EATING_TIME: 1
   inventoryObject: {fileID: 0}
-  itemsParent: {fileID: 0}
-  hotbarParent: {fileID: 0}
+--- !u!114 &1199991450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8710761594736655239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0571f3b9f26db744ae23e4eb984ceb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
 --- !u!1 &8710761594916082493
 GameObject:
   m_ObjectHideFlags: 0

@@ -156,6 +156,28 @@ public class Inventory
         else newSlot.ClearSlot();
     }
 
+    public void SwitchItems(InventorySlot srcSlot, InventorySlot dstSlot)
+    {
+        Item i1 = srcSlot.Item;
+        int amount1 = srcSlot.Amount;
+
+        Item i2 = dstSlot.Item;
+        int amount2 = dstSlot.Amount;
+
+        if (i2 != null && amount2 > 0) srcSlot.AddItem(i2, amount2);
+        else srcSlot.ClearSlot();
+        if (i1 != null && amount1 > 0) dstSlot.AddItem(i1, amount1);
+        else dstSlot.ClearSlot();
+    }
+
+    public void WearArmor()
+    {
+        if (ChosenItem != null && ChosenItem.job == Jobs.ARMOR)
+        {
+            SwitchItems(hotbarSlots[chosenItemIdx], armorSlots[(int)ChosenItem.bodyPart]);
+        }
+    }
+
     public float GetCurrentDefenseLevel()
     {
         float sum = 0;

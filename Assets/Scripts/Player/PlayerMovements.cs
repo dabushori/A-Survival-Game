@@ -8,6 +8,7 @@ public class PlayerMovements : MonoBehaviour
 {
     public GameObject playerBody; // player's body to move (the whole prefab)
     private Inventory inventory;
+    public PlayerHealth playerHealth;
 
     private float xRotation;
     [SerializeField]
@@ -142,12 +143,39 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
+    bool canEat = true;
+    [SerializeField]
+    float EATING_TIME; // time between eatings
+
     public void Use()
     {
         // use logic
         Debug.Log("use");
-        // if (inventory.chosenItem.usable) inventory.chosenItem.Use();
-        // something like currentItem.use
+        Item currentItem = inventory.ChosenItem;
+        if (currentItem == null) return;
+        if (currentItem.placeable)
+        {
+            // place
+        }
+        else
+        {
+            if (currentItem.job == Jobs.ARMOR)
+            {
+                inventory.WearArmor();
+            }
+            else if (currentItem.job == Jobs.FOOD && canEat)
+            {
+                canEat = false;
+                playerHealth.AddHealth(currentItem.hpBonus);
+                inventory.RemoveFromInventory(currentItem, 1);
+                Invoke(nameof(ResetCanEat), EATING_TIME);
+            }
+        }
+    }
+
+    void ResetCanEat()
+    {
+        canEat = true;
     }
 
     public void ChooseItem(InputAction.CallbackContext ctx)

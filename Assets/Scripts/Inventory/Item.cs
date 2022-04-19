@@ -6,7 +6,7 @@ public class Item : ScriptableObject
 {
     new public string name = "New Item"; // item name
 
-    
+    public bool placeable;
     public class EnumFlagsAttribute : PropertyAttribute
     {
         public EnumFlagsAttribute() { }
@@ -46,10 +46,10 @@ public class Item : ScriptableObject
 
     // armor
     public BodyPart bodyPart; // body part of the armor
-    public float defenseLevel; // level of defense (between 0-1, every component will reduce 25% of the damage)
+    public int defenseLevel; // level of defense (between 0-100, represent the protection precent of the damage, 10 means only 90% of the damage will be dealt)
 
     // food
-    public float hpBonus;
+    public int hpBonus;
 
     public Sprite icon; // path to image (icon)
 }
@@ -63,4 +63,4 @@ public enum HitLevel
 {
     // to fill
 }
-public enum BodyPart { HEAD, CHEST, LEGS, FEET }
+public enum BodyPart { HEAD = 0, CHEST = 1, LEGS = 2, FEET = 3}

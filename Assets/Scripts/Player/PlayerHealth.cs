@@ -8,23 +8,28 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     Slider healthBar;
 
-    public float Health
+    public int Health
     {
         get
         {
-            return healthBar.value;
+            return (int) healthBar.value;
         }
         private set
         {
-            healthBar.value = value;
+            healthBar.value = Mathf.Min(value, healthBar.maxValue);
+            // death logic
+            // if healthBar.value <= 0 { ... }
         }
     }
 
     public void DealDamage(int damage)
     {
         float defenseLevel = Inventory.Instance.GetCurrentDefenseLevel();
-        Health -= damage * (100 - defenseLevel) / 100;
+        Health -= (int) (damage * (100 - defenseLevel)) / 100;
     }
 
-
+    public void AddHealth(int helathToAdd)
+    {
+        Health += helathToAdd;
+    }
 }
