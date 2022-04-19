@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Inventory/Recipe")]
-public class Recipe : MonoBehaviour
+public class Recipe : ScriptableObject
 {
     public Item[] ingredients;
     public int[] amounts;

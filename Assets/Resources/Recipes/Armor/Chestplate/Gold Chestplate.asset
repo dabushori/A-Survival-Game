@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595759f0b8dd23a4099512e9aaf6cb04, type: 3}
+  m_Name: Gold Chestplate
+  m_EditorClassIdentifier: 
+  ingredients:
+  - {fileID: 11400000, guid: f4c25218bc5f83e4b9c9e76197681f56, type: 2}
+  amounts: 1e000000
+  craftedItem: {fileID: 11400000, guid: 2157280b6d9744c4f86f74bfa429333a, type: 2}
+  amountOfCraftedItem: 1

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595759f0b8dd23a4099512e9aaf6cb04, type: 3}
+  m_Name: Meat
+  m_EditorClassIdentifier: 
+  ingredients:
+  - {fileID: 11400000, guid: cc5d2cbf62fcbac4a94a36ecea037151, type: 2}
+  - {fileID: 11400000, guid: 702dfda66b9145443b3615d5ff3b8922, type: 2}
+  amounts: 0100000001000000
+  craftedItem: {fileID: 11400000, guid: 4916074d06438c74581fc8beedad75ac, type: 2}
+  amountOfCraftedItem: 1

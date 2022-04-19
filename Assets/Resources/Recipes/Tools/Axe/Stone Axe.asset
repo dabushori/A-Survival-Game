@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595759f0b8dd23a4099512e9aaf6cb04, type: 3}
+  m_Name: Stone Axe
+  m_EditorClassIdentifier: 
+  ingredients:
+  - {fileID: 11400000, guid: 087c55f1867fa434f9a75de21e16905d, type: 2}
+  - {fileID: 11400000, guid: f4d6654322b935d4898d1ab90914b224, type: 2}
+  amounts: 0200000008000000
+  craftedItem: {fileID: 11400000, guid: 2cdc5c66b6730634dbb5e6e06c9b2279, type: 2}
+  amountOfCraftedItem: 1
