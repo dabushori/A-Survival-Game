@@ -127,35 +127,43 @@ public class PlayerMovements : MonoBehaviour
     }
 
     private bool isUse = false;
-    private float useStartTime;
 
     public void Use(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
         {
             isUse = true;
-            useStartTime = Time.time;
         }
         else if (ctx.canceled)
         {
             isUse = false;
-            useStartTime = 0;
         }
     }
 
     bool canEat = true;
+    bool canPlace = true;
     [SerializeField]
-    float EATING_TIME; // time between eatings
+    float EATING_TIME, PLACING_TIME; // time between eatings
+    [SerializeField]
+    private LayerMask SURFACE_LAYER;
+    [SerializeField]
+    int MIN_PLACING_DISTANCE, MAX_PLACING_DISTANCE;
 
     public void Use()
     {
         // use logic
-        Debug.Log("use");
         Item currentItem = inventory.ChosenItem;
         if (currentItem == null) return;
-        if (currentItem.placeable)
+        if (currentItem.placeable && canPlace)
         {
             // place
+            if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
+            {
+                canPlace = false;
+                Instantiate(currentItem.placedObject, hit.point, Quaternion.identity);
+                inventory.RemoveFromInventory(currentItem, 1);
+                Invoke(nameof(ResetCanPlace), PLACING_TIME);
+            }
         }
         else
         {
@@ -176,6 +184,10 @@ public class PlayerMovements : MonoBehaviour
     void ResetCanEat()
     {
         canEat = true;
+    }
+    void ResetCanPlace()
+    {
+        canPlace = true;
     }
 
     public void ChooseItem(InputAction.CallbackContext ctx)
@@ -215,7 +227,7 @@ public class PlayerMovements : MonoBehaviour
     }
 
     bool isInInventory = false;
-    public GameObject inventoryObject;
+    public GameObject inventoryObject, crosserObject;
 
     public void ToggleInventory(InputAction.CallbackContext ctx)
     {
@@ -226,12 +238,14 @@ public class PlayerMovements : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 isInInventory = false;
                 inventoryObject.SetActive(false);
+                crosserObject.SetActive(true);
             } 
             else
             {
                 Cursor.lockState = CursorLockMode.None;
                 isInInventory = true;
                 inventoryObject.SetActive(true);
+                crosserObject.SetActive(false);
             }
         }
     }

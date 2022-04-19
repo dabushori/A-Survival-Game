@@ -17,7 +17,7 @@ public class Testing : MonoBehaviour
             inventory = Inventory.Instance;
             foreach (Item i in items)
             {
-                inventory.AddToInventory(i, 5);
+                inventory.AddToInventory(i, 100);
             }
             items = null;
         }

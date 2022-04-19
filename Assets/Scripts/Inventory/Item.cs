@@ -6,7 +6,6 @@ public class Item : ScriptableObject
 {
     new public string name = "New Item"; // item name
 
-    public bool placeable;
     public class EnumFlagsAttribute : PropertyAttribute
     {
         public EnumFlagsAttribute() { }
@@ -20,6 +19,7 @@ public class Item : ScriptableObject
         }
     }
 
+    public Sprite icon; // path to image (icon)
     
     [EnumFlagsAttribute]
     public Jobs job; // what the item can be used for
@@ -51,7 +51,9 @@ public class Item : ScriptableObject
     // food
     public int hpBonus;
 
-    public Sprite icon; // path to image (icon)
+    //placeable
+    public bool placeable;
+    public GameObject placedObject;
 }
 
 public enum Jobs { MINING = 1, FIGHTING = 2, FOOD = 4, ARMOR = 8 }

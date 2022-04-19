@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: gun
   m_EditorClassIdentifier: 
   name: gun
+  icon: {fileID: 21300000, guid: cf20934ae669340499b0c31460532ccc, type: 3}
   job: -1
   breakDamage: 0
   breakLevel: 0
@@ -21,4 +22,5 @@ MonoBehaviour:
   bodyPart: 0
   defenseLevel: 0
   hpBonus: 0
-  icon: {fileID: 21300000, guid: cf20934ae669340499b0c31460532ccc, type: 3}
+  placeable: 1
+  placedObject: {fileID: 1377331622712542, guid: b9eb627f7bb4c1748829f3f01ce72b68, type: 3}
