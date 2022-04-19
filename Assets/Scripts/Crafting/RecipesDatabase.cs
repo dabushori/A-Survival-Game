@@ -6,6 +6,7 @@ using System.Linq;
 public class RecipesDatabase
 {
     public static List<Recipe> recipes = new List<Recipe>(Resources.LoadAll("Recipes", typeof(Recipe)).Cast<Recipe>());
+    public static List<Recipe> handRecipes = new List<Recipe>(Resources.LoadAll("Recipes", typeof(Recipe)).Cast<Recipe>());
 
     public bool CanUserCraft(Inventory inventory, Recipe recipe)
     {

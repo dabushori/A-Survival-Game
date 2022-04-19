@@ -240,7 +240,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void ToggleInventory(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (!isInStopMenu && ctx.performed)
         {
             if (isInInventory)
             {
@@ -263,7 +263,7 @@ public class PlayerMovements : MonoBehaviour
     public GameObject stopMenuObject;
     public void ToggleStopMenu(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (!isInInventory && ctx.performed)
         {
             if (isInStopMenu)
             {

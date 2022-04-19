@@ -307,7 +307,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8710761594736655260}
         m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
-        m_MethodName: CloseMenu
+        m_MethodName: ToggleStopMenu
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -342,8 +342,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBody: {fileID: 8710761594365420446}
   playerHealth: {fileID: 1199991450}
-  mouseXSensitivity: 0
-  mouseYSensitivity: 0
   speed: 5
   sprintSpeed: 10
   controller: {fileID: 8710761594365420441}
@@ -372,6 +370,7 @@ MonoBehaviour:
   MAX_PLACING_DISTANCE: 30
   inventoryObject: {fileID: 0}
   crosserObject: {fileID: 0}
+  stopMenuObject: {fileID: 0}
 --- !u!114 &1199991450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
+  endScreen: {fileID: 0}
 --- !u!1 &8710761594916082493
 GameObject:
   m_ObjectHideFlags: 0
