@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ControlsSettings : MonoBehaviour
 {
-    private float sensX = 10f;
-    private float sensY = 10f;
+    private float sensX = GameStateController.SensitivityX;
+    private float sensY = GameStateController.SensitivityY;
     float sensMax = 15f;
     float sensMin = 1f;
 

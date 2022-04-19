@@ -15,7 +15,7 @@ public class PlayerMovements : MonoBehaviour
     private float mouseXSensitivity, mouseYSensitivity;
     public void Look(InputAction.CallbackContext ctx)
     {
-        if (!isInInventory && playerHealth.Health > 0)
+        if (!isInInventory && playerHealth.Health > 0 && !isInStopMenu)
         {
             Vector2 mouse = ctx.ReadValue<Vector2>();
             mouse = new Vector2(mouse.x * mouseXSensitivity, mouse.y * mouseYSensitivity) * Time.deltaTime;
@@ -57,7 +57,7 @@ public class PlayerMovements : MonoBehaviour
     float jumpPower;
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!isInInventory)
+        if (!isInInventory && !isInStopMenu)
         {
             // if (ctx.performed) controller.Move(Vector3.up * jumpPower);
             if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
@@ -220,7 +220,7 @@ public class PlayerMovements : MonoBehaviour
         // Gravity 
         UpdateGravity();
 
-        if (!isInInventory)
+        if (!isInInventory && !isInStopMenu)
         {
             controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x)); // moving
             // Hit Logic
@@ -260,12 +260,35 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-    public void CloseMenu(InputAction.CallbackContext ctx)
+    bool isInStopMenu = false;
+    public GameObject stopMenuObject;
+    public void ToggleStopMenu(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
-            // pause game
+            if (isInStopMenu)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                isInStopMenu = false;
+                stopMenuObject.SetActive(false);
+                crosserObject.SetActive(true);
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                isInStopMenu = true;
+                stopMenuObject.SetActive(true);
+                crosserObject.SetActive(false);
+            }
         }
+    }
+
+    public void CloseMenuByButton()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        isInStopMenu = false;
+        stopMenuObject.SetActive(false);
+        crosserObject.SetActive(true);
     }
 
     private void Awake()
@@ -275,5 +298,6 @@ public class PlayerMovements : MonoBehaviour
         mouseXSensitivity = GameStateController.SensitivityX;
         mouseYSensitivity = GameStateController.SensitivityY;
         inventoryObject.SetActive(false);
+        stopMenuObject.SetActive(false);
     }
 }
