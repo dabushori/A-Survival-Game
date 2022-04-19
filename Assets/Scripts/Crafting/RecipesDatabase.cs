@@ -5,15 +5,6 @@ using System.Linq;
 
 public class RecipesDatabase
 {
-    [CreateAssetMenu(fileName = "New Recipe", menuName = "Inventory/Recipe")]
-    public class Recipe : ScriptableObject
-    {
-        public Item[] ingredients;
-        public int[] amounts;
-        public Item craftedItem;
-        public int amountOfCraftedItem;
-    }
-
     public static List<Recipe> recipes = new List<Recipe>(Resources.LoadAll("Recipes", typeof(Recipe)).Cast<Recipe>());
 
     public bool CanUserCraft(Inventory inventory, Recipe recipe)
