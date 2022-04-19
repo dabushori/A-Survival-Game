@@ -7,14 +7,13 @@ public class MobAI : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    public Transform player;
+    public GameObject player;
 
     public LayerMask WhatIsGround, WhatIsPlayer;
 
     // stats
     public int health;
-    // public Item dropItem;
-    // public int damage; // projectile damage
+    public int damage; // projectile damage
 
 
     //Walking
@@ -36,13 +35,21 @@ public class MobAI : MonoBehaviour
         {
             transform.position = hit.point;
         }
-        player = GameObject.Find("FirstPersonPlayer").transform;
+        // player = GameObject.Find("FirstPersonPlayer");
         agent = GetComponent<NavMeshAgent>();
     }
     public void Update()
     {
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, WhatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, WhatIsPlayer);
+        Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer);
+        Collider[] attackPlayers = Physics.OverlapSphere(transform.position, attackRange, WhatIsPlayer);
+
+        playerInSightRange = sightPlayers?.Length != 0;
+        playerInAttackRange = attackPlayers?.Length != 0;
+
+        player = playerInSightRange ? sightPlayers[0].gameObject : null;
+
+        // playerInSightRange = Physics.CheckSphere(transform.position, sightRange, WhatIsPlayer);
+        // playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, WhatIsPlayer);
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange) Chasing();
@@ -71,19 +78,20 @@ public class MobAI : MonoBehaviour
     }
     public void Chasing()
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(player.transform.position);
     }
     public void Attacking()
     {
         // mob wont move while attacking
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        transform.LookAt(player.transform);
 
         if (!alreadyAttacked)
         {
             //attack
-
+            PlayerHealth health = player.GetComponentInChildren<PlayerHealth>();
+            health.DealDamage(damage);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -103,7 +111,6 @@ public class MobAI : MonoBehaviour
     }
     private void DestroyMob()
     {
-        // drop item
         Destroy(gameObject);
     }
 }

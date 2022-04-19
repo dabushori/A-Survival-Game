@@ -14,9 +14,17 @@ public class PlayerHealth : MonoBehaviour
         {
             return healthBar.value;
         }
-        set
+        private set
         {
-            healthBar.value = value; 
+            healthBar.value = value;
         }
     }
+
+    public void DealDamage(int damage)
+    {
+        float defenseLevel = Inventory.Instance.GetCurrentDefenseLevel();
+        Health -= damage * (100 - defenseLevel) / 100;
+    }
+
+
 }

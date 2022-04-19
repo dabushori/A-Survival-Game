@@ -155,4 +155,14 @@ public class Inventory
         if (i1 != null && amount1 > 0) newSlot.AddItem(i1, amount1);
         else newSlot.ClearSlot();
     }
+
+    public float GetCurrentDefenseLevel()
+    {
+        float sum = 0;
+        foreach (var i in armorSlots)
+        {
+            if (i != null && i.Item != null) sum += i.Item.defenseLevel;
+        }
+        return sum;
+    }
 }

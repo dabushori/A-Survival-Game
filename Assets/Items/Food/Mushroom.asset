@@ -21,4 +21,4 @@ MonoBehaviour:
   bodyPart: 0
   defenseLevel: 0
   hpBonus: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 83b60e55d0c40bf4990d56c9fb6dfd7f, type: 3}
