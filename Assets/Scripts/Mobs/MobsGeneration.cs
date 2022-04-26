@@ -13,10 +13,7 @@ public class MobsGeneration : MonoBehaviour
 
     public int spawnRadiusMax, spawnRadiusMin;
 
-    public TimeController timeController;
     public LayerMask hostileMobsLayer, friendlyMobsLayer;
-
-    public Transform mobsParentTransform;
 
     public void SpawnMob(bool isHotile)
     {
@@ -36,9 +33,9 @@ public class MobsGeneration : MonoBehaviour
             Vector3 mobPosition = new Vector3(location.x, 0, location.y) + transform.position;
         
             // check spawn rules
-            if (CanSpawnMob(mob, isHotile))
+            if (CanSpawnMob(mob, isHotile, mobPosition))
             {
-                Instantiate(mob.mobObject, mobPosition, Quaternion.identity, mobsParentTransform);
+                Instantiate(mob.mobObject, mobPosition, Quaternion.identity);
             }
         }
     }
@@ -59,17 +56,19 @@ public class MobsGeneration : MonoBehaviour
         return mobsList[mobsList.Count - 1];
     }
 
-    public bool CanSpawnMob(MobData mobData, bool isHostile)
+    public bool CanSpawnMob(MobData mobData, bool isHostile, Vector3 position)
     {
         if (mobData.onlyAtNight)
         {
-            return timeController.IsNight() && (isHostile ?
+            return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&
+                GameStateController.timeController.IsNight() && (isHostile ?
             (Physics.OverlapSphere(transform.position, spawnRadiusMax, hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) :
             (Physics.OverlapSphere(transform.position, spawnRadiusMax, friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY));
         }
-        return isHostile ?
+        return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&
+            (isHostile ?
             (Physics.OverlapSphere(transform.position, spawnRadiusMax, hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) : 
-            (Physics.OverlapSphere(transform.position, spawnRadiusMax, friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY);
+            (Physics.OverlapSphere(transform.position, spawnRadiusMax, friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY));
     }
 
 
@@ -79,13 +78,11 @@ public class MobsGeneration : MonoBehaviour
     {
         if (Time.time - previousHostileSpawnTime > HOSTILE_MOB_SPAWN_CYCLE_TIME)
         {
-            Debug.Log("Trying to spawn hostile mobs");
             previousHostileSpawnTime = Time.time;
             SpawnMob(true);
         }
         if (Time.time - previousFriendlySpawnTime > HOSTILE_MOB_SPAWN_CYCLE_TIME)
         {
-            Debug.Log("Trying to spawn hostile mobs");
             previousFriendlySpawnTime = Time.time;
             SpawnMob(false);
         }
@@ -95,9 +92,6 @@ public class MobsGeneration : MonoBehaviour
     {
         hostileMobsList = new List<MobData>(Resources.LoadAll("Mobs/Hostile Mobs", typeof(MobData)).Cast<MobData>());
         friendlyMobsList = new List<MobData>(Resources.LoadAll("Mobs/Friendly Mobs", typeof(MobData)).Cast<MobData>());
-
-        Debug.Log("hostile len = " + hostileMobsList.Count);
-        Debug.Log("friendly len = " + friendlyMobsList.Count);
 
         sumOfHostileWeights = 0;
         foreach(MobData md in hostileMobsList)

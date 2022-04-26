@@ -151,9 +151,8 @@ public class PlayerMovements : MonoBehaviour
     public CraftingMenuInitializer craftingMenuInitializer;
     public void Use()
     {
-        if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide))
-        {
-            if (hit.transform.gameObject.TryGetComponent<RecipeCraftingMenuItem>(out RecipeCraftingMenuItem menuItem))
+        if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide)) {
+           if (hit.transform.gameObject.TryGetComponent<RecipeCraftingMenuItem>(out RecipeCraftingMenuItem menuItem))
             {
                 switch (menuItem.menuType)
                 {
@@ -169,7 +168,6 @@ public class PlayerMovements : MonoBehaviour
                 }
                 ToggleInventory();
             }
-            return;
         }
         // use logic
         Item currentItem = inventory.ChosenItem;
@@ -194,11 +192,8 @@ public class PlayerMovements : MonoBehaviour
             else if (currentItem.job == Jobs.FOOD && canEat)
             {
                 canEat = false;
-                if (!(playerHealth.Health == 100))
-                {
-                    playerHealth.AddHealth(currentItem.hpBonus);
-                    inventory.RemoveFromInventory(currentItem, 1);
-                }
+                playerHealth.AddHealth(currentItem.hpBonus);
+                inventory.RemoveFromInventory(currentItem, 1);
                 Invoke(nameof(ResetCanEat), EATING_TIME);
             }
         }

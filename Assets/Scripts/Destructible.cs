@@ -33,7 +33,7 @@ public class Destructible : MonoBehaviour
         Item chosenItem = inventory.ChosenItem;
         int damage;
         BreakLevel toolBreakLevel;
-        if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.MINING))
+        if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.MINING) || (levelNeededToBreak == BreakLevel.WOOD && chosenItem.breakLevel != BreakLevel.WOOD))
         {
             damage = DEFAULT_BREAKING_DAMAGE;
             toolBreakLevel = BreakLevel.WOOD;

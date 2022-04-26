@@ -31,7 +31,7 @@ public class MobAI : MonoBehaviour
 
     LayerMask worldObjects = 1 << 7;
 
-    void AssureNotColliding()
+    void AssureValidPosition()
     {
         CapsuleCollider col = GetComponent<CapsuleCollider>();
         var direction = new Vector3 { [col.direction] = 1 };
@@ -60,7 +60,7 @@ public class MobAI : MonoBehaviour
             transform.position = hit.point;
         }
 
-        AssureNotColliding();
+        AssureValidPosition();
         
         // player = GameObject.Find("FirstPersonPlayer");
         agent = GetComponent<NavMeshAgent>();

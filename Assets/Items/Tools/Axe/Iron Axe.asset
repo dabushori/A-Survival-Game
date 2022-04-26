@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Iron Axe
   icon: {fileID: 0}
-  job: 0
+  job: 1
   breakDamage: 50
   breakLevel: 0
   hitDamage: 0

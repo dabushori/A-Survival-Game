@@ -72,6 +72,10 @@ public class WorldGeneration : MonoBehaviour
 
         float distanceBetweenVertices = (float)tileDepth / (float)tileDepthInVertices;
         GenerateGameObjects(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
+        
+        GameStateController.worldDepth = tileDepthInVertices * mapDepthInTiles;
+        GameStateController.worldWidth = tileWidthInVertices * mapWidthInTiles;
+
         gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
@@ -127,6 +131,21 @@ public class WorldGeneration : MonoBehaviour
         GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 30, Resources.LoadAll("World/Diamond"));
     }
 
+    [SerializeField]
+    GameObject timeUnitPrefab;
+    public void GenerateTimeController()
+    {
+        GameStateController.timeController = Instantiate(timeUnitPrefab).GetComponentInChildren<TimeController>();
+    }
+
+    [SerializeField]
+    GameObject playerPrefab;
+
+    public void SpawnPlayer()
+    {
+        Instantiate(playerPrefab, new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity);
+    }
+
     System.Random random;
     void Start()
     {
@@ -134,6 +153,8 @@ public class WorldGeneration : MonoBehaviour
         random = new System.Random(worldSeed);
         Random.InitState(worldSeed);
 
+        GenerateTimeController();
         GenerateWorld();
+        SpawnPlayer();
     }
 }
