@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 8710761594736655261}
   - component: {fileID: 8710761594736655260}
   - component: {fileID: 1199991450}
+  - component: {fileID: 767272277}
   m_Layer: 0
   m_Name: PlayerCapsule
   m_TagString: Untagged
@@ -385,6 +386,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
   endScreen: {fileID: 0}
+--- !u!114 &767272277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8710761594736655239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb30b19ed20f61b45a66dc39e4050087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAX_HOSTILE_MOBS_CAPACITY: 40
+  MAX_FRIENDLY_MOBS_CAPACITY: 15
+  hostileMobsList: []
+  friendlyMobsList: []
+  spawnRadiusMax: 40
+  spawnRadiusMin: 20
+  timeController: {fileID: 0}
+  hostileMobsLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  friendlyMobsLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  mobsParentTransform: {fileID: 0}
+  HOSTILE_MOB_SPAWN_CYCLE_TIME: 2
+  FRIENDLY_MOB_SPAWN_CYCLE_TIME: 2
 --- !u!1 &8710761594916082493
 GameObject:
   m_ObjectHideFlags: 0

@@ -130,6 +130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 767272277, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: timeController
+      value: 
+      objectReference: {fileID: 1921556390}
+    - target: {fileID: 767272277, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
+      propertyPath: mobsParentTransform
+      value: 
+      objectReference: {fileID: 437638335}
     - target: {fileID: 1199991450, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
       propertyPath: endScreen
       value: 
@@ -207,14 +215,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 295564522, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 295564522, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 350
-      objectReference: {fileID: 0}
     - target: {fileID: 699951453, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -229,27 +229,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1106560004, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1106560004, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
-      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1125766796, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1125766796, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.000030517578
-      objectReference: {fileID: 0}
-    - target: {fileID: 1125766798, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
-      propertyPath: m_Spacing.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1774986466, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
-      propertyPath: m_ScrollSensitivity
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 739278945680028247, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1355,40 +1339,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &767272271 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8710761594736655239, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
-  m_PrefabInstance: {fileID: 69023506}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &767272277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767272271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb30b19ed20f61b45a66dc39e4050087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MAX_HOSTILE_MOBS_CAPACITY: 40
-  MAX_FRIENDLY_MOBS_CAPACITY: 15
-  hostileMobsList:
-  - {fileID: 0}
-  friendlyMobsList: []
-  spawnRadiusMax: 40
-  spawnRadiusMin: 20
-  timeController: {fileID: 1921556390}
-  hostileMobsLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  friendlyMobsLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  mobsParentTransform: {fileID: 437638335}
-  HOSTILE_MOB_SPAWN_CYCLE_TIME: 2
-  FRIENDLY_MOB_SPAWN_CYCLE_TIME: 2
 --- !u!1 &887784082
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,13 +1379,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c891674e1b1006745ba2ac3d14936018, type: 2}
   - {fileID: 11400000, guid: 93bbb7abe31111d42a2285b320c81a3c, type: 2}
   health: {fileID: 1199991450}
-  agents:
-  - {fileID: 3998730199834716222, guid: 2de458af20a81464eb27703ae5ea36a6, type: 3}
-  - {fileID: 3998730199834716222, guid: 280451c9ef935624982221227ee3cda2, type: 3}
-  - {fileID: 3998730199834716222, guid: edc40caa29318cc45996b7638696b592, type: 3}
-  - {fileID: 3998730199834716222, guid: 1c4c27c0a71598a4a90b7e0deef4eccd, type: 3}
-  - {fileID: 3998730199834716222, guid: fbc9071ebbafe8f4c9ca0bd92d00f0c8, type: 3}
-  - {fileID: 3998730199834716222, guid: edc41cb49c26e7743ae4f98f9aff68db, type: 3}
+  agents: []
 --- !u!4 &887784084
 Transform:
   m_ObjectHideFlags: 0
@@ -1455,7 +1399,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1199991450, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
   m_PrefabInstance: {fileID: 69023506}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767272271}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0571f3b9f26db744ae23e4eb984ceb8, type: 3}
@@ -1622,7 +1566,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8710761594736655260, guid: e0a38e97ea519e64e86cd36cc695daf5, type: 3}
   m_PrefabInstance: {fileID: 69023506}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767272271}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70f4b22243f43ad4989ae113155dbcb0, type: 3}
