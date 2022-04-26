@@ -14,4 +14,41 @@ public class CraftingMenuInitializer : MonoBehaviour
             recipeMenuItem.CreateRecipe(r);
         }
     }
+
+    public void OnCraftingTable()
+    {
+        foreach (Recipe r in RecipesDatabase.craftingTableRecipes)
+        {
+            RecipeCraftingMenuItem recipeMenuItem = Instantiate(recipeCraftingMenuItemPrefab, transform).GetComponent<RecipeCraftingMenuItem>();
+            recipeMenuItem.CreateRecipe(r);
+        }
+    }
+
+    public void OnFurnace()
+    {
+        foreach (Recipe r in RecipesDatabase.furnaceRecipes)
+        {
+            RecipeCraftingMenuItem recipeMenuItem = Instantiate(recipeCraftingMenuItemPrefab, transform).GetComponent<RecipeCraftingMenuItem>();
+            recipeMenuItem.CreateRecipe(r);
+        }
+    }
+
+    public void OnAnvil()
+    {
+        foreach (Recipe r in RecipesDatabase.anvilRecipes)
+        {
+            RecipeCraftingMenuItem recipeMenuItem = Instantiate(recipeCraftingMenuItemPrefab, transform).GetComponent<RecipeCraftingMenuItem>();
+            recipeMenuItem.CreateRecipe(r);
+        }
+    }
+
+
+    public void restartCraftingMenu()
+    {
+        foreach (Transform transformChild in transform)
+        {
+            Destroy(transformChild.gameObject);
+        }
+        Start();
+    }
 }

@@ -8,6 +8,8 @@ public class RecipeCraftingMenuItem : MonoBehaviour
     GameObject ingredientSlot, resultSlot, plusSign, arrow;
     [SerializeField]
     int FIXED_SLOT_SIZE;
+    [SerializeField]
+    public MenuType menuType;
 
     public void CreateRecipe(Recipe recipe)
     {
@@ -25,3 +27,4 @@ public class RecipeCraftingMenuItem : MonoBehaviour
         rs.SetUp(recipe.amountOfCraftedItem, recipe.craftedItem.icon, recipe);
     }
 }
+public enum MenuType {CRAFTING_TABLE = 1, FURNACE, ANVIL }

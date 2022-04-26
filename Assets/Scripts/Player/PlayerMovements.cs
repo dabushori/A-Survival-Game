@@ -148,15 +148,34 @@ public class PlayerMovements : MonoBehaviour
     [SerializeField]
     int MIN_PLACING_DISTANCE, MAX_PLACING_DISTANCE;
 
+    public CraftingMenuInitializer craftingMenuInitializer;
     public void Use()
     {
+        if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide)) {
+           if (hit.transform.gameObject.TryGetComponent<RecipeCraftingMenuItem>(out RecipeCraftingMenuItem menuItem))
+            {
+                switch (menuItem.menuType)
+                {
+                    case MenuType.CRAFTING_TABLE:
+                        craftingMenuInitializer.OnCraftingTable();
+                        break;
+                    case MenuType.FURNACE:
+                        craftingMenuInitializer.OnFurnace();
+                        break;
+                    case MenuType.ANVIL:
+                        craftingMenuInitializer.OnAnvil();
+                        break;
+                }
+                ToggleInventory();
+            }
+        }
         // use logic
         Item currentItem = inventory.ChosenItem;
         if (currentItem == null) return;
         if (currentItem.placeable && canPlace)
         {
             // place
-            if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
+            if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
             {
                 canPlace = false;
                 Instantiate(currentItem.placedObject, hit.point, Quaternion.identity);
@@ -244,11 +263,35 @@ public class PlayerMovements : MonoBehaviour
         {
             if (isInInventory)
             {
+                craftingMenuInitializer.restartCraftingMenu();
                 Cursor.lockState = CursorLockMode.Locked;
                 isInInventory = false;
                 inventoryObject.SetActive(false);
                 crosserObject.SetActive(true);
             } 
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                isInInventory = true;
+                inventoryObject.SetActive(true);
+                crosserObject.SetActive(false);
+
+            }
+        }
+    }
+
+    public void ToggleInventory()
+    {
+        if (!isInStopMenu)
+        {
+            if (isInInventory)
+            {
+                craftingMenuInitializer.restartCraftingMenu();
+                Cursor.lockState = CursorLockMode.Locked;
+                isInInventory = false;
+                inventoryObject.SetActive(false);
+                crosserObject.SetActive(true);
+            }
             else
             {
                 Cursor.lockState = CursorLockMode.None;

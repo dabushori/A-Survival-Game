@@ -22,4 +22,4 @@ MonoBehaviour:
   defenseLevel: 0
   hpBonus: 0
   placeable: 1
-  placedObject: {fileID: 0}
+  placedObject: {fileID: 5590217510827680156, guid: b7f61e223d0e29c4fa0e1b76d3f2fb8a, type: 3}
