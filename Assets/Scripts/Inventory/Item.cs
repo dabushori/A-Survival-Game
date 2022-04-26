@@ -5,23 +5,10 @@ using UnityEditor;
 public class Item : ScriptableObject
 {
     new public string name = "New Item"; // item name
-
-    public class EnumFlagsAttribute : PropertyAttribute
-    {
-        public EnumFlagsAttribute() { }
-    }
-    [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
-    public class EnumFlagsAttributeDrawer : PropertyDrawer
-    {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            property.intValue = EditorGUI.MaskField(position, label, property.intValue, property.enumNames);
-        }
-    }
+    
 
     public Sprite icon; // path to image (icon)
     
-    [EnumFlagsAttribute]
     public Jobs job; // what the item can be used for
     public bool IsSuitableForJob(Jobs wantedJob)
     {

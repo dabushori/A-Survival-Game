@@ -210,7 +210,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void ChooseItem(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (!isInInventory && !isInStopMenu && ctx.performed)
         {
             string digit = ((KeyControl)ctx.control).keyCode.ToString();
             if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed)) inventory.ChooseItem(digitPressed - 1);
@@ -220,7 +220,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void ChangeItem(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (!isInInventory && !isInStopMenu && ctx.performed)
         {
             float scrollY = ctx.ReadValue<float>();
             Debug.Log(scrollY);
