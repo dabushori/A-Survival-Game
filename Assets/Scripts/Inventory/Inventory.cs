@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory
 {
@@ -29,6 +30,8 @@ public class Inventory
         this.inventorySlots = inventorySlots;
         this.hotbarSlots = hotbarSlots;
         this.armorSlots = armorSlots;
+
+        SetSelectedItemColor();
     }
 
     [SerializeField]
@@ -43,19 +46,32 @@ public class Inventory
         }
     }
 
+    private void ResetSelectedItemColor()
+    {
+        hotbarSlots[chosenItemIdx].gameObject.GetComponentInChildren<Image>().color = Color.white;
+    }
+
+    private void SetSelectedItemColor()
+    {
+        hotbarSlots[chosenItemIdx].gameObject.GetComponentInChildren<Image>().color = new Color(0.769f, 0.769f, 0.769f, 0.5f);
+        // hotbarSlots[chosenItemIdx].gameObject.GetComponentInChildren<Image>().color = Color.gray;
+    }
+
     public void ChooseItem(int slotIdx)
     {
+        ResetSelectedItemColor();
         chosenItemIdx = slotIdx;
+        SetSelectedItemColor();
     }
 
     public void ChooseNextItem()
     {
-        chosenItemIdx = (chosenItemIdx + 1) % hotbarSpace;
+        ChooseItem((chosenItemIdx + 1) % hotbarSpace);
     }
 
     public void ChoosePrevItem()
     {
-        chosenItemIdx = (chosenItemIdx + hotbarSpace - 1) % hotbarSpace;
+        ChooseItem((chosenItemIdx + hotbarSpace - 1) % hotbarSpace);
     }
 
     public int GetAmountOfItem(Item item)

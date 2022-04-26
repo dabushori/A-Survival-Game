@@ -223,6 +223,7 @@ public class PlayerMovements : MonoBehaviour
         if (ctx.performed)
         {
             float scrollY = ctx.ReadValue<float>();
+            Debug.Log(scrollY);
             if (scrollY > 0) inventory.ChooseNextItem();
             else if (scrollY < 0) inventory.ChoosePrevItem();
         }

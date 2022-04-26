@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Egg
   m_EditorClassIdentifier: 
   name: Egg
-  icon: {fileID: 21300000, guid: 20e06490328bdb64e8babce1431a2418, type: 3}
+  icon: {fileID: 21300000, guid: a1b3e97ea66a29045980e6924b3b6b27, type: 3}
   job: 4
   breakDamage: 0
   breakLevel: 0
