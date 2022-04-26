@@ -132,6 +132,7 @@ public class WorldGeneration : MonoBehaviour
     {
         worldSeed = GameStateController.Seed % 1000000;
         random = new System.Random(worldSeed);
+        Random.InitState(worldSeed);
 
         GenerateWorld();
     }

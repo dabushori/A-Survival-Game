@@ -104,6 +104,11 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    public bool IsNight()
+    {
+        return !(currentTime.TimeOfDay > sunriseTime + TimeSpan.FromHours(-1) && currentTime.TimeOfDay < sunsetTime + TimeSpan.FromHours(1));
+    }
+
     private void RotateSun()
     {
         float lightRotation;

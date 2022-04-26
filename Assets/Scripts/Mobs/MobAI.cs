@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,12 +29,39 @@ public class MobAI : MonoBehaviour
     public float sightRange, attackRange;
     private bool playerInSightRange, playerInAttackRange;
 
+    LayerMask worldObjects = 1 << 7;
+
+    void AssureNotColliding()
+    {
+        CapsuleCollider col = GetComponent<CapsuleCollider>();
+        var direction = new Vector3 { [col.direction] = 1 };
+        var offset = col.height / 2 - col.radius;
+        var localPoint0 = col.center - direction * offset;
+        var localPoint1 = col.center + direction * offset;
+        var point0 = transform.TransformPoint(localPoint0);
+        var point1 = transform.TransformPoint(localPoint1);
+        var r = transform.TransformVector(col.radius, col.radius, col.radius);
+        var radius = Enumerable.Range(0, 3).Select(xyz => xyz == col.direction ? 0 : r[xyz])
+            .Select(Mathf.Abs).Max();
+        if (Physics.OverlapCapsule(point0, point1, radius, worldObjects).Length > 0)
+        {
+            Destroy(this);
+        }
+    }
+
     public void Awake()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, float.MaxValue, (1 << 6))) // 6 is the surface layer, so here we will only find hits with the surface layer
         {
             transform.position = hit.point;
         }
+        else if (Physics.Raycast(transform.position, Vector3.up, out hit, float.MaxValue, (1 << 6)))
+        {
+            transform.position = hit.point;
+        }
+
+        AssureNotColliding();
+        
         // player = GameObject.Find("FirstPersonPlayer");
         agent = GetComponent<NavMeshAgent>();
     }
