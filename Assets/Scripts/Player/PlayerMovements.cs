@@ -70,7 +70,7 @@ public class PlayerMovements : MonoBehaviour
     }
 
     [SerializeField]
-    private LayerMask DISTRUCTABLE_LAYER;
+    private LayerMask DISTRUCTIBLE_LAYER;
     [SerializeField]
     private float MINING_DISTANCE;
     [SerializeField]
@@ -108,7 +108,7 @@ public class PlayerMovements : MonoBehaviour
         // Hit Logic
         if (
             (Time.time - hitStartTime) > MINING_TIME && // will use item mining speed
-            Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide))
+            Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide))
         {
             hit.transform.gameObject.GetComponent<Destructible>().Break(inventory);
             // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
@@ -151,7 +151,7 @@ public class PlayerMovements : MonoBehaviour
     public CraftingMenuInitializer craftingMenuInitializer;
     public void Use()
     {
-        if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTABLE_LAYER, QueryTriggerInteraction.Collide)) {
+        if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide)) {
            if (hit.transform.gameObject.TryGetComponent<RecipeCraftingMenuItem>(out RecipeCraftingMenuItem menuItem))
             {
                 switch (menuItem.menuType)

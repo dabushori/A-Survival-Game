@@ -351,9 +351,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   jumpPower: 1
-  DISTRUCTABLE_LAYER:
+  DISTRUCTIBLE_LAYER:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1664
   MINING_DISTANCE: 2
   MOBS_LAYER:
     serializedVersion: 2
