@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Anvil
   m_EditorClassIdentifier: 
   ingredients:
-  - {fileID: 11400000, guid: f344bd3da228374489f682574ec2cb44, type: 2}
   - {fileID: 11400000, guid: f4d6654322b935d4898d1ab90914b224, type: 2}
-  amounts: 0f0000000f000000
+  amounts: 14000000
   craftedItem: {fileID: 11400000, guid: dbadcf9d2ff38a44ca630dd85c76c9c7, type: 2}
   amountOfCraftedItem: 1
