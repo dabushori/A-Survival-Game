@@ -15,5 +15,5 @@ MonoBehaviour:
   groupSizeMin: 2
   groupSizeMax: 3
   mobObject: {fileID: 3998730199834716222, guid: fbc9071ebbafe8f4c9ca0bd92d00f0c8, type: 3}
-  weight: 0
+  weight: 7
   onlyAtNight: 0
