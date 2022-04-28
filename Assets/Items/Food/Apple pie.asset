@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apple pie
   m_EditorClassIdentifier: 
   name: Apple pie
-  icon: {fileID: 21300000, guid: 9fe2f3f8a95808247857cd0d28c7e88f, type: 3}
+  icon: {fileID: 21300000, guid: f748d0fb731997542a3fbafe98a9750e, type: 3}
   job: 4
   breakDamage: 0
   breakLevel: 0

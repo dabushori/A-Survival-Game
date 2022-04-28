@@ -160,7 +160,7 @@ public class PlayerMovements : MonoBehaviour
                         craftingMenuInitializer.OnCraftingTable();
                         break;
                     case MenuType.FURNACE:
-                        craftingMenuInitializer.OnFurnace();
+                         craftingMenuInitializer.OnFurnace();
                         break;
                     case MenuType.ANVIL:
                         craftingMenuInitializer.OnAnvil();

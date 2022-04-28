@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredients:
   - {fileID: 11400000, guid: 764004e81eb2bfb42aeb438517e99641, type: 2}
-  amounts: 19000000
-  craftedItem: {fileID: 11400000, guid: ea7c731d3f23a7d498c214ffd1948108, type: 2}
+  amounts: 14000000
+  craftedItem: {fileID: 11400000, guid: 0655d4d5dd4bdb14e832b61505bd1713, type: 2}
   amountOfCraftedItem: 1

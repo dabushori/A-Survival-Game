@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Omelet
   m_EditorClassIdentifier: 
   name: Omelet
-  icon: {fileID: 21300000, guid: 20e06490328bdb64e8babce1431a2418, type: 3}
+  icon: {fileID: 21300000, guid: 53e3c8b682b73054e90c7c33fddda494, type: 3}
   job: 4
   breakDamage: 0
   breakLevel: 0
