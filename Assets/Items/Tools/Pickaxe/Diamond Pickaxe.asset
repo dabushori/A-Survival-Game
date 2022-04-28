@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Diamond Pickaxe
   m_EditorClassIdentifier: 
   name: Diamond Pickaxe
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c763e9b672d18ce4d8d194b30d1185e9, type: 3}
   job: 1
   breakDamage: 65
   breakLevel: 4

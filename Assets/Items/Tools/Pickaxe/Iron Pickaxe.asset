@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron Pickaxe
   m_EditorClassIdentifier: 
   name: Iron Pickaxe
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 91de487c3e1de4e42bcc4659da134422, type: 3}
   job: 1
   breakDamage: 50
   breakLevel: 4
