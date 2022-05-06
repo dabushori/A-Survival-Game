@@ -67,7 +67,7 @@ public class Destructible : MonoBehaviour
                 } else
                 {
                     animator.SetBool("IsDead", true);
-                    Destroy(gameObject, 1f);
+                    Destroy(gameObject, 2.5f);
                 }
                 for (int i = 0; i < items.Length; ++i)
                 {
@@ -104,7 +104,7 @@ public class Destructible : MonoBehaviour
             else
             {
                 animator.SetBool("IsDead", true);
-                Destroy(gameObject, 1f);
+                Destroy(gameObject, 2.5f);
             }
             for (int i = 0; i < items.Length; ++i)
             {
