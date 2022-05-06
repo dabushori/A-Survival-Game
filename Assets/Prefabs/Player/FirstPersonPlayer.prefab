@@ -416,16 +416,16 @@ MonoBehaviour:
   MAX_FRIENDLY_MOBS_CAPACITY: 15
   hostileMobsList: []
   friendlyMobsList: []
-  spawnRadiusMax: 40
-  spawnRadiusMin: 20
+  spawnRadiusMax: 50
+  spawnRadiusMin: 25
   hostileMobsLayer:
     serializedVersion: 2
     m_Bits: 512
   friendlyMobsLayer:
     serializedVersion: 2
     m_Bits: 1024
-  HOSTILE_MOB_SPAWN_CYCLE_TIME: 30
-  FRIENDLY_MOB_SPAWN_CYCLE_TIME: 30
+  HOSTILE_MOB_SPAWN_CYCLE_TIME: 15
+  FRIENDLY_MOB_SPAWN_CYCLE_TIME: 25
 --- !u!1 &8710761594916082493
 GameObject:
   m_ObjectHideFlags: 0

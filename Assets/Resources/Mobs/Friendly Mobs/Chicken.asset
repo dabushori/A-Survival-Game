@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ba1bac91d59dd47ae753f46df7f46a, type: 3}
   m_Name: Chicken
   m_EditorClassIdentifier: 
-  groupSizeMin: 2
-  groupSizeMax: 4
+  groupSizeMin: 1
+  groupSizeMax: 3
   mobObject: {fileID: 3998730199834716222, guid: edc41cb49c26e7743ae4f98f9aff68db, type: 3}
   weight: 8
   onlyAtNight: 0
