@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1105849990698835478}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 310.89005, y: 363.02695, z: -288.4288}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1105849991289392797}
   m_RootOrder: 1
@@ -42,12 +42,12 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.37624598, g: 0.87544096, b: 0.8962264, a: 1}
+  m_Color: {r: 0.43921322, g: 0.86660075, b: 0.8867924, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize: 0
   m_Shadows:
     m_Type: 0
     m_Resolution: -1
@@ -82,7 +82,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -264,7 +264,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeMultiplayer: 72
   startHour: 12
-  timeText: {fileID: 0}
   sunLight: {fileID: 1105849990986420783}
   sunriseHour: 7
   sunsetHour: 20
@@ -283,14 +282,14 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.101533085
-      value: 0.87827206
-      inSlope: 0.3270696
-      outSlope: 0.3270696
+      time: 0.043160588
+      value: 0.94139284
+      inSlope: 0.20568205
+      outSlope: 0.20568205
       tangentMode: 0
       weightedMode: 3
       inWeight: 0.30891576
-      outWeight: 0.33333334
+      outWeight: 0.33155563
     - serializedVersion: 3
       time: 1
       value: 1
@@ -303,8 +302,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxSunLightIntensity: 1
+  maxSunLightIntensity: 0.6
   moonLight: {fileID: 1105849990698835473}
-  maxMoonLightIntensity: 0.5
+  maxMoonLightIntensity: 0.3
   daySky: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   nightSky: {fileID: 2100000, guid: 16bc8a9d5451ca44d8f70575adbece3a, type: 2}

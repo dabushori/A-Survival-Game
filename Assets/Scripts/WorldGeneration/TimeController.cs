@@ -11,9 +11,6 @@ public class TimeController : MonoBehaviour
     [SerializeField]
     private float startHour;
 
-    [SerializeField]
-    private TextMeshProUGUI timeText;
-
     // sunlight rotation
     [SerializeField]
     private Light sunLight;
@@ -86,27 +83,25 @@ public class TimeController : MonoBehaviour
     private void UpdateTimeOfDay()
     {
         currentTime = currentTime.AddSeconds(Time.deltaTime * timeMultiplayer);
-        if (timeText != null)
-        {
-            timeText.text = currentTime.ToString("HH:mm");
-        }
     }
 
     private void UpdateSky()
     {
-        if (currentTime.TimeOfDay > sunriseTime + TimeSpan.FromHours(-1) && currentTime.TimeOfDay < sunsetTime + TimeSpan.FromHours(1))
+        if (currentTime.TimeOfDay > sunriseTime + TimeSpan.FromHours(-1.5) && currentTime.TimeOfDay < sunsetTime + TimeSpan.FromHours(1.5))
         {
+            moonLight.enabled = false;
             RenderSettings.skybox = daySky;
         }
         else
         {
+            moonLight.enabled = true;
             RenderSettings.skybox = nightSky;
         }
     }
 
     public bool IsNight()
     {
-        return !(currentTime.TimeOfDay > sunriseTime + TimeSpan.FromHours(-1) && currentTime.TimeOfDay < sunsetTime + TimeSpan.FromHours(1));
+        return !(currentTime.TimeOfDay > sunriseTime && currentTime.TimeOfDay < sunsetTime);
     }
 
     private void RotateSun()
