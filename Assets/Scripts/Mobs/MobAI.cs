@@ -33,17 +33,7 @@ public class MobAI : MonoBehaviour
 
     void AssureValidPosition()
     {
-        CapsuleCollider col = GetComponent<CapsuleCollider>();
-        var direction = new Vector3 { [col.direction] = 1 };
-        var offset = col.height / 2 - col.radius;
-        var localPoint0 = col.center - direction * offset;
-        var localPoint1 = col.center + direction * offset;
-        var point0 = transform.TransformPoint(localPoint0);
-        var point1 = transform.TransformPoint(localPoint1);
-        var r = transform.TransformVector(col.radius, col.radius, col.radius);
-        var radius = Enumerable.Range(0, 3).Select(xyz => xyz == col.direction ? 0 : r[xyz])
-            .Select(Mathf.Abs).Max();
-        if (Physics.OverlapCapsule(point0, point1, radius, worldObjects).Length > 0)
+        if (Physics.OverlapSphere(transform.position, GetComponent<CapsuleCollider>().radius, worldObjects).Length > 0)
         {
             Destroy(this);
         }
@@ -62,7 +52,6 @@ public class MobAI : MonoBehaviour
 
         AssureValidPosition();
         
-        // player = GameObject.Find("FirstPersonPlayer");
         agent = GetComponent<NavMeshAgent>();
     }
     public void Update()
