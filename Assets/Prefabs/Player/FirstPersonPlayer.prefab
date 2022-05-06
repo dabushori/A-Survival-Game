@@ -380,8 +380,8 @@ MonoBehaviour:
   SURFACE_LAYER:
     serializedVersion: 2
     m_Bits: 192
-  MIN_PLACING_DISTANCE: 5
-  MAX_PLACING_DISTANCE: 30
+  MIN_PLACING_DISTANCE: 2
+  MAX_PLACING_DISTANCE: 5
   craftingMenuInitializer: {fileID: 1426014400}
   inventoryObject: {fileID: 6891379878316901325}
   crosserObject: {fileID: 1321350299}

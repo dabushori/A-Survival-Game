@@ -176,7 +176,9 @@ public class PlayerMovements : MonoBehaviour
             if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
             {
                 canPlace = false;
-                Instantiate(currentItem.placedObject, hit.point, Quaternion.identity);
+                Vector3 cameraForward = Camera.main.transform.forward;
+                cameraForward.y = 0;
+                Instantiate(currentItem.placedObject, hit.point, Quaternion.LookRotation(cameraForward));
                 inventory.RemoveFromInventory(currentItem, 1);
                 Invoke(nameof(ResetCanPlace), PLACING_TIME);
             }
