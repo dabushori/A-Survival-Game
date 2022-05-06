@@ -355,10 +355,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.30173704
+  m_Height: 0.6034741
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.28, z: 0}
 --- !u!114 &-902123837040610889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 85
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
-  breakParticlesPrefab: {fileID: 0}
+  breakParticlesPrefab: {fileID: 6434259900260357715, guid: 14a381865be203d4d8efc4c72e3b5fe4, type: 3}
   items:
   - {fileID: 11400000, guid: 4916074d06438c74581fc8beedad75ac, type: 2}
   - {fileID: 11400000, guid: dd6901e9c467e3a418d0900e378384bf, type: 2}
