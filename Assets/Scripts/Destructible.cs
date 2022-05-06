@@ -32,11 +32,20 @@ public class Destructible : MonoBehaviour
     public int DEFAULT_BREAKING_DAMAGE = 20, DEFAULT_HITTING_DAMAGE = 20;
 
     Animator animator;
+    float deathLength;
 
     private void Awake()
     {
         TryGetComponent<Animator>(out animator);
         if (animator != null && !animator.HasState(0, Animator.StringToHash("death"))) animator = null;
+            
+        if (animator != null)
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == "anim_death") deathLength = clip.length + 0.1f;
+            }
+        }
     }
 
     public void Break(Inventory inventory)
@@ -73,7 +82,7 @@ public class Destructible : MonoBehaviour
                 } else
                 {
                     animator.SetBool("IsDead", true);
-                    Destroy(gameObject, 3f);
+                    Destroy(gameObject, deathLength);
                 }
                 for (int i = 0; i < items.Length; ++i)
                 {
@@ -114,7 +123,7 @@ public class Destructible : MonoBehaviour
             else
             {
                 animator.SetBool("IsDead", true);
-                Destroy(gameObject, 3f);
+                Destroy(gameObject, deathLength);
             }
             for (int i = 0; i < items.Length; ++i)
             {
