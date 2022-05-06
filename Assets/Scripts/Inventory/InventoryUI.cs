@@ -11,6 +11,9 @@ public class InventoryUI : MonoBehaviour
     InventorySlot[] inventorySlots;
     InventorySlot[] hotbarSlots;
     InventorySlot[] armorSlots;
+    /**
+     * Creating the entire UI of the inventory
+     */
     void Start()
     {
         inventory = Inventory.Instance;

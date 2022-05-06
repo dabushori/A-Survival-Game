@@ -9,7 +9,9 @@ public class Inventory
     private static Inventory instance = new Inventory();
     private Inventory() { }
     
-
+    /**
+     * singleton
+     */
     public static Inventory Instance
     {
         get
@@ -18,13 +20,12 @@ public class Inventory
         }
     }
 
-    public delegate void onItemChanged();
-    public onItemChanged onItemChangedCallback;
-
     [SerializeField] InventorySlot[] inventorySlots;
     [SerializeField] InventorySlot[] hotbarSlots;
     [SerializeField] InventorySlot[] armorSlots;
-
+    /**
+     * connect the slots in the incentory to the game slots
+     */
     public void setSlots(InventorySlot[] inventorySlots, InventorySlot[] hotbarSlots, InventorySlot[] armorSlots)
     {
         this.inventorySlots = inventorySlots;
@@ -45,18 +46,25 @@ public class Inventory
             return hotbarSlots[chosenItemIdx].Item;
         }
     }
-
+    /**
+     * reset the selected color on the slot
+     */
     private void ResetSelectedItemColor()
     {
         hotbarSlots[chosenItemIdx].gameObject.GetComponentInChildren<Image>().color = Color.white;
     }
 
+    /**
+     * set the selected color on the chosen slot
+     */
     private void SetSelectedItemColor()
     {
         hotbarSlots[chosenItemIdx].gameObject.GetComponentInChildren<Image>().color = new Color(0.769f, 0.769f, 0.769f, 0.5f);
-        // hotbarSlots[chosenItemIdx].gameObject.GetComponentInChildren<Image>().color = Color.gray;
     }
 
+    /**
+     * set chosen item
+     */
     public void ChooseItem(int slotIdx)
     {
         ResetSelectedItemColor();
@@ -64,16 +72,24 @@ public class Inventory
         SetSelectedItemColor();
     }
 
+    /**
+     * choose the next item
+     */
     public void ChooseNextItem()
     {
         ChooseItem((chosenItemIdx + 1) % hotbarSpace);
     }
-
+    /**
+     * choose the previous item
+     */
     public void ChoosePrevItem()
     {
         ChooseItem((chosenItemIdx + hotbarSpace - 1) % hotbarSpace);
     }
 
+    /**
+     * get the amount of the item
+     */
     public int GetAmountOfItem(Item item)
     {
         foreach (InventorySlot slot in hotbarSlots)
@@ -92,19 +108,19 @@ public class Inventory
         }
         return 0;
     }
-
+    /**
+     * add the item to the inventory
+     */
     public bool AddToInventory(Item item, int amount)
     {
         if (amount < 0) return false;
         if (amount == 0) return true;
-        // Debug.Log(hotbarSlots);
-        // Debug.Log(inventorySlots);
+
         foreach (InventorySlot slot in hotbarSlots)
         {
             if (slot.Item == item)
             {
                 slot.IncAmount(amount);
-                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -112,7 +128,6 @@ public class Inventory
             if (slot.Item == item)
             {
                 slot.IncAmount(amount);
-                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -121,7 +136,6 @@ public class Inventory
             if (slot.Item == null)
             {
                 slot.AddItem(item, amount);
-                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -130,13 +144,14 @@ public class Inventory
             if (slot.Item == null)
             {
                 slot.AddItem(item, amount);
-                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
         return false;
     }
-
+    /**
+     * remove the item from the inventory
+     */
     public bool RemoveFromInventory(Item item, int amount)
     {
         if (amount < 0) return false;
@@ -146,7 +161,6 @@ public class Inventory
             if (slot.Item == item)
             {
                 slot.DecAmount(amount);
-                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -155,7 +169,6 @@ public class Inventory
             if (slot.Item == item)
             {
                 slot.DecAmount(amount);
-                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -164,7 +177,6 @@ public class Inventory
             if (slot.Item == item)
             {
                 slot.DecAmount(amount);
-                //onItemChangedCallback?.Invoke();
                 return true;
             }
         }
@@ -172,7 +184,9 @@ public class Inventory
     }
 
     public InventorySlot selectedSlot;
-    // switch between selectedSlot and newSlot
+    /**
+     *  switch between selectedSlot and newSlot
+     */
     public void SwitchItems(InventorySlot newSlot)
     {
         Item i1 = selectedSlot.Item;
@@ -186,7 +200,9 @@ public class Inventory
         if (i1 != null && amount1 > 0) newSlot.AddItem(i1, amount1);
         else newSlot.ClearSlot();
     }
-
+    /**
+     * switch between srcSlot and destSlot
+     */
     public void SwitchItems(InventorySlot srcSlot, InventorySlot dstSlot)
     {
         Item i1 = srcSlot.Item;
@@ -200,7 +216,9 @@ public class Inventory
         if (i1 != null && amount1 > 0) dstSlot.AddItem(i1, amount1);
         else dstSlot.ClearSlot();
     }
-
+    /**
+     * put the item in the armor inventory
+     */
     public void WearArmor()
     {
         if (ChosenItem != null && ChosenItem.job == Jobs.ARMOR)
@@ -208,7 +226,9 @@ public class Inventory
             SwitchItems(hotbarSlots[chosenItemIdx], armorSlots[(int)ChosenItem.bodyPart]);
         }
     }
-
+    /**
+     * get the defense level of the items from the armor slot
+     */
     public float GetCurrentDefenseLevel()
     {
         float sum = 0;

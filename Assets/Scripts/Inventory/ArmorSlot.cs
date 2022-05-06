@@ -2,6 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
+/**
+ * Slot that is only used for armor (The armor the player wear)
+ */
 public class ArmorSlot : InventorySlot
 {
     public BodyPart bodyPart;

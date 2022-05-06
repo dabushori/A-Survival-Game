@@ -11,6 +11,9 @@ public class InventorySlot : MonoBehaviour
     protected int amount;
     protected Inventory inventory;
 
+    /**
+     * Singelton inventory
+     */
     private void Start()
     {
         inventory = Inventory.Instance;
@@ -61,17 +64,26 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
+    /**
+     * increase amount of item by 1 in the slot
+     */
     public void IncAmount(int amount = 1)
     {
         Amount += amount;
     }
 
+    /**
+     * decrease amount of item by 1 in the slot
+     */
     public void DecAmount(int amount = 1)
     {
         Amount -= amount;
         if (Amount == 0) ClearSlot();
     }
 
+    /**
+     * add item to the slot
+     */
     public void AddItem(Item newItem, int newAmount)
     {
         Item = newItem;
@@ -83,6 +95,9 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
+    /**
+     * clear the slot from the item
+     */
     public void ClearSlot()
     {
         Item = null;
@@ -94,11 +109,17 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
+    /**
+     * remove 1 of the item from the slot
+     */
     public void onRemoveButton()
     {
         inventory.RemoveFromInventory(item, 1);
     }
 
+    /**
+     * drag and drop functions to move items in the inventory
+     */
     public void OnDrag(BaseEventData data)
     {
         inventory.selectedSlot = this;

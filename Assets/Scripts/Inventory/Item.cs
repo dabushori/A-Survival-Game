@@ -10,6 +10,10 @@ public class Item : ScriptableObject
     public Sprite icon; // path to image (icon)
     
     public Jobs job; // what the item can be used for
+
+    /**
+     * checking if the item can be used for this job
+     */
     public bool IsSuitableForJob(Jobs wantedJob)
     {
         int jobValue = (int)wantedJob;
@@ -22,6 +26,9 @@ public class Item : ScriptableObject
     public int breakDamage; // amount of damage it deals when breaking
     public BreakLevel breakLevel;
 
+    /**
+     * checking if the item can break (match the break level)
+     */
     public static bool CanBreak(BreakLevel toolBreakLevel , BreakLevel levelNeededToBreak)
     {
         return toolBreakLevel >= levelNeededToBreak;
