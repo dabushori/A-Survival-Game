@@ -54,7 +54,7 @@ public class MobAI : MonoBehaviour
         
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        hasMultipleAnimations = animator.HasState(0, Animator.StringToHash("death"));
+        hasMultipleAnimations = animator.HasState(0, Animator.StringToHash("attack"));
     }
     public void Update()
     {
@@ -66,18 +66,20 @@ public class MobAI : MonoBehaviour
 
         player = playerInSightRange ? sightPlayers[0].gameObject : null;
 
-        // playerInSightRange = Physics.CheckSphere(transform.position, sightRange, WhatIsPlayer);
-        // playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, WhatIsPlayer);
-
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (!playerInSightRange && !playerInAttackRange)
+        {
+            if (hasMultipleAnimations) animator.SetBool("IsAttacking", false);
+            Patroling();
+        }
         if (playerInSightRange) {
-            if (!playerInAttackRange) animator.SetBool("IsAttacking", false);
+            if (!playerInAttackRange && hasMultipleAnimations)
+            {
+                animator.SetBool("IsAttacking", false);
+            }
             Chasing();
         }
         if (playerInAttackRange)
         {
-            animator.SetBool("IsAttacking", true);
-            // animator.Play("attack");
             Attacking();
         }
     }
@@ -108,7 +110,6 @@ public class MobAI : MonoBehaviour
     }
     public void Attacking()
     {
-
         // mob wont move while attacking
         agent.SetDestination(transform.position);
 
@@ -116,13 +117,19 @@ public class MobAI : MonoBehaviour
 
         if (!alreadyAttacked)
         {
+            if (hasMultipleAnimations) animator.SetBool("IsAttacking", true);
+
             // attack
-            PlayerHealth health = player.GetComponentInChildren<PlayerHealth>();
-            health.DealDamage(damage);
+            Invoke(nameof(DealDamage), timeBetweenAttacks / 2);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
+    }
+
+    void DealDamage()
+    {
+        player.GetComponentInChildren<PlayerHealth>().DealDamage(damage);
     }
 
     private void ResetAttack()
