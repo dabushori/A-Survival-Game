@@ -162,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 140
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
+  breakParticlesPrefab: {fileID: 0}
   items:
   - {fileID: 11400000, guid: cc5d2cbf62fcbac4a94a36ecea037151, type: 2}
   minItemsToGive: 01000000

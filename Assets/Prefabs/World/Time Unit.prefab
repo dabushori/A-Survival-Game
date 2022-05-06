@@ -263,10 +263,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeMultiplayer: 72
-  startHour: 13
+  startHour: 12
   sunLight: {fileID: 1105849990986420783}
   sunriseHour: 7
-  sunsetHour: 13
+  sunsetHour: 20
   dayAmbientLight: {r: 0.51067996, g: 0.5521786, b: 0.7169812, a: 0}
   nightAmbientLight: {r: 0.20652366, g: 0.260738, b: 0.3679245, a: 0}
   lightChangeCurve:

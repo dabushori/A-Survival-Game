@@ -420,6 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 85
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
+  breakParticlesPrefab: {fileID: 0}
   items:
   - {fileID: 11400000, guid: 4916074d06438c74581fc8beedad75ac, type: 2}
   - {fileID: 11400000, guid: dd6901e9c467e3a418d0900e378384bf, type: 2}
