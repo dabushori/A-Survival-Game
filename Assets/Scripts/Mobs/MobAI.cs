@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -31,6 +28,9 @@ public class MobAI : MonoBehaviour
 
     LayerMask worldObjects = 1 << 7;
 
+    Animator animator;
+    bool hasMultipleAnimations;
+
     void AssureValidPosition()
     {
         if (Physics.OverlapSphere(transform.position, GetComponent<CapsuleCollider>().radius, worldObjects).Length > 0)
@@ -53,6 +53,8 @@ public class MobAI : MonoBehaviour
         AssureValidPosition();
         
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        hasMultipleAnimations = animator.HasState(0, Animator.StringToHash("death"));
     }
     public void Update()
     {
@@ -68,8 +70,16 @@ public class MobAI : MonoBehaviour
         // playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, WhatIsPlayer);
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange) Chasing();
-        if (playerInAttackRange) Attacking();
+        if (playerInSightRange) {
+            if (!playerInAttackRange) animator.SetBool("IsAttacking", false);
+            Chasing();
+        }
+        if (playerInAttackRange)
+        {
+            animator.SetBool("IsAttacking", true);
+            // animator.Play("attack");
+            Attacking();
+        }
     }
     public void Patroling()
     {
@@ -98,6 +108,7 @@ public class MobAI : MonoBehaviour
     }
     public void Attacking()
     {
+
         // mob wont move while attacking
         agent.SetDestination(transform.position);
 
@@ -105,7 +116,7 @@ public class MobAI : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            //attack
+            // attack
             PlayerHealth health = player.GetComponentInChildren<PlayerHealth>();
             health.DealDamage(damage);
 

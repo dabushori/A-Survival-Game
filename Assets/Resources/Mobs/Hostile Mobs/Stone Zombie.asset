@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupSizeMin: 1
   groupSizeMax: 2
-  mobObject: {fileID: 3998730199834716222, guid: 280451c9ef935624982221227ee3cda2, type: 3}
+  mobObject: {fileID: 5091242709008108106, guid: 5f02485c5bcc56544b78027c057985be, type: 3}
   weight: 20
   onlyAtNight: 1

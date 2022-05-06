@@ -28,6 +28,14 @@ public class Destructible : MonoBehaviour
 
     public int DEFAULT_BREAKING_DAMAGE = 20, DEFAULT_HITTING_DAMAGE = 20;
 
+    Animator animator;
+
+    private void Awake()
+    {
+        TryGetComponent<Animator>(out animator);
+        if (animator != null && !animator.HasState(0, Animator.StringToHash("death"))) animator = null;
+    }
+
     public void Break(Inventory inventory)
     {
         Item chosenItem = inventory.ChosenItem;
@@ -53,7 +61,14 @@ public class Destructible : MonoBehaviour
             }
             if (hp <= 0)
             {
-                Destroy(gameObject);
+                if (animator == null)
+                {
+                    Destroy(gameObject);
+                } else
+                {
+                    animator.SetBool("IsDead", true);
+                    Destroy(gameObject, 1f);
+                }
                 for (int i = 0; i < items.Length; ++i)
                 {
                     inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
@@ -66,33 +81,35 @@ public class Destructible : MonoBehaviour
     {
         Item chosenItem = inventory.ChosenItem;
         int damage;
-        // HitLevel toolHitLevel;
         if (chosenItem == null || !chosenItem.IsSuitableForJob(Jobs.FIGHTING))
         {
             damage = DEFAULT_HITTING_DAMAGE;
-            // toolHitLevel = HitLevel.WOOD;
         }
         else
         {
             damage = chosenItem.hitDamage;
-            // toolHitLevel = chosenItem.hitLevel;
         }
 
-        // if (Item.CanHit(...))
-        // {
-            if (hp > 0)
-            {
-                hp -= damage;
-                PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-            }
-            if (hp <= 0)
+        if (hp > 0)
+        {
+            hp -= damage;
+            PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
+        }
+        if (hp <= 0)
+        {
+            if (animator == null)
             {
                 Destroy(gameObject);
-                for (int i = 0; i < items.Length; ++i)
-                {
-                    inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
-                }
             }
-        // }
+            else
+            {
+                animator.SetBool("IsDead", true);
+                Destroy(gameObject, 1f);
+            }
+            for (int i = 0; i < items.Length; ++i)
+            {
+                inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
+            }
+        }
     }
 }

@@ -424,8 +424,8 @@ MonoBehaviour:
   friendlyMobsLayer:
     serializedVersion: 2
     m_Bits: 1024
-  HOSTILE_MOB_SPAWN_CYCLE_TIME: 15
-  FRIENDLY_MOB_SPAWN_CYCLE_TIME: 25
+  HOSTILE_MOB_SPAWN_CYCLE_TIME: 1
+  FRIENDLY_MOB_SPAWN_CYCLE_TIME: 1
 --- !u!1 &8710761594916082493
 GameObject:
   m_ObjectHideFlags: 0
