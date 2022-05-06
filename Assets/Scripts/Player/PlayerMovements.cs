@@ -48,8 +48,7 @@ public class PlayerMovements : MonoBehaviour
     {
         if (Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = -2f;
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-        // Debug.Log(velocity * Time.deltaTime);
+        controller.Move(Vector3.up * velocity.y * Time.deltaTime);
     }
 
     [SerializeField]
@@ -91,7 +90,6 @@ public class PlayerMovements : MonoBehaviour
             isHitKeyPressed = false;
             hitStartTime = 0;
         }
-        // Debug.Log(Time.fixedTimeAsDouble);
     }
 
     [SerializeField]
@@ -223,7 +221,6 @@ public class PlayerMovements : MonoBehaviour
         if (!isInInventory && !isInStopMenu && ctx.performed)
         {
             float scrollY = ctx.ReadValue<float>();
-            Debug.Log(scrollY);
             if (scrollY > 0) inventory.ChooseNextItem();
             else if (scrollY < 0) inventory.ChoosePrevItem();
         }
@@ -241,7 +238,9 @@ public class PlayerMovements : MonoBehaviour
 
         if (!isInInventory && !isInStopMenu)
         {
-            controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x)); // moving
+            Vector3 movingVec = (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x);
+            movingVec.y = 0;
+            controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
             // Hit Logic
             if (isHitKeyPressed) Hit();
             // Use Logic

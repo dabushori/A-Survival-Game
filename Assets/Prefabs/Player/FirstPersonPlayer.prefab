@@ -356,8 +356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBody: {fileID: 8710761594365420446}
   playerHealth: {fileID: 1199991450}
-  speed: 5
-  sprintSpeed: 10
+  speed: 4
+  sprintSpeed: 7
   controller: {fileID: 8710761594365420441}
   gravity: -19.62
   GROUND_LAYER:
@@ -424,8 +424,8 @@ MonoBehaviour:
   friendlyMobsLayer:
     serializedVersion: 2
     m_Bits: 1024
-  HOSTILE_MOB_SPAWN_CYCLE_TIME: 2
-  FRIENDLY_MOB_SPAWN_CYCLE_TIME: 2
+  HOSTILE_MOB_SPAWN_CYCLE_TIME: 30
+  FRIENDLY_MOB_SPAWN_CYCLE_TIME: 30
 --- !u!1 &8710761594916082493
 GameObject:
   m_ObjectHideFlags: 0

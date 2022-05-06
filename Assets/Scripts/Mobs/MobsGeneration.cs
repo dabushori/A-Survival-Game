@@ -72,7 +72,7 @@ public class MobsGeneration : MonoBehaviour
     }
 
 
-    float previousHostileSpawnTime, previousFriendlySpawnTime;
+    float previousHostileSpawnTime = -Mathf.Infinity, previousFriendlySpawnTime = -Mathf.Infinity;
     public float HOSTILE_MOB_SPAWN_CYCLE_TIME, FRIENDLY_MOB_SPAWN_CYCLE_TIME;
     public void Update()
     {
