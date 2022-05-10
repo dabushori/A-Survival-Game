@@ -347,6 +347,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14629b28f51132429b3688d2d41dac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volume: {fileID: 1892778173}
+  music: {fileID: 765786944}
   audioMixer: {fileID: 24100000, guid: 6d4f353e67562954f8926a46753403ae, type: 2}
 --- !u!1 &41808173
 GameObject:
@@ -490,7 +492,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 56060413}
-  - component: {fileID: 56060414}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -522,18 +523,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.000030518}
   m_SizeDelta: {x: 1108, y: 634}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &56060414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56060412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f70a50e846ceddc40a94ed0c96423444, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &92761085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,7 +1246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: Create
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1702,7 +1691,7 @@ GameObject:
   - component: {fileID: 265592825}
   - component: {fileID: 265592824}
   m_Layer: 5
-  m_Name: Play Button
+  m_Name: Create Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1725,8 +1714,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 162.06, y: -180}
-  m_SizeDelta: {x: 150, y: 75}
+  m_AnchoredPosition: {x: 149.07855, y: -180}
+  m_SizeDelta: {x: 175.9629, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &265592824
 MonoBehaviour:
@@ -4843,7 +4832,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 10
+  m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -5001,6 +4990,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691270991}
   m_CullTransparentMesh: 1
+--- !u!114 &730938291 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8843643797124248060, guid: c53ba83714742804fb68e356a4c17417, type: 3}
+  m_PrefabInstance: {fileID: 1970490673}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &757693174
 GameObject:
   m_ObjectHideFlags: 0
@@ -6020,6 +6020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolutionDD: {fileID: 1807312486}
+  quality: {fileID: 1389036785}
 --- !u!1 &853458041
 GameObject:
   m_ObjectHideFlags: 0
@@ -7746,7 +7747,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "10\u200B"
+  m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8688,7 +8689,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 56060414}
+      - m_Target: {fileID: 1673791725}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
@@ -10814,6 +10815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameInput: {fileID: 384176377}
   connectText: {fileID: 129216647}
+  connectButton: {fileID: 434880999}
   mainMenu: {fileID: 56060412}
 --- !u!1 &1591341807
 GameObject:
@@ -10983,7 +10985,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "10\u200B"
+  m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11401,6 +11403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1673791723}
   - component: {fileID: 1673791724}
+  - component: {fileID: 1673791725}
   m_Layer: 5
   m_Name: Menus
   m_TagString: Untagged
@@ -11451,16 +11454,31 @@ MonoBehaviour:
   worldSeedInput: {fileID: 1480358419}
   randomSeedInput: {fileID: 4122542}
   roomNameInput_create: {fileID: 1564232793}
+  createButton: {fileID: 265592824}
   roomName: {fileID: 1381028396}
   roomSeed: {fileID: 1545986280}
   roomMenu: {fileID: 1970490674}
   createMenu: {fileID: 330787109}
   joinMenu: {fileID: 1581919787}
   mainMenu: {fileID: 56060412}
+  leaveButton: {fileID: 730938291}
   playersAmount: {fileID: 1413132838}
   contentTransform: {fileID: 1554664813}
   playerItemPrefab: {fileID: 1925220373450761139, guid: 602de8f4c5b308445b56113deba78c5f, type: 3}
   roomNameInput_join: {fileID: 879365344}
+  joinButton: {fileID: 1969243757}
+--- !u!114 &1673791725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673791722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f70a50e846ceddc40a94ed0c96423444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1736475417
 GameObject:
   m_ObjectHideFlags: 0
@@ -13790,6 +13808,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8843643798466002397, guid: c53ba83714742804fb68e356a4c17417, type: 3}
+      propertyPath: m_Name
+      value: Start Button
+      objectReference: {fileID: 0}
     - target: {fileID: 8843643798592170490, guid: c53ba83714742804fb68e356a4c17417, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -13806,7 +13828,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8843643797506709440, guid: c53ba83714742804fb68e356a4c17417, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c53ba83714742804fb68e356a4c17417, type: 3}
 --- !u!1 &1970490674 stripped
 GameObject:
@@ -14734,7 +14757,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 10
+  m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0

@@ -14,15 +14,26 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     [SerializeField]
     TMP_InputField roomNameInput_create;
 
+
+    [SerializeField]
+    Button createButton;
     public void OnClickCreate()
     {
         if (randomSeedInput.isOn)
         {
-            if (roomNameInput_create.text.Length > 0) CreateRoom(roomNameInput_create.text, Random.Range(-1000000, 1000000));
+            if (roomNameInput_create.text.Length > 0)
+            {
+                createButton.interactable = false;
+                CreateRoom(roomNameInput_create.text, Random.Range(-1000000, 1000000));
+            }
         } 
         else
         {
-            if (int.TryParse(worldSeedInput.text, out int seed) && roomNameInput_create.text.Length > 0) CreateRoom(roomNameInput_create.text, seed);
+            if (int.TryParse(worldSeedInput.text, out int seed) && roomNameInput_create.text.Length > 0)
+            {
+                createButton.interactable = false;
+                CreateRoom(roomNameInput_create.text, seed);
+            }
         }
     }
 
@@ -63,10 +74,13 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         UpdatePlayersList();
     }
 
+    [SerializeField]
+    Button leaveButton;
     public void OnClickLeave()
     {
         if (PhotonNetwork.CurrentRoom != null)
         {
+            leaveButton.interactable = false;
             PhotonNetwork.LeaveRoom();
         }
     }
@@ -76,6 +90,10 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         roomMenu.SetActive(false);
         mainMenu.SetActive(true);
         UpdatePlayersList();
+        // make the buttons interactable again
+        leaveButton.interactable = true;
+        createButton.interactable = true;
+        joinButton.interactable = true;
     }
 
     public void JoinRoom(string name)
@@ -112,9 +130,15 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
 
     [SerializeField]
     TMP_InputField roomNameInput_join;
+    [SerializeField]
+    Button joinButton;
     public void OnClickJoin()
     {
-        if (roomNameInput_join.text.Length > 0) JoinRoom(roomNameInput_join.text);
+        if (roomNameInput_join.text.Length > 0)
+        {
+            joinButton.interactable = false;
+            JoinRoom(roomNameInput_join.text);
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

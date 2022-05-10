@@ -9,6 +9,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public TMPro.TMP_InputField nameInput;
     public TMPro.TMP_Text connectText;
+    public Button connectButton;
 
     public GameObject mainMenu;
 
@@ -18,6 +19,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = nameInput.text;
             connectText.text = "Connecting...";
+            connectButton.interactable = false;
             PhotonNetwork.ConnectUsingSettings();
         }
     }

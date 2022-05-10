@@ -12,6 +12,11 @@ public class ControlsSettings : MonoBehaviour
     public TMPro.TMP_InputField inputX;
     public TMPro.TMP_InputField inputY;
 
+    public void Start()
+    {
+        inputX.text = sensX.ToString();
+        inputY.text = sensY.ToString();
+    }
 
     public void SetSensX(string sens)
     {
