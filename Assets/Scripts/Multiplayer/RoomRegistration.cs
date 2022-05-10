@@ -12,25 +12,26 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     [SerializeField]
     Toggle randomSeedInput;
     [SerializeField]
-    TMP_InputField roomNameInput;
+    TMP_InputField roomNameInput_create;
 
-    void OnClickCreate()
+    public void OnClickCreate()
     {
         if (randomSeedInput.isOn)
         {
-            if (roomNameInput.text.Length > 0) CreateRoom(roomNameInput.text, Random.Range(-1000000, 1000000));
+            if (roomNameInput_create.text.Length > 0) CreateRoom(roomNameInput_create.text, Random.Range(-1000000, 1000000));
         } 
         else
         {
-            if (int.TryParse(worldSeedInput.text, out int seed) && roomNameInput.text.Length > 0) CreateRoom(roomNameInput.text, seed);
+            if (int.TryParse(worldSeedInput.text, out int seed) && roomNameInput_create.text.Length > 0) CreateRoom(roomNameInput_create.text, seed);
         }
-        // change text to creating room ...
     }
 
     void CreateRoom(string name, int worldSeed)
     {
         RoomOptions options = new RoomOptions();
-        options.CustomRoomProperties["seed"] = worldSeed;
+        ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable();
+        properties["seed"] = worldSeed;
+        options.CustomRoomProperties = properties;
         PhotonNetwork.CreateRoom(name, options);
     }
 
@@ -38,16 +39,43 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     TMP_Text roomName;
     [SerializeField]
     TMP_Text roomSeed;
+    [SerializeField]
+    GameObject roomMenu;
+    [SerializeField]
+    GameObject createMenu;
+    [SerializeField]
+    GameObject joinMenu;
+    [SerializeField]
+    GameObject mainMenu;
     public override void OnJoinedRoom()
     {
         // logic for room joining
 
         // activate the room menu
+        joinMenu.SetActive(false);
+        createMenu.SetActive(false);
+        roomMenu.SetActive(true);
         
         // set name
         roomName.text = PhotonNetwork.CurrentRoom.Name;
         // set seed
         roomSeed.text = PhotonNetwork.CurrentRoom.CustomProperties["seed"].ToString();
+        UpdatePlayersList();
+    }
+
+    public void OnClickLeave()
+    {
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+    }
+
+    public override void OnLeftRoom()
+    {
+        roomMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        UpdatePlayersList();
     }
 
     public void JoinRoom(string name)
@@ -80,5 +108,22 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
             item.SetNickName(player.Value.NickName);
             players.Add(item);
         }
+    }
+
+    [SerializeField]
+    TMP_InputField roomNameInput_join;
+    public void OnClickJoin()
+    {
+        if (roomNameInput_join.text.Length > 0) JoinRoom(roomNameInput_join.text);
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        UpdatePlayersList();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        UpdatePlayersList();
     }
 }
