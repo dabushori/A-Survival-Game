@@ -59,7 +59,7 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     TMP_Text playersAmount;
     [SerializeField]
     Transform contentTransform;
-    [SerializeField]
+    
     List<PlayerItem> players = new List<PlayerItem>();
     [SerializeField]
     GameObject playerItemPrefab;
