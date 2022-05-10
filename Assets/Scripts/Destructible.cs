@@ -108,7 +108,7 @@ public class Destructible : MonoBehaviour
         if (hp > 0)
         {
             hp -= damage;
-            BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 3);
+            BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2);
             PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
         }
         if (hp <= 0)
@@ -117,7 +117,7 @@ public class Destructible : MonoBehaviour
             {
                 Destroy(gameObject);
                 hp -= damage;
-                BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 3);
+                BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2);
                 PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
             }
             else
