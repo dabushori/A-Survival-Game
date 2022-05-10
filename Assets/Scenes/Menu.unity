@@ -9657,6 +9657,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430340016}
   m_CullTransparentMesh: 1
+--- !u!1 &1436236578 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8843643798466002397, guid: c53ba83714742804fb68e356a4c17417, type: 3}
+  m_PrefabInstance: {fileID: 1970490673}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1439360322
 GameObject:
   m_ObjectHideFlags: 0
@@ -10778,7 +10783,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1582937460
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11460,7 +11465,9 @@ MonoBehaviour:
   roomMenu: {fileID: 1970490674}
   createMenu: {fileID: 330787109}
   joinMenu: {fileID: 1581919787}
+  openMenu: {fileID: 1582937459}
   mainMenu: {fileID: 56060412}
+  startButton: {fileID: 1436236578}
   leaveButton: {fileID: 730938291}
   playersAmount: {fileID: 1413132838}
   contentTransform: {fileID: 1554664813}
@@ -13807,6 +13814,18 @@ PrefabInstance:
     - target: {fileID: 8843643797506709442, guid: c53ba83714742804fb68e356a4c17417, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843643798466002211, guid: c53ba83714742804fb68e356a4c17417, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1673791724}
+    - target: {fileID: 8843643798466002211, guid: c53ba83714742804fb68e356a4c17417, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnStartClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843643798466002211, guid: c53ba83714742804fb68e356a4c17417, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RoomRegistration, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8843643798466002397, guid: c53ba83714742804fb68e356a4c17417, type: 3}
       propertyPath: m_Name

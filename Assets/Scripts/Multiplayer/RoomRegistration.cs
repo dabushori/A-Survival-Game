@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEditor;
 
 public class RoomRegistration : MonoBehaviourPunCallbacks
 {
@@ -57,7 +59,11 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject joinMenu;
     [SerializeField]
+    GameObject openMenu;
+    [SerializeField]
     GameObject mainMenu;
+    [SerializeField]
+    GameObject startButton;
     public override void OnJoinedRoom()
     {
         // logic for room joining
@@ -72,6 +78,8 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         // set seed
         roomSeed.text = PhotonNetwork.CurrentRoom.CustomProperties["seed"].ToString();
         UpdatePlayersList();
+
+        startButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     [SerializeField]
@@ -95,6 +103,7 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         createButton.interactable = true;
         joinButton.interactable = true;
     }
+
 
     public void JoinRoom(string name)
     {
@@ -149,5 +158,22 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         UpdatePlayersList();
+    }
+
+    public void OnStartClick()
+    {
+        PhotonNetwork.LoadLevel("World");
+    }
+
+    private void Awake()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            mainMenu.SetActive(true);
+        } 
+        else
+        {
+            openMenu.SetActive(true);
+        }
     }
 }
