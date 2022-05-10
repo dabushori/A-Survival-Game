@@ -160,13 +160,22 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         UpdatePlayersList();
     }
 
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if (newMasterClient == PhotonNetwork.LocalPlayer)
+        {
+            startButton.SetActive(true);
+        }
+    }
+
     public void OnStartClick()
     {
-        PhotonNetwork.LoadLevel("World");
+        PhotonView.Get(this).RPC("StartWorld", RpcTarget.All);
     }
 
     private void Awake()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         if (PhotonNetwork.IsConnected)
         {
             mainMenu.SetActive(true);
@@ -175,6 +184,11 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         {
             openMenu.SetActive(true);
         }
-        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
+    [PunRPC]
+    public void StartWorld()
+    {
+        PhotonNetwork.LoadLevel("World");
     }
 }
