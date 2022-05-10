@@ -2654,6 +2654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolutionDD: {fileID: 739278944695848083}
+  quality: {fileID: 739278944854601803}
 --- !u!1 &739278944927903410
 GameObject:
   m_ObjectHideFlags: 0
@@ -7339,6 +7340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14629b28f51132429b3688d2d41dac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volume: {fileID: 739278945263856004}
+  music: {fileID: 739278946350328391}
   audioMixer: {fileID: 24100000, guid: 6d4f353e67562954f8926a46753403ae, type: 2}
 --- !u!1 &739278946175208913
 GameObject:
