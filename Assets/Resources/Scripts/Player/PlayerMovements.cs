@@ -22,7 +22,7 @@ public class PlayerMovements : MonoBehaviour
 
             xRotation -= mouse.y;
             xRotation = Mathf.Clamp(xRotation, -90, 90);
-            Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            myCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
             playerBody.transform.Rotate(Vector3.up * mouse.x);
         }
@@ -36,8 +36,11 @@ public class PlayerMovements : MonoBehaviour
     private Vector2 movingDirection;
     public void Move(InputAction.CallbackContext ctx)
     {
-        if (myPhotonView.IsMine) movingDirection = ctx.ReadValue<Vector2>();
-        // movingDirection = Camera.main.transform.forward * dir.y + Camera.main.transform.right * dir.x;
+        Debug.Log("moving 0");
+        if (!myPhotonView.IsMine) return;
+        Debug.Log("moving 1");
+        movingDirection = ctx.ReadValue<Vector2>();
+        // movingDirection = myCamera.transform.forward * dir.y + myCamera.transform.right * dir.x;
     }
 
     [SerializeField]
@@ -111,7 +114,7 @@ public class PlayerMovements : MonoBehaviour
         // Hit Logic
         if (
             (Time.time - hitStartTime) > MINING_TIME && // will use item mining speed
-            Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide))
+            Physics.Raycast(gameObject.transform.position, myCamera.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide))
         {
             hit.transform.gameObject.GetComponent<Destructible>().Break(inventory);
             // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
@@ -120,7 +123,7 @@ public class PlayerMovements : MonoBehaviour
 
 
         if (!isHit && // will use item mining speed
-            Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MINING_DISTANCE, MOBS_LAYER, QueryTriggerInteraction.Collide))
+            Physics.Raycast(gameObject.transform.position, myCamera.transform.forward, out hit, MINING_DISTANCE, MOBS_LAYER, QueryTriggerInteraction.Collide))
         {
             isHit = true;
             hit.transform.gameObject.GetComponent<Destructible>().Hit(inventory);
@@ -155,7 +158,7 @@ public class PlayerMovements : MonoBehaviour
     public CraftingMenuInitializer craftingMenuInitializer;
     public void Use()
     {
-        if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide)) {
+        if (Physics.Raycast(gameObject.transform.position, myCamera.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide)) {
            if (hit.transform.gameObject.TryGetComponent<RecipeCraftingMenuItem>(out RecipeCraftingMenuItem menuItem))
             {
                 switch (menuItem.menuType)
@@ -179,10 +182,10 @@ public class PlayerMovements : MonoBehaviour
         if (currentItem.placeable && canPlace)
         {
             // place
-            if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
+            if (Physics.Raycast(gameObject.transform.position, myCamera.transform.forward, out hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
             {
                 canPlace = false;
-                Vector3 cameraForward = Camera.main.transform.forward;
+                Vector3 cameraForward = myCamera.transform.forward;
                 cameraForward.y = 0; 
                 PhotonNetwork.InstantiateRoomObject("Prefabs/Furniture/" + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
                 inventory.RemoveFromInventory(currentItem, 1);
@@ -249,8 +252,9 @@ public class PlayerMovements : MonoBehaviour
 
         if (!isInInventory && !isInStopMenu)
         {
-            Vector3 movingVec = (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x);
+            Vector3 movingVec = (myCamera.transform.forward * movingDirection.y + myCamera.transform.right * movingDirection.x);
             movingVec.y = 0;
+            Debug.Log("moving 2");
             controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
             // Hit Logic
             if (isHitKeyPressed) Hit();
@@ -353,16 +357,16 @@ public class PlayerMovements : MonoBehaviour
         stopMenuObject.SetActive(false);
     }
 
-    PhotonView myPhotonView;
+    [SerializeField] PhotonView myPhotonView;
     [SerializeField] GameObject myCamera;
     [SerializeField] GameObject myCanvas;
     private void Start()
     {
-        myPhotonView = GetComponentInParent<PhotonView>();
         if (!myPhotonView.IsMine)
         {
-            myCamera.SetActive(false);
-            myCanvas.SetActive(false);
+            Destroy(myCamera);
+            Destroy(myCanvas);
+            Destroy(gameObject);
         }
     }
 }
