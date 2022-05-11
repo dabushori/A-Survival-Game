@@ -7,26 +7,26 @@ using UnityEngine.UI;
 public class AudioSettings : MonoBehaviour
 {
     [SerializeField]
-    Slider volume;
+    Slider volumeSlider;
     [SerializeField]
-    Slider music;
+    Slider musicSlider;
 
     private void Start()
     {
-        volume.value = GameStateController.VolumeMixer;
-        music.value = GameStateController.MusicMixer;
+        audioMixer.GetFloat("volume",out float volume);
+        volumeSlider.value = volume;
+        audioMixer.GetFloat("volume",out float music);
+        musicSlider.value = music;
     }
 
     public AudioMixer audioMixer;
     public void SetVolume(float volume)
     {
-        GameStateController.VolumeMixer = volume;
         audioMixer.SetFloat("volume", volume);
     }
 
     public void SetMusic(float music)
     {
-        GameStateController.MusicMixer = music;
         audioMixer.SetFloat("music", music);
     }
 }

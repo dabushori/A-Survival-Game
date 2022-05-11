@@ -102,12 +102,25 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         leaveButton.interactable = true;
         createButton.interactable = true;
         joinButton.interactable = true;
+        startButtonRef.interactable = true;
     }
 
 
+    [SerializeField]
+    TMP_Text faildJoinText;
     public void JoinRoom(string name)
     {
-        if (PhotonNetwork.CurrentRoom == null) PhotonNetwork.JoinRoom(name);
+        if (PhotonNetwork.CurrentRoom == null)
+        {
+            faildJoinText.text = "";
+            PhotonNetwork.JoinRoom(name);
+        }
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        faildJoinText.text = "Can't join the room";
+        joinButton.interactable = true;
     }
 
     [SerializeField]
@@ -145,10 +158,12 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     {
         if (roomNameInput_join.text.Length > 0)
         {
-            joinButton.interactable = false;
             JoinRoom(roomNameInput_join.text);
+            joinButton.interactable = false;
+
         }
     }
+
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -168,8 +183,11 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         }
     }
 
+    [SerializeField]
+    Button startButtonRef;
     public void OnStartClick()
     {
+        startButtonRef.interactable = false;
         PhotonView.Get(this).RPC("StartWorld", RpcTarget.All);
     }
 
