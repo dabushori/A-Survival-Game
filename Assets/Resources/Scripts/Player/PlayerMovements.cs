@@ -183,8 +183,8 @@ public class PlayerMovements : MonoBehaviour
             {
                 canPlace = false;
                 Vector3 cameraForward = Camera.main.transform.forward;
-                cameraForward.y = 0;
-                Instantiate(currentItem.placedObject, hit.point, Quaternion.LookRotation(cameraForward));
+                cameraForward.y = 0; 
+                PhotonNetwork.InstantiateRoomObject("Prefabs/Furniture/" + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
                 inventory.RemoveFromInventory(currentItem, 1);
                 Invoke(nameof(ResetCanPlace), PLACING_TIME);
             }

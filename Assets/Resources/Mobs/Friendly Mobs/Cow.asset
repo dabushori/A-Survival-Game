@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ba1bac91d59dd47ae753f46df7f46a, type: 3}
   m_Name: Cow
   m_EditorClassIdentifier: 
+  mobName: Cow
   groupSizeMin: 1
   groupSizeMax: 2
   mobObject: {fileID: 1244760467543844, guid: cddb9a8ecf38bfe4e83926595015ee56, type: 3}

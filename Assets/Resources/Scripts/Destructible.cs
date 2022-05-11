@@ -70,16 +70,16 @@ public class Destructible : MonoBehaviour
             if (hp > 0)
             {
                 hp -= damage;
-                BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6);
+                BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 5);
                 PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
             }
             if (hp <= 0)
             {
                 if (animator == null)
                 {
-                    PhotonNetwork.Destroy(gameObject);
-                    BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6);
+                    BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 5);
                     PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
+                    PhotonNetwork.Destroy(gameObject);
                 } else
                 {
                     animator.SetBool("IsDead", true);
@@ -116,10 +116,10 @@ public class Destructible : MonoBehaviour
         {
             if (animator == null)
             {
-                PhotonNetwork.Destroy(gameObject);
                 hp -= damage;
                 BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2);
                 PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
+                PhotonNetwork.Destroy(gameObject);
             }
             else
             {

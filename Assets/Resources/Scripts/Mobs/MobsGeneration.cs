@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class MobsGeneration : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class MobsGeneration : MonoBehaviour
     {
         // select random mob
         MobData mob = SelectRandomMob(isHotile);
-
         int numOfMobs = Random.Range(mob.groupSizeMin, mob.groupSizeMax + 1);
 
         for (int i = 0; i < numOfMobs; ++i)
@@ -35,7 +35,8 @@ public class MobsGeneration : MonoBehaviour
             // check spawn rules
             if (CanSpawnMob(mob, isHotile, mobPosition))
             {
-                Instantiate(mob.mobObject, mobPosition, Quaternion.identity);
+                PhotonNetwork.InstantiateRoomObject("Prefabs/Mobs/" + mob.mobName, mobPosition, Quaternion.identity);
+                //Instantiate(mob.mobObject, mobPosition, Quaternion.identity);
             }
         }
     }
