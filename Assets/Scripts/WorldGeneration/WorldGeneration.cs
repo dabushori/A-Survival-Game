@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -71,7 +72,7 @@ public class WorldGeneration : MonoBehaviour
         }
 
         float distanceBetweenVertices = (float)tileDepth / (float)tileDepthInVertices;
-        GenerateGameObjects(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
+        if (PhotonNetwork.IsMasterClient) GenerateGameObjects(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
         
         GameStateController.worldDepth = tileDepthInVertices * mapDepthInTiles;
         GameStateController.worldWidth = tileWidthInVertices * mapWidthInTiles;
@@ -79,7 +80,7 @@ public class WorldGeneration : MonoBehaviour
         gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
-    public void GenerateObjects(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices, int neighborRadius, Object[] objectsList)
+    public void GenerateObjects(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices, int neighborRadius, string path, int numOfItemsInList)
     {
         // generate a noise map using Perlin Noise
         float[,] objectsMap = NoiseMapGeneration.GenerateNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, this.waves, random.Next(0, 1000000));
@@ -114,8 +115,7 @@ public class WorldGeneration : MonoBehaviour
 
                 if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, float.MaxValue, (1 << 6))) // 6 is the surface layer, so here we will only find hits with the surface layer
                 {
-                    GameObject obj = Instantiate((GameObject)objectsList[random.Next(0, objectsList.Length)], hit.point, Quaternion.identity);
-                    obj.transform.localScale = Vector3.one * 0.5f;
+                    PhotonNetwork.Instantiate(path + random.Next(0, numOfItemsInList), hit.point, Quaternion.identity);
                 }
             }
         }
@@ -124,18 +124,17 @@ public class WorldGeneration : MonoBehaviour
 
     public void GenerateGameObjects(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices)
     {
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, Resources.LoadAll("World/Trees"));
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, Resources.LoadAll("World/Rocks"));
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 10, Resources.LoadAll("World/Iron"));
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 18, Resources.LoadAll("World/Gold"));
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 30, Resources.LoadAll("World/Diamond"));
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, "World/Trees/", 12);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, "World/Rocks/", 6);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 10, "World/Iron/", 6);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 18, "World/Gold/", 6);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 30, "World/Diamond/", 6);
     }
 
-    [SerializeField]
-    GameObject timeUnitPrefab;
     public void GenerateTimeController()
     {
-        GameStateController.timeController = Instantiate(timeUnitPrefab).GetComponentInChildren<TimeController>();
+        // GameStateController.timeController = Instantiate(timeUnitPrefab).GetComponentInChildren<TimeController>();
+        PhotonNetwork.Instantiate("Prefabs/World/TimeController", Vector3.zero, Quaternion.identity).GetComponent<TimeController>();
     }
 
     [SerializeField]
@@ -143,18 +142,20 @@ public class WorldGeneration : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Instantiate(playerPrefab, new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity);
+        // Instantiate(playerPrefab, new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity);
+        PhotonNetwork.Instantiate("Prefabs/Player/FirstPersonPlayer", new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity);
     }
 
     System.Random random;
     void Start()
     {
-        worldSeed = GameStateController.Seed % 1000000;
+        worldSeed = ((int)PhotonNetwork.CurrentRoom.CustomProperties["seed"]) % 1000000;
         random = new System.Random(worldSeed);
         Random.InitState(worldSeed);
 
-        GenerateTimeController();
+        if (PhotonNetwork.IsMasterClient) GenerateTimeController();
         GenerateWorld();
+
         SpawnPlayer();
     }
 }

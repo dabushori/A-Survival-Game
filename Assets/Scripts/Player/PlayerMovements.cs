@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -178,7 +179,7 @@ public class PlayerMovements : MonoBehaviour
                 canPlace = false;
                 Vector3 cameraForward = Camera.main.transform.forward;
                 cameraForward.y = 0;
-                Instantiate(currentItem.placedObject, hit.point, Quaternion.LookRotation(cameraForward));
+                PhotonNetwork.InstantiateRoomObject("Prefabs/Furniture/" + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
                 inventory.RemoveFromInventory(currentItem, 1);
                 Invoke(nameof(ResetCanPlace), PLACING_TIME);
             }
@@ -335,8 +336,23 @@ public class PlayerMovements : MonoBehaviour
         crosserObject.SetActive(true);
     }
 
+
+    [SerializeField]
+    PhotonView photonView;
+    [SerializeField]
+    GameObject[] localPlayerLogic;
     private void Awake()
     {
+        if (!photonView.IsMine)
+        {
+            foreach (GameObject obj in localPlayerLogic)
+            {
+                Destroy(obj);
+            }
+            Destroy(gameObject);
+            return;
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         inventory = Inventory.Instance;
         inventoryObject.SetActive(false);

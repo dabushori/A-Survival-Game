@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
 public class TimeController : MonoBehaviour
 {
@@ -54,6 +55,9 @@ public class TimeController : MonoBehaviour
 
     private void Start()
     {
+        sunLight = GameObject.Find("SunLight").GetComponent<Light>();
+        moonLight = GameObject.Find("MoonLight").GetComponent<Light>();
+
         currentTime = DateTime.Now.Date + TimeSpan.FromHours(startHour);
 
         sunriseTime = TimeSpan.FromHours(sunriseHour);
@@ -78,7 +82,6 @@ public class TimeController : MonoBehaviour
         // change the ambient light
         RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, lightChangeCurve.Evaluate(doProduct));
     }
-
 
     private void UpdateTimeOfDay()
     {

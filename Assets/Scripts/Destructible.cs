@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class Destructible : MonoBehaviour
 
     [SerializeField]
     public GameObject breakParticlesPrefab;
+
+    PhotonView photonView;
 
     public int HP
     {
@@ -37,6 +40,7 @@ public class Destructible : MonoBehaviour
     private void Awake()
     {
         TryGetComponent<Animator>(out animator);
+        photonView = GetComponent<PhotonView>();
         if (animator != null && !animator.HasState(0, Animator.StringToHash("death"))) animator = null;
             
         if (animator != null)
@@ -76,13 +80,13 @@ public class Destructible : MonoBehaviour
             {
                 if (animator == null)
                 {
-                    Destroy(gameObject);
+                    DestroyObject();
                     BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6);
                     PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
                 } else
                 {
                     animator.SetBool("IsDead", true);
-                    Destroy(gameObject, deathLength);
+                    DestroyObject();
                 }
                 for (int i = 0; i < items.Length; ++i)
                 {
@@ -115,7 +119,7 @@ public class Destructible : MonoBehaviour
         {
             if (animator == null)
             {
-                Destroy(gameObject);
+                DestroyObject();
                 hp -= damage;
                 BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2);
                 PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
@@ -123,12 +127,25 @@ public class Destructible : MonoBehaviour
             else
             {
                 animator.SetBool("IsDead", true);
-                Destroy(gameObject, deathLength);
+                DestroyObject();
             }
             for (int i = 0; i < items.Length; ++i)
             {
                 inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
             }
+        }
+    }
+
+    [PunRPC]
+    void DestroyObject()
+    {
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        } 
+        else
+        {
+            photonView.RPC(nameof(DestroyObject), photonView.Owner);
         }
     }
 }
