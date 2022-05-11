@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -4409120486316474747}
   - component: {fileID: 6982270542606648379}
   - component: {fileID: 2164275706160606816}
+  - component: {fileID: -3240063729898352611}
   m_Layer: 7
   m_Name: 3
   m_TagString: Untagged
@@ -124,6 +125,7 @@ MonoBehaviour:
   levelNeededToBreak: 0
   DEFAULT_BREAKING_DAMAGE: 20
   DEFAULT_HITTING_DAMAGE: 20
+  myPhotonView: {fileID: 0}
 --- !u!65 &-4409120486316474747
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -168,7 +170,24 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -3240063729898352611}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-3240063729898352611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377331622712542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1

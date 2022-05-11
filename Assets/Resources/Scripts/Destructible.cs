@@ -47,6 +47,7 @@ public class Destructible : MonoBehaviour
                 if (clip.name == "anim_death") deathLength = clip.length + 0.1f;
             }
         }
+        myPhotonView = gameObject.GetComponent<PhotonView>();
     }
 
     public void Break(Inventory inventory)
@@ -79,11 +80,13 @@ public class Destructible : MonoBehaviour
                 {
                     BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 5);
                     PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-                    PhotonNetwork.Destroy(gameObject);
+                    // PhotonNetwork.Destroy(gameObject);
+                    DestoryObject();
                 } else
                 {
                     animator.SetBool("IsDead", true);
-                    PhotonNetwork.Destroy(gameObject);
+                    // PhotonNetwork.Destroy(gameObject);
+                    DestoryObject();
                 }
                 for (int i = 0; i < items.Length; ++i)
                 {
@@ -119,17 +122,33 @@ public class Destructible : MonoBehaviour
                 hp -= damage;
                 BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2);
                 PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-                PhotonNetwork.Destroy(gameObject);
+                // PhotonNetwork.Destroy(gameObject);
+                DestoryObject();
             }
             else
             {
                 animator.SetBool("IsDead", true);
-                PhotonNetwork.Destroy(gameObject);
+                // PhotonNetwork.Destroy(gameObject);
+                DestoryObject();
             }
             for (int i = 0; i < items.Length; ++i)
             {
                 inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
             }
+        }
+    }
+
+    [SerializeField] PhotonView myPhotonView;
+    [PunRPC]
+    public void DestoryObject()
+    {
+        if (myPhotonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
+        else
+        {
+            myPhotonView.RPC(nameof(DestoryObject), myPhotonView.Owner);
         }
     }
 }

@@ -81,7 +81,10 @@ public class WorldGeneration : MonoBehaviourPunCallbacks
         gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
 
         float distanceBetweenVertices = (float)tileDepth / (float)tileDepthInVertices;
-        if (PhotonNetwork.IsMasterClient) GenerateGameObjects(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GenerateGameObjects(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
+        }
         
         GameStateController.worldDepth = tileDepthInVertices * mapDepthInTiles;
         GameStateController.worldWidth = tileWidthInVertices * mapWidthInTiles;
@@ -146,7 +149,9 @@ public class WorldGeneration : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SpawnPlayer()
     {
-        PhotonNetwork.Instantiate("Prefabs/Player/PhotonPlayer", Vector3.zero, Quaternion.identity);
+        // PhotonNetwork.Instantiate("Prefabs/Player/PhotonPlayer", Vector3.zero, Quaternion.identity);
+        var position = Random.insideUnitCircle * 20;
+        PhotonNetwork.Instantiate("Prefabs/Player/FirstPersonPlayer", new Vector3(position.x + GameStateController.worldDepth / 2, 5, position.y + GameStateController.worldWidth / 2), Quaternion.identity);
     }
 
     [SerializeField]
@@ -167,11 +172,5 @@ public class WorldGeneration : MonoBehaviourPunCallbacks
             PhotonView.Get(this).RPC(nameof(SpawnPlayer), RpcTarget.All);
         }
 
-    }
-
-    void SyncWorld_RPC(object worldObjects, object tiles)
-    {
-        Instantiate((GameObject)worldObjects, transform);
-        Instantiate((GameObject)tiles, transform);
     }
 }

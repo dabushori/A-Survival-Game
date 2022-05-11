@@ -431,6 +431,7 @@ MonoBehaviour:
   levelNeededToBreak: 0
   DEFAULT_BREAKING_DAMAGE: 20
   DEFAULT_HITTING_DAMAGE: 20
+  myPhotonView: {fileID: 0}
 --- !u!114 &5967535684710066619
 MonoBehaviour:
   m_ObjectHideFlags: 0

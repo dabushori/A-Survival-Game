@@ -130,6 +130,8 @@ public class MobAI : MonoBehaviour
 
     void DealDamage()
     {
+        Debug.Log(player);
+        Debug.Log(player.GetComponentInChildren<PlayerHealth>());
         player.GetComponentInChildren<PlayerHealth>().DealDamage(damage);
     }
 
