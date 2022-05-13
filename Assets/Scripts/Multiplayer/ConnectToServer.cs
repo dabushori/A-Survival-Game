@@ -26,6 +26,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
+        connectButton.interactable = true;
         gameObject.SetActive(false);
         mainMenu.SetActive(true);
     }
