@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
-  breakParticlesPrefab: {fileID: 6434259900260357715, guid: 89712efdac7fa8640a15a6a7f5d9c48d, type: 3}
+  breakParticlesPrefab: {fileID: 6183049579705176933, guid: f1150654984875d4eb1dca57ce814aed, type: 3}
   items:
   - {fileID: 11400000, guid: f4d6654322b935d4898d1ab90914b224, type: 2}
   minItemsToGive: 02000000
@@ -121,6 +121,7 @@ MonoBehaviour:
   levelNeededToBreak: 1
   DEFAULT_BREAKING_DAMAGE: 20
   DEFAULT_HITTING_DAMAGE: 20
+  mobScaleParticle: 0
 --- !u!65 &1597276420967786103
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -152,8 +153,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 0}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

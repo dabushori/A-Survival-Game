@@ -458,8 +458,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.780496, y: 0.9628936, z: 1.0095855}
-  m_Center: {x: 0.88517135, y: 0.40163332, z: 0.45882648}
+  m_Size: {x: 1.780496, y: 0.9351334, z: 1.0095855}
+  m_Center: {x: 0.88517135, y: 0.38775322, z: 0.45882648}
 --- !u!114 &-7553478104782626967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
-  breakParticlesPrefab: {fileID: 6434259900260357715, guid: 5863a29a5b7adbe43bbd166eff1dbbc8, type: 3}
+  breakParticlesPrefab: {fileID: 6183049579705176933, guid: db549771045651445b3f7a572e2b7ff2, type: 3}
   items:
   - {fileID: 11400000, guid: f8ba2fbf646e1bc42883b7b3a82b3cfa, type: 2}
   minItemsToGive: 01000000

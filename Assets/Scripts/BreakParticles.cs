@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BreakParticles : MonoBehaviour
 {
-    public static void CreateBreakParticles(GameObject BreakParticlesPrefab, Vector3 position)
+    public static void CreateBreakParticles(GameObject BreakParticlesPrefab, Vector3 position, Transform mobTransform)
     {
-        ParticleSystem ps = Instantiate(BreakParticlesPrefab, position, Quaternion.identity).GetComponent<ParticleSystem>();
+        ParticleSystem ps = Instantiate(BreakParticlesPrefab, position, Quaternion.identity, mobTransform).GetComponent<ParticleSystem>();
         ps.Play();
     }
 
     void Start()
     {
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 2f);
     }
 }

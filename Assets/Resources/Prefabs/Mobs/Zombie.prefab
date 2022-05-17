@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 140
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
-  breakParticlesPrefab: {fileID: 6434259900260357715, guid: 14a381865be203d4d8efc4c72e3b5fe4, type: 3}
+  breakParticlesPrefab: {fileID: 6463359905744312084, guid: fc5ac9314ac78384586ff69ac0a9775a, type: 3}
   items:
   - {fileID: 11400000, guid: cc5d2cbf62fcbac4a94a36ecea037151, type: 2}
   minItemsToGive: 01000000
@@ -173,6 +173,7 @@ MonoBehaviour:
   levelNeededToBreak: 0
   DEFAULT_BREAKING_DAMAGE: 20
   DEFAULT_HITTING_DAMAGE: 20
+  mobScaleParticle: 1
 --- !u!114 &-5701278682144826981
 MonoBehaviour:
   m_ObjectHideFlags: 0
