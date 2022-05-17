@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -37,7 +35,6 @@ public class PlayerMovements : MonoBehaviour
     public void Move(InputAction.CallbackContext ctx)
     {
         movingDirection = ctx.ReadValue<Vector2>();
-        // movingDirection = Camera.main.transform.forward * dir.y + Camera.main.transform.right * dir.x;
     }
 
     [SerializeField]
@@ -58,7 +55,6 @@ public class PlayerMovements : MonoBehaviour
     {
         if (!isInInventory && !isInStopMenu)
         {
-            // if (ctx.performed) controller.Move(Vector3.up * jumpPower);
             if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
         }
     }
@@ -110,7 +106,6 @@ public class PlayerMovements : MonoBehaviour
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide))
         {
             hit.transform.gameObject.GetComponent<Destructible>().Break(inventory);
-            // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
             hitStartTime = Time.time;
         }
 
@@ -209,14 +204,18 @@ public class PlayerMovements : MonoBehaviour
         canPlace = true;
     }
 
+    bool canChooseItem = true;
+
     public void ChooseItem(InputAction.CallbackContext ctx)
     {
-        if (!isInInventory && !isInStopMenu && ctx.performed)
+        Debug.Log(((KeyControl)ctx.control).keyCode.ToString());
+        if (canChooseItem && !isInInventory && !isInStopMenu && ctx.performed)
         {
+            canChooseItem = false;
+            Invoke(nameof(ResetCanChooseItem), 0.2f);
             string digit = ((KeyControl)ctx.control).keyCode.ToString();
             if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed)) inventory.ChooseItem(digitPressed - 1);
         }
-        // ctx.action.GetBindingIndex();
     }
 
     public void ChangeItem(InputAction.CallbackContext ctx)
@@ -229,32 +228,33 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
+    void ResetCanChooseItem()
+    {
+        canChooseItem = true;
+    }
+
     private void Update()
     {
         if (playerHealth.Health <= 0)
         {
-            DeathHold();
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
         // Gravity 
         UpdateGravity();
 
+        Vector3 movingVec = Vector3.zero;
         if (!isInInventory && !isInStopMenu)
         {
-            Vector3 movingVec = (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x);
+            movingVec = (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x);
             movingVec.y = 0;
-            controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
             // Hit Logic
             if (isHitKeyPressed) Hit();
             // Use Logic
             if (isUse) Use();
         }
+        controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
 
-    }
-
-    public void DeathHold()
-    {
-        Cursor.lockState = CursorLockMode.None;
     }
 
     bool isInInventory = false;
