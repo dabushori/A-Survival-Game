@@ -58,6 +58,7 @@ public class MobsGeneration : MonoBehaviour
 
     public bool CanSpawnMob(MobData mobData, bool isHostile, Vector3 position)
     {
+        if (GameStateController.timeController == null) return false;
         if (mobData.onlyAtNight)
         {
             return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&

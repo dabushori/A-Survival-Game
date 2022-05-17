@@ -58,6 +58,7 @@ public class MobAI : MonoBehaviour
     }
     public void Update()
     {
+        if (!agent.isOnNavMesh) return;
         if (GetComponent<Destructible>().HP <= 0) return;
         Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer);
         Collider[] attackPlayers = Physics.OverlapSphere(transform.position, attackRange, WhatIsPlayer);

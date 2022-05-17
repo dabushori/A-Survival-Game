@@ -62,6 +62,8 @@ public class TimeController : MonoBehaviour
 
         sunriseTime = TimeSpan.FromHours(sunriseHour);
         sunsetTime = TimeSpan.FromHours(sunsetHour);
+
+        GameStateController.timeController = this;
     }
 
     private void Update()

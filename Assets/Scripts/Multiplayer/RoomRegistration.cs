@@ -19,24 +19,31 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
 
     [SerializeField]
     Button createButton;
+    [SerializeField]
+    TMP_Text failedToCreateText;
     public void OnClickCreate()
     {
         if (randomSeedInput.isOn)
         {
             if (roomNameInput_create.text.Length > 0)
             {
+                failedToCreateText.text = "";
                 createButton.interactable = false;
                 CreateRoom(roomNameInput_create.text, Random.Range(-1000000, 1000000));
+                return;
             }
         } 
         else
         {
             if (int.TryParse(worldSeedInput.text, out int seed) && roomNameInput_create.text.Length > 0)
             {
+                failedToCreateText.text = "";
                 createButton.interactable = false;
                 CreateRoom(roomNameInput_create.text, seed);
+                return;
             }
         }
+        failedToCreateText.text = "Can't create the room";
     }
 
     void CreateRoom(string name, int worldSeed)
@@ -46,6 +53,11 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         properties["seed"] = worldSeed;
         options.CustomRoomProperties = properties;
         PhotonNetwork.CreateRoom(name, options);
+    }
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        failedToCreateText.text = "Can't create the room";
+        createButton.interactable = true;
     }
 
     [SerializeField]
@@ -102,6 +114,7 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         leaveButton.interactable = true;
         createButton.interactable = true;
         joinButton.interactable = true;
+        startButtonNO.interactable = true;
     }
 
 
@@ -150,7 +163,9 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
             failedToJoinText.text = "";
             joinButton.interactable = false;
             JoinRoom(roomNameInput_join.text);
+            return;
         }
+        failedToJoinText.text = "Can't connect to the room";
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -167,9 +182,6 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         UpdatePlayersList();
-        startButtonNO.interactable = true;
-        joinButton.interactable = true;
-        createButton.interactable = true;
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -185,15 +197,23 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     public void OnStartClick()
     {
         startButtonNO.interactable = false;
+        leaveButton.interactable = false;
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        //PhotonNetwork.LoadLevel("World");
         PhotonView.Get(this).RPC("StartWorld", RpcTarget.All);
     }
 
     private void Awake()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
+        Cursor.lockState = CursorLockMode.None;
         if (PhotonNetwork.IsConnected)
         {
             mainMenu.SetActive(true);
+            if (PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
         } 
         else
         {
@@ -205,5 +225,11 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     public void StartWorld()
     {
         PhotonNetwork.LoadLevel("World");
+    }
+
+    public void resetFailedMessages()
+    {
+        failedToJoinText.text = "";
+        failedToCreateText.text = "";
     }
 }

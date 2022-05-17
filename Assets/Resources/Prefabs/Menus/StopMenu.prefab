@@ -6503,6 +6503,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b97a29852a9038346a9bedeb8040e9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leaveButton: {fileID: 739278945808253243}
+  stayButton: {fileID: 739278945269839687}
 --- !u!1 &739278945918952623
 GameObject:
   m_ObjectHideFlags: 0
