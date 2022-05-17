@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -31,6 +32,8 @@ public class MobAI : MonoBehaviour
     Animator animator;
     bool hasMultipleAnimations;
 
+    PhotonView mobPV;
+
     void AssureValidPosition()
     {
         if (Physics.OverlapSphere(transform.position, GetComponent<CapsuleCollider>().radius, worldObjects).Length > 0)
@@ -41,6 +44,7 @@ public class MobAI : MonoBehaviour
 
     public void Awake()
     {
+        mobPV = GetComponent<PhotonView>();
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, float.MaxValue, (1 << 6))) // 6 is the surface layer, so here we will only find hits with the surface layer
         {
             transform.position = hit.point;
@@ -58,6 +62,7 @@ public class MobAI : MonoBehaviour
     }
     public void Update()
     {
+        if (!mobPV.IsMine) return;
         if (!agent.isOnNavMesh) return;
         if (GetComponent<Destructible>().HP <= 0) return;
         Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer);

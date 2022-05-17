@@ -124,11 +124,11 @@ public class WorldGeneration : MonoBehaviour
 
     public void GenerateGameObjects(int levelDepth, int levelWidth, float levelScale, float distanceBetweenVertices)
     {
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, "World/Trees/", 12);
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, "World/Rocks/", 6);
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 10, "World/Iron/", 6);
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 18, "World/Gold/", 6);
-        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 30, "World/Diamond/", 6);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, GameStateController.treesPath, 12);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, GameStateController.rocksPath, 6);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 10, GameStateController.ironsPath, 6);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 18, GameStateController.goldsPath, 6);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 30, GameStateController.diamondsPath, 6);
     }
 
     public void GenerateTimeController()

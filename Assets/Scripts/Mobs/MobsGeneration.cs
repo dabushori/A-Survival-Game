@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class MobsGeneration : MonoBehaviour
 {
@@ -35,7 +36,8 @@ public class MobsGeneration : MonoBehaviour
             // check spawn rules
             if (CanSpawnMob(mob, isHotile, mobPosition))
             {
-                Instantiate(mob.mobObject, mobPosition, Quaternion.identity);
+                PhotonNetwork.InstantiateRoomObject(GameStateController.mobsPath + mob.mobName, mobPosition, Quaternion.identity);
+                //Instantiate(mob.mobObject, mobPosition, Quaternion.identity);
             }
         }
     }
