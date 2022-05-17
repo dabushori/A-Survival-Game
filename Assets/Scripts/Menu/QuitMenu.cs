@@ -33,4 +33,9 @@ public class QuitMenu : MonoBehaviourPunCallbacks
         while (PhotonNetwork.CurrentRoom.PlayerCount > 1) yield return null;
         PhotonNetwork.LoadLevel("Menu");
     }
+
+    private void OnApplicationQuit()
+    {
+        Quit();
+    }
 }
