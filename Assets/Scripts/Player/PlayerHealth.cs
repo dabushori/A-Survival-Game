@@ -29,6 +29,14 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         }
     }
 
+    public int MaxHealth
+    {
+        get
+        {
+            return (int) healthBar.maxValue;
+        }
+    }
+
 
     public void DealDamage(int damage)
     {

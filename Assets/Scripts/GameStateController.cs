@@ -10,7 +10,6 @@ public class GameStateController : MonoBehaviour
 
     public static int Quality = 2;
 
-
     public static int worldDepth, worldWidth;
 
     public static TimeController timeController;
@@ -21,6 +20,5 @@ public class GameStateController : MonoBehaviour
     public static string ironsPath = "World/Iron/";
     public static string goldsPath = "World/Gold/";
     public static string diamondsPath = "World/Diamond/";
-
-
+    public static string furniturePath = "Prefabs/Furniture/";
 }

@@ -47,7 +47,11 @@ public class Destructible : MonoBehaviour
         {
             foreach (var clip in animator.runtimeAnimatorController.animationClips)
             {
-                if (clip.name == "anim_death") deathLength = clip.length + 0.1f;
+                if (clip.name == "anim_death")
+                {
+                    deathLength = clip.length + 0.3f;
+                    break;
+                }
             }
         }
     }
@@ -72,7 +76,7 @@ public class Destructible : MonoBehaviour
         {
             if (hp > 0)
             {
-                hp -= damage;
+                DealDamage(damage);
                 BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6);
                 PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
             }
@@ -111,24 +115,15 @@ public class Destructible : MonoBehaviour
 
         if (hp > 0)
         {
-            hp -= damage;
+            DealDamage(damage);
             BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2);
             PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
         }
         if (hp <= 0)
         {
-            if (animator == null)
-            {
-                DestroyObject();
-                hp -= damage;
-                BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2);
-                PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-            }
-            else
-            {
-                animator.SetBool("IsDead", true);
-                DestroyObject();
-            }
+            DestroyObject();
+            BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2);
+            PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
             for (int i = 0; i < items.Length; ++i)
             {
                 inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
@@ -137,15 +132,41 @@ public class Destructible : MonoBehaviour
     }
 
     [PunRPC]
+    void DealDamage(int damage)
+    {
+        if (photonView.IsMine)
+        {
+            hp -= damage;
+        }
+        else
+        {
+            photonView.RPC(nameof(DealDamage), photonView.Owner, damage);
+        }
+    }
+
+    [PunRPC]
     void DestroyObject()
     {
         if (photonView.IsMine)
         {
-            PhotonNetwork.Destroy(gameObject);
+            if (animator != null)
+            {
+                animator.SetBool("IsDead", true);
+                Invoke(nameof(DestroyMe), deathLength);
+            }
+            else
+            {
+                DestroyMe();
+            }
         } 
         else
         {
             photonView.RPC(nameof(DestroyObject), photonView.Owner);
         }
+    }
+
+    void DestroyMe()
+    {
+        PhotonNetwork.Destroy(gameObject);
     }
 }

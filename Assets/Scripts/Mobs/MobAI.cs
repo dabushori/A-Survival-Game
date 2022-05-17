@@ -139,6 +139,7 @@ public class MobAI : MonoBehaviour
     void DealDamage()
     {
         if (player != null) PhotonView.Get(player).RPC(nameof(PlayerControls.DealDamage), PhotonView.Get(player).Owner, damage);
+        if (hasMultipleAnimations) animator.SetBool("IsAttacking", false);
     }
 
     private void ResetAttack()

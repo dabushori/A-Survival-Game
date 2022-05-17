@@ -174,7 +174,7 @@ public class PlayerMovements : MonoBehaviour
                 canPlace = false;
                 Vector3 cameraForward = Camera.main.transform.forward;
                 cameraForward.y = 0;
-                PhotonNetwork.InstantiateRoomObject("Prefabs/Furniture/" + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
+                PhotonNetwork.InstantiateRoomObject(GameStateController.furniturePath + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
                 inventory.RemoveFromInventory(currentItem, 1);
                 Invoke(nameof(ResetCanPlace), PLACING_TIME);
             }
@@ -187,6 +187,7 @@ public class PlayerMovements : MonoBehaviour
             }
             else if (currentItem.job == Jobs.FOOD && canEat)
             {
+                if (playerHealth.Health == playerHealth.MaxHealth) return;
                 canEat = false;
                 playerHealth.AddHealth(currentItem.hpBonus);
                 inventory.RemoveFromInventory(currentItem, 1);
