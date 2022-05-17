@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 8710761594365420441}
   - component: {fileID: 1377713615972869607}
   - component: {fileID: 8387440710353344827}
-  - component: {fileID: 7045287346766586156}
+  - component: {fileID: 7306178471303033369}
   m_Layer: 0
   m_Name: FirstPersonPlayer
   m_TagString: Untagged
@@ -208,7 +208,7 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
---- !u!114 &7045287346766586156
+--- !u!114 &7306178471303033369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

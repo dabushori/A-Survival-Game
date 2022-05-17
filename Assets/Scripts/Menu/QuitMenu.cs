@@ -22,7 +22,7 @@ public class QuitMenu : MonoBehaviourPunCallbacks
         leaveButton.interactable = false;
         if (PhotonNetwork.IsMasterClient)
         {
-            parentPV.RPC(nameof(PlayerLeaveRoom.ReturnAllToMenu), RpcTarget.Others);
+            parentPV.RPC(nameof(PlayerControls.ReturnAllToMenu), RpcTarget.Others);
             StartCoroutine(AssureAllPlayersExited());
         }
         else PhotonNetwork.LoadLevel("Menu");

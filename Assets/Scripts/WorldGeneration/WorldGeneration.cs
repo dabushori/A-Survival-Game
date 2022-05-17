@@ -146,7 +146,8 @@ public class WorldGeneration : MonoBehaviour
         // Instantiate(playerPrefab, new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity);
         Hashtable props = new Hashtable();
         GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/FirstPersonPlayer", new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity) as GameObject;
-        props["local_player"] = player.GetComponent<PhotonView>().ViewID;
+        int viewID = player.GetComponent<PhotonView>().ViewID;
+        props["local_player"] = viewID;
         PhotonNetwork.SetPlayerCustomProperties(props);
     }
 

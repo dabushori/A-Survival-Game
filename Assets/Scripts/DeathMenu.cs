@@ -17,7 +17,7 @@ public class DeathMenu : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            parentPV.RPC(nameof(PlayerLeaveRoom.ReturnAllToMenu), RpcTarget.Others);
+            parentPV.RPC(nameof(PlayerControls.ReturnAllToMenu), RpcTarget.Others);
             StartCoroutine(AssureAllPlayersExited());
         }
         else PhotonNetwork.LoadLevel("Menu");

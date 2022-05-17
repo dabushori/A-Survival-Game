@@ -1,6 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class MobAI : MonoBehaviour
 {
@@ -62,21 +63,21 @@ public class MobAI : MonoBehaviour
     }
     public void Update()
     {
-        if (!agent.isOnNavMesh) return;
+        if (!mobPV.IsMine || !agent.isOnNavMesh) return;
         if (GetComponent<Destructible>().HP <= 0) return;
-        Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer);
+        Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer).OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
         Collider[] attackPlayers = Physics.OverlapSphere(transform.position, attackRange, WhatIsPlayer);
 
         playerInSightRange = sightPlayers?.Length != 0;
         playerInAttackRange = attackPlayers?.Length != 0;
 
         player = playerInSightRange ? sightPlayers[0].transform.parent.gameObject : null;
-        if (mobPV.IsMine && !playerInSightRange && !playerInAttackRange)
+        if (!playerInSightRange && !playerInAttackRange)
         {
             if (hasMultipleAnimations) animator.SetBool("IsAttacking", false);
             Patroling();
         }
-        if (player == null || player.GetComponent<PhotonView>().ViewID != (int)PhotonNetwork.LocalPlayer.CustomProperties["local_player"]) return;
+        // if (player == null || player.GetComponent<PhotonView>().ViewID != (int)PhotonNetwork.LocalPlayer.CustomProperties["local_player"]) return;
         if (playerInSightRange)
         {
             if (!playerInAttackRange && hasMultipleAnimations)
@@ -137,7 +138,7 @@ public class MobAI : MonoBehaviour
 
     void DealDamage()
     {
-        player.GetComponentInChildren<PlayerHealth>().DealDamage(damage);
+        if (player != null) PhotonView.Get(player).RPC(nameof(PlayerControls.DealDamage), PhotonView.Get(player).Owner, damage);
     }
 
     private void ResetAttack()

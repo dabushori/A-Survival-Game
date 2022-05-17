@@ -193,6 +193,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6113339963038010782}
+  - {fileID: -5464765699464726819}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -251,7 +252,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: IsDead
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!1 &5091242709008108108
 GameObject:

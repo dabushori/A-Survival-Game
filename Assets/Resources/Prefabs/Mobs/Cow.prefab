@@ -643,6 +643,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7472918440429159916}
+  - {fileID: -4620412332644936994}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -693,8 +694,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsDead
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &1247043747989182
 GameObject:
   m_ObjectHideFlags: 0
