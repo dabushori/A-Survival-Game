@@ -484,6 +484,7 @@ GameObject:
   - component: {fileID: 4390196248814062417}
   - component: {fileID: -8895217774276672440}
   - component: {fileID: 7472918440429159916}
+  - component: {fileID: -4620412332644936994}
   m_Layer: 10
   m_Name: Cow
   m_TagString: Untagged
@@ -678,6 +679,22 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-4620412332644936994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244760467543844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers: []
 --- !u!1 &1247043747989182
 GameObject:
   m_ObjectHideFlags: 0

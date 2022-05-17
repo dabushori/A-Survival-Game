@@ -62,7 +62,6 @@ public class MobAI : MonoBehaviour
     }
     public void Update()
     {
-        if (!mobPV.IsMine) return;
         if (!agent.isOnNavMesh) return;
         if (GetComponent<Destructible>().HP <= 0) return;
         Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer);
@@ -71,14 +70,15 @@ public class MobAI : MonoBehaviour
         playerInSightRange = sightPlayers?.Length != 0;
         playerInAttackRange = attackPlayers?.Length != 0;
 
-        player = playerInSightRange ? sightPlayers[0].gameObject : null;
-
-        if (!playerInSightRange && !playerInAttackRange)
+        player = playerInSightRange ? sightPlayers[0].transform.parent.gameObject : null;
+        if (mobPV.IsMine && !playerInSightRange && !playerInAttackRange)
         {
             if (hasMultipleAnimations) animator.SetBool("IsAttacking", false);
             Patroling();
         }
-        if (playerInSightRange) {
+        if (player == null || player.GetComponent<PhotonView>().ViewID != (int)PhotonNetwork.LocalPlayer.CustomProperties["local_player"]) return;
+        if (playerInSightRange)
+        {
             if (!playerInAttackRange && hasMultipleAnimations)
             {
                 animator.SetBool("IsAttacking", false);
@@ -90,6 +90,7 @@ public class MobAI : MonoBehaviour
             Attacking();
         }
     }
+
     public void Patroling()
     {
         if (!walkPointSet) FindWalkPoint();

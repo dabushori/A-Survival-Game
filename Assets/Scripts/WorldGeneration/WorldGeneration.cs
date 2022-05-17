@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -143,7 +144,10 @@ public class WorldGeneration : MonoBehaviour
     public void SpawnPlayer()
     {
         // Instantiate(playerPrefab, new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity);
-        PhotonNetwork.Instantiate("Prefabs/Player/FirstPersonPlayer", new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity);
+        Hashtable props = new Hashtable();
+        GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/FirstPersonPlayer", new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity) as GameObject;
+        props["local_player"] = player.GetComponent<PhotonView>().ViewID;
+        PhotonNetwork.SetPlayerCustomProperties(props);
     }
 
     System.Random random;
