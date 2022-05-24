@@ -85,16 +85,9 @@ public class Destructible : MonoBehaviour
             }
             if (hp <= 0)
             {
-                if (animator == null)
-                {
-                    DestroyObject();
-                    BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6, transform);
-                    PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-                } else
-                {
-                    animator.SetBool("IsDead", true);
-                    DestroyObject();
-                }
+                DestroyObject();
+                BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6, transform);
+                PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
                 for (int i = 0; i < items.Length; ++i)
                 {
                     inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
