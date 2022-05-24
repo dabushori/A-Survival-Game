@@ -114,6 +114,7 @@ MonoBehaviour:
   hp: 100
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
   breakParticlesPrefab: {fileID: 6183049579705176933, guid: 2b2419230cd5f1549b82e61d1675e7ff, type: 3}
+  takeDamageSound: {fileID: 8300000, guid: 000e236491a1b60429a00129f8db3eb9, type: 3}
   items:
   - {fileID: 11400000, guid: f4d6654322b935d4898d1ab90914b224, type: 2}
   minItemsToGive: 02000000

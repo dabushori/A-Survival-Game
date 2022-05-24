@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameStateController : MonoBehaviour
 {
 
-    public static float SensitivityX = 5f;
-    public static float SensitivityY = 10f;
+    public static float SensitivityX = 7f;
+    public static float SensitivityY = 7f;
 
     public static int Quality = 2;
 

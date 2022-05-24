@@ -8,6 +8,7 @@ public class MobAI : MonoBehaviour
     public NavMeshAgent agent;
 
     public GameObject player;
+    public GameObject soundPlayer;
 
     public LayerMask WhatIsGround, WhatIsPlayer;
 
@@ -27,6 +28,12 @@ public class MobAI : MonoBehaviour
     //Ranges
     public float sightRange, attackRange;
     private bool playerInSightRange, playerInAttackRange;
+
+    // sound
+    private bool alreadyPlayedSound;
+    public AudioClip sound;
+    public float timeBetweenSounds;
+
 
     LayerMask worldObjects = 1 << 7;
 
@@ -90,6 +97,29 @@ public class MobAI : MonoBehaviour
         {
             Attacking();
         }
+
+        // sound
+        Collider[] soundPlayers = Physics.OverlapSphere(transform.position, 30, WhatIsPlayer).OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
+        bool playerInSoundRange = soundPlayers?.Length != 0;
+        foreach (Collider sp in soundPlayers)
+        {
+            soundPlayer = playerInSoundRange ? sp.transform.parent.gameObject : null;
+            if (playerInSoundRange)
+            {
+                Talking();
+            }
+        }
+    }
+
+    public void Talking()
+    {
+        if (!alreadyPlayedSound && soundPlayer != null)
+        {
+            Invoke(nameof(PlaySound), timeBetweenSounds / 2);
+
+            alreadyPlayedSound = true;
+            Invoke(nameof(ResetSound), timeBetweenSounds);
+        }
     }
 
     public void Patroling()
@@ -145,5 +175,21 @@ public class MobAI : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    private void PlaySound()
+    {
+        if (soundPlayer != null) PhotonView.Get(this).RPC(nameof(RPCPlaySound), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPCPlaySound()
+    {
+        SFXManager.Instance.PlaySound(sound, transform.position, 0.5f);
+    }
+
+    private void ResetSound()
+    {
+        alreadyPlayedSound = false;
     }
 }

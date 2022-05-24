@@ -376,6 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   player: {fileID: 0}
+  soundPlayer: {fileID: 0}
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -387,6 +388,8 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   sightRange: 0
   attackRange: 0
+  sound: {fileID: 8300000, guid: dde031b66b76ddb4b96a70487b157fcd, type: 3}
+  timeBetweenSounds: 12
 --- !u!195 &-8417263607788059315
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -424,6 +427,7 @@ MonoBehaviour:
   hp: 85
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
   breakParticlesPrefab: {fileID: 6463359905744312084, guid: fc5ac9314ac78384586ff69ac0a9775a, type: 3}
+  takeDamageSound: {fileID: 8300000, guid: 457a15bae97d7434ea347df499254da5, type: 3}
   items:
   - {fileID: 11400000, guid: 4916074d06438c74581fc8beedad75ac, type: 2}
   - {fileID: 11400000, guid: dd6901e9c467e3a418d0900e378384bf, type: 2}

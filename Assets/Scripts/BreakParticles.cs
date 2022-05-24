@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BreakParticles : MonoBehaviour
 {
-    public static void CreateBreakParticles(GameObject BreakParticlesPrefab, Vector3 position, Transform mobTransform)
+    public static void CreateBreakParticles(GameObject BreakParticlesPrefab, Vector3 position, Transform transform)
     {
-        ParticleSystem ps = Instantiate(BreakParticlesPrefab, position, Quaternion.identity, mobTransform).GetComponent<ParticleSystem>();
+        ParticleSystem ps = Instantiate(BreakParticlesPrefab, position, Quaternion.identity, transform).GetComponent<ParticleSystem>();
         ps.Play();
     }
 

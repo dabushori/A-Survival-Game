@@ -119,6 +119,7 @@ MonoBehaviour:
   hp: 150
   floatingPointsPrefab: {fileID: 1855528624968127118, guid: 7610cf8dd7294fe458d62bbfc5df03ce, type: 3}
   breakParticlesPrefab: {fileID: 6183049579705176933, guid: 708e3f32b98e5e6479b7cae549c9f828, type: 3}
+  takeDamageSound: {fileID: 8300000, guid: 000e236491a1b60429a00129f8db3eb9, type: 3}
   items:
   - {fileID: 11400000, guid: dbadcf9d2ff38a44ca630dd85c76c9c7, type: 2}
   minItemsToGive: 01000000
@@ -126,6 +127,7 @@ MonoBehaviour:
   levelNeededToBreak: 1
   DEFAULT_BREAKING_DAMAGE: 20
   DEFAULT_HITTING_DAMAGE: 20
+  mobScaleParticle: 1
 --- !u!65 &1706965443101079411
 BoxCollider:
   m_ObjectHideFlags: 0

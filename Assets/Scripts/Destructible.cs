@@ -15,6 +15,9 @@ public class Destructible : MonoBehaviour
     [SerializeField]
     public GameObject breakParticlesPrefab;
 
+    [SerializeField]
+    public AudioClip takeDamageSound;
+
     PhotonView photonView;
 
     public int HP
@@ -77,6 +80,7 @@ public class Destructible : MonoBehaviour
 
         if (Item.CanBreak(toolBreakLevel, levelNeededToBreak))
         {
+            photonView.RPC(nameof(RPCDamageSound), RpcTarget.All);
             if (hp > 0)
             {
                 DealDamage(damage);
@@ -85,9 +89,9 @@ public class Destructible : MonoBehaviour
             }
             if (hp <= 0)
             {
-                DestroyObject();
                 BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6, transform);
                 PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
+                DestroyObject();
                 for (int i = 0; i < items.Length; ++i)
                 {
                     inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
@@ -109,6 +113,7 @@ public class Destructible : MonoBehaviour
         {
             damage = chosenItem.hitDamage;
         }
+        photonView.RPC(nameof(RPCDamageSound), RpcTarget.All);
 
         if (hp > 0)
         {
@@ -118,9 +123,9 @@ public class Destructible : MonoBehaviour
         }
         if (hp <= 0)
         {
-            DestroyObject();
             BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y * mobScaleParticle, transform);
             PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
+            DestroyObject();
             for (int i = 0; i < items.Length; ++i)
             {
                 inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
@@ -142,6 +147,12 @@ public class Destructible : MonoBehaviour
     }
 
     [PunRPC]
+    void RPCDamageSound()
+    {
+        SFXManager.Instance.PlaySound(takeDamageSound, transform.position);
+    }
+
+    [PunRPC]
     void DestroyObject()
     {
         if (photonView.IsMine)
@@ -153,7 +164,7 @@ public class Destructible : MonoBehaviour
             }
             else
             {
-                DestroyMe();
+                Invoke(nameof(DestroyMe), 0.1f);
             }
         } 
         else

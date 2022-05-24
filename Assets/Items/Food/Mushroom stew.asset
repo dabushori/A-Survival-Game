@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e58f363ef4a54e9498b7926d6cc1832f, type: 3}
-  m_Name: Mushroom Stew
+  m_Name: Mushroom stew
   m_EditorClassIdentifier: 
   name: Mushroom stew
   icon: {fileID: 21300000, guid: e70e2c03cd5882f4d9431cde9aab5792, type: 3}

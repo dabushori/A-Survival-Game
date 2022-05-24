@@ -526,7 +526,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8710761594916082493}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!1001 &4229544395053997908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -697,6 +697,23 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 3c4faadbf145b8a4c9757ef95f9d9c87, type: 2}
   - {fileID: 2100000, guid: e6010ba7fc181d545b81d94b719e6da2, type: 2}
   - {fileID: 2100000, guid: 7d1b7edb7b5eb8443ba8706dde29a3bb, type: 2}
+--- !u!114 &2555462056750100228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395227842081449681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39a60f6ae02f4e4a9bb2abb625fa7de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armorMats:
+  - {fileID: 2100000, guid: 4b2f667b1a8d6e24eb5bdd7a1af662db, type: 2}
+  - {fileID: 2100000, guid: 3c4faadbf145b8a4c9757ef95f9d9c87, type: 2}
+  - {fileID: 2100000, guid: e6010ba7fc181d545b81d94b719e6da2, type: 2}
+  - {fileID: 2100000, guid: 7d1b7edb7b5eb8443ba8706dde29a3bb, type: 2}
 --- !u!114 &7418404505532274299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,23 +736,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2555462056750100228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6395227842081449681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c39a60f6ae02f4e4a9bb2abb625fa7de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  armorMats:
-  - {fileID: 2100000, guid: 4b2f667b1a8d6e24eb5bdd7a1af662db, type: 2}
-  - {fileID: 2100000, guid: 3c4faadbf145b8a4c9757ef95f9d9c87, type: 2}
-  - {fileID: 2100000, guid: e6010ba7fc181d545b81d94b719e6da2, type: 2}
-  - {fileID: 2100000, guid: 7d1b7edb7b5eb8443ba8706dde29a3bb, type: 2}
 --- !u!114 &3114083490531159530
 MonoBehaviour:
   m_ObjectHideFlags: 0
