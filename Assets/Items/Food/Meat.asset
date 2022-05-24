@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58f363ef4a54e9498b7926d6cc1832f, type: 3}
   m_Name: Meat
   m_EditorClassIdentifier: 
-  name: Meat
+  name: Stake
   icon: {fileID: 21300000, guid: 1bdb9c7d4ccd0dd40b80cc1f421d25b5, type: 3}
   job: 4
   breakDamage: 0

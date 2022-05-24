@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e58f363ef4a54e9498b7926d6cc1832f, type: 3}
-  m_Name: Cooked Meat
+  m_Name: Chicken
   m_EditorClassIdentifier: 
-  name: Cooked Stake
-  icon: {fileID: 21300000, guid: 76bf367011a3c6049a1e0a7ad4d25b54, type: 3}
+  name: Chicken
+  icon: {fileID: 21300000, guid: 1bdb9c7d4ccd0dd40b80cc1f421d25b5, type: 3}
   job: 4
   breakDamage: 0
   breakLevel: 0
   hitDamage: 0
   bodyPart: 0
   defenseLevel: 0
-  hpBonus: 20
+  hpBonus: 7
   placeable: 0
   placedObject: {fileID: 0}
