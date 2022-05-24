@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 587251819171431668, guid: ac0b91b1d4829bc489dc1ca7b8d50cbb, type: 3}

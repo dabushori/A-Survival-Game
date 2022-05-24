@@ -482,6 +482,7 @@ MonoBehaviour:
   levelNeededToBreak: 0
   DEFAULT_BREAKING_DAMAGE: 20
   DEFAULT_HITTING_DAMAGE: 20
+  mobScaleParticle: 1
 --- !u!114 &-366949737515332256
 MonoBehaviour:
   m_ObjectHideFlags: 0

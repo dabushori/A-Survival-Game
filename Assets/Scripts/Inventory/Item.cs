@@ -47,6 +47,8 @@ public class Item : ScriptableObject
     //placeable
     public bool placeable;
     public GameObject placedObject;
+
+    public GameObject itemToHold;
 }
 
 public enum Jobs { MINING = 1, FIGHTING = 2, FOOD = 4, ARMOR = 8 }

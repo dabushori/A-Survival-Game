@@ -135,8 +135,9 @@ public class PlayerMovements : MonoBehaviour
 
     bool canEat = true;
     bool canPlace = true;
+    bool canWear = true;
     [SerializeField]
-    float EATING_TIME, PLACING_TIME; // time between eatings
+    float EATING_TIME, PLACING_TIME, WEARING_TIME; // time between eatings
     [SerializeField]
     private LayerMask SURFACE_LAYER;
     [SerializeField]
@@ -166,32 +167,74 @@ public class PlayerMovements : MonoBehaviour
         // use logic
         Item currentItem = inventory.ChosenItem;
         if (currentItem == null) return;
-        if (currentItem.placeable && canPlace)
+        if (currentItem.placeable)
         {
-            // place
-            if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
+            if (canPlace)
             {
-                canPlace = false;
-                Vector3 cameraForward = Camera.main.transform.forward;
-                cameraForward.y = 0;
-                PhotonNetwork.InstantiateRoomObject(GameStateController.furniturePath + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
-                inventory.RemoveFromInventory(currentItem, 1);
-                Invoke(nameof(ResetCanPlace), PLACING_TIME);
+                // place
+                if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
+                {
+                    canPlace = false;
+                    Vector3 cameraForward = Camera.main.transform.forward;
+                    cameraForward.y = 0;
+                    PhotonNetwork.InstantiateRoomObject(GameStateController.furniturePath + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
+                    inventory.RemoveFromInventory(currentItem, 1);
+                    Invoke(nameof(ResetCanPlace), PLACING_TIME);
+                }
             }
         }
         else
         {
             if (currentItem.job == Jobs.ARMOR)
             {
-                inventory.WearArmor();
+                if (canWear)
+                {
+                    canWear = false;
+                    inventory.WearArmor();
+                    WearCurrentArmor();
+                    Invoke(nameof(ResetCanWear), WEARING_TIME);
+                }
             }
-            else if (currentItem.job == Jobs.FOOD && canEat)
+            else if (currentItem.job == Jobs.FOOD)
             {
-                if (playerHealth.Health == playerHealth.MaxHealth) return;
-                canEat = false;
-                playerHealth.AddHealth(currentItem.hpBonus);
-                inventory.RemoveFromInventory(currentItem, 1);
-                Invoke(nameof(ResetCanEat), EATING_TIME);
+                if (canEat)
+                {
+                    if (playerHealth.Health != playerHealth.MaxHealth)
+                    {
+                        canEat = false;
+                        playerHealth.AddHealth(currentItem.hpBonus);
+                        inventory.RemoveFromInventory(currentItem, 1);
+                        Invoke(nameof(ResetCanEat), EATING_TIME);
+                    }
+                }
+            }
+        }
+    }
+
+
+    [SerializeField]
+    Transform characterBoneRoot;
+
+    // helmet, 
+    [SerializeField]
+    GameObject[] armor;
+
+    public void WearCurrentArmor()
+    {
+        var armorSlots = inventory.GetArmorSlots();
+        if (armorSlots == null) return;
+        foreach (var slot in armorSlots)
+        {
+            GameObject currArmor = armor[(int)((ArmorSlot)slot).bodyPart];
+            if (slot.Amount > 0)
+            {
+                currArmor.SetActive(true);
+                Material m = slot.Item.itemToHold.GetComponent<Renderer>().sharedMaterial;
+                currArmor.GetComponent<ArmorSync>().SetMaterial(m);
+            }
+            else
+            {
+                currArmor.SetActive(false);
             }
         }
     }
@@ -199,6 +242,10 @@ public class PlayerMovements : MonoBehaviour
     void ResetCanEat()
     {
         canEat = true;
+    }
+    void ResetCanWear()
+    {
+        canWear = true;
     }
     void ResetCanPlace()
     {
@@ -209,13 +256,15 @@ public class PlayerMovements : MonoBehaviour
 
     public void ChooseItem(InputAction.CallbackContext ctx)
     {
-        Debug.Log(((KeyControl)ctx.control).keyCode.ToString());
         if (canChooseItem && !isInInventory && !isInStopMenu && ctx.performed)
         {
             canChooseItem = false;
             Invoke(nameof(ResetCanChooseItem), 0.2f);
             string digit = ((KeyControl)ctx.control).keyCode.ToString();
-            if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed)) inventory.ChooseItem(digitPressed - 1);
+            if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed))
+            {
+                inventory.ChooseItem(digitPressed - 1);
+            }
         }
     }
 
@@ -226,6 +275,21 @@ public class PlayerMovements : MonoBehaviour
             float scrollY = ctx.ReadValue<float>();
             if (scrollY > 0) inventory.ChooseNextItem();
             else if (scrollY < 0) inventory.ChoosePrevItem();
+        }
+    }
+
+    [SerializeField]
+    Transform itemPlaceHolder;
+
+    public void HoldCurrentItem()
+    {
+        foreach (Transform childTransform in itemPlaceHolder.GetComponentInChildren<Transform>())
+        {
+            Destroy(childTransform.gameObject);
+        }
+        if (inventory.ChosenItem != null && inventory.ChosenItem.itemToHold != null)
+        {
+            Instantiate(inventory.ChosenItem.itemToHold, itemPlaceHolder);
         }
     }
 
@@ -255,6 +319,12 @@ public class PlayerMovements : MonoBehaviour
             if (isUse) Use();
         }
         controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
+
+        if (inventory != null)
+        {
+            WearCurrentArmor();
+            HoldCurrentItem();
+        }
 
     }
 
@@ -358,5 +428,12 @@ public class PlayerMovements : MonoBehaviour
         inventory = Inventory.Instance;
         inventoryObject.SetActive(false);
         stopMenuObject.SetActive(false);
+        Invoke(nameof(Init), 3);
+    }
+
+    private void Init()
+    {
+        foreach (var r in RecipesDatabase.furnaceRecipes) Inventory.Instance.AddToInventory(r.craftedItem, 10);
+        foreach (var r in RecipesDatabase.anvilRecipes) Inventory.Instance.AddToInventory(r.craftedItem, 10);
     }
 }

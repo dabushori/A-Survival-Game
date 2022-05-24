@@ -45,6 +45,10 @@ MonoBehaviour:
   - AllToLobby
   - ReturnAllToMenu
   - DealDamage
+  - OnDisable
+  - OnEnable
+  - SetMaterial
+  - SetMaterialByIndex
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

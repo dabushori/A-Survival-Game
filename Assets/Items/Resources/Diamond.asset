@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: Diamond
   m_EditorClassIdentifier: 
   name: Diamond
+  icon: {fileID: 21300000, guid: ab490490f27789f4988b37efe5ac76f7, type: 3}
   job: 0
   breakDamage: 0
   breakLevel: 0
   hitDamage: 0
-  hitLevel: 0
   bodyPart: 0
   defenseLevel: 0
   hpBonus: 0
-  icon: {fileID: 21300000, guid: ab490490f27789f4988b37efe5ac76f7, type: 3}
+  placeable: 0
+  placedObject: {fileID: 0}
+  itemToHold: {fileID: 7405846476849542632, guid: 497070078c2d33c458870b26919d764d, type: 3}

@@ -23,6 +23,13 @@ public class Inventory
     [SerializeField] InventorySlot[] inventorySlots;
     [SerializeField] InventorySlot[] hotbarSlots;
     [SerializeField] InventorySlot[] armorSlots;
+
+    public InventorySlot[] GetArmorSlots()
+    {
+        return armorSlots;
+    }
+
+
     /**
      * connect the slots in the incentory to the game slots
      */
