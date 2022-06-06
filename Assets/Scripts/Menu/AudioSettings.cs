@@ -10,6 +10,8 @@ public class AudioSettings : MonoBehaviour
     Slider musicSlider;
     [SerializeField]
     Slider gameSlider;
+    [SerializeField]
+    Slider sfxSlider;
 
     private void Start()
     {
@@ -19,6 +21,8 @@ public class AudioSettings : MonoBehaviour
         musicSlider.value = music;
         audioMixer.GetFloat("game", out float game);
         gameSlider.value = game;
+        audioMixer.GetFloat("sfx", out float sfx);
+        sfxSlider.value = sfx;
     }
 
     public AudioMixer audioMixer;
@@ -35,5 +39,10 @@ public class AudioSettings : MonoBehaviour
     public void SetGame(float game)
     {
         audioMixer.SetFloat("game", game);
+    }
+    
+    public void SetSFX(float sfx)
+    {
+        audioMixer.SetFloat("sfx", sfx);
     }
 }

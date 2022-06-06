@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 514243181658818538, guid: a7c61b7e9ce1dd644a15a564cae48ef6, type: 3}
+      propertyPath: game
+      value: 
+      objectReference: {fileID: 5830736212805342988, guid: 6d4f353e67562954f8926a46753403ae, type: 2}
     - target: {fileID: 5820209441825883801, guid: a7c61b7e9ce1dd644a15a564cae48ef6, type: 3}
       propertyPath: m_Name
       value: World

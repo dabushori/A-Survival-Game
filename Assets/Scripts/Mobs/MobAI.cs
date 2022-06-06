@@ -7,10 +7,9 @@ public class MobAI : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    public GameObject player;
-    public GameObject soundPlayer;
+    GameObject player;
 
-    public LayerMask WhatIsGround, WhatIsPlayer;
+    public LayerMask WhatIsGround, WhatIsPlayer, WhatIsEnvironment;
 
     // stats
     public int damage; // projectile damage
@@ -46,7 +45,20 @@ public class MobAI : MonoBehaviour
     {
         if (Physics.OverlapSphere(transform.position, GetComponent<CapsuleCollider>().radius, worldObjects).Length > 0)
         {
-            Destroy(this);
+            DestroyMob();
+        }
+    }
+
+    [PunRPC]
+    void DestroyMob()
+    {
+        if (mobPV.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
+        else
+        {
+            mobPV.RPC(nameof(DestroyMob), mobPV.Owner);
         }
     }
 
@@ -77,8 +89,7 @@ public class MobAI : MonoBehaviour
 
         playerInSightRange = sightPlayers?.Length != 0;
         playerInAttackRange = attackPlayers?.Length != 0;
-
-        player = playerInSightRange ? sightPlayers[0].transform.parent.gameObject : null;
+        player = playerInSightRange ? sightPlayers[0].transform.gameObject : null;
         if (!playerInSightRange && !playerInAttackRange)
         {
             if (hasMultipleAnimations) animator.SetBool("IsAttacking", false);
@@ -101,19 +112,15 @@ public class MobAI : MonoBehaviour
         // sound
         Collider[] soundPlayers = Physics.OverlapSphere(transform.position, 30, WhatIsPlayer).OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
         bool playerInSoundRange = soundPlayers?.Length != 0;
-        foreach (Collider sp in soundPlayers)
+        if (playerInSoundRange)
         {
-            soundPlayer = playerInSoundRange ? sp.transform.parent.gameObject : null;
-            if (playerInSoundRange)
-            {
-                Talking();
-            }
+            Talking();
         }
     }
 
     public void Talking()
     {
-        if (!alreadyPlayedSound && soundPlayer != null)
+        if (!alreadyPlayedSound && sound != null)
         {
             Invoke(nameof(PlaySound), timeBetweenSounds / 2);
 
@@ -140,8 +147,8 @@ public class MobAI : MonoBehaviour
         float newZ = Random.Range(-walkPointRange, walkPointRange);
         walkPoint = new Vector3(transform.position.x + newX, transform.position.y, transform.position.z + newZ);
         // checking if the poisnt is on the ground
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, WhatIsGround))
-            walkPointSet = true;
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, WhatIsGround)) walkPointSet = true;
+        if (Physics.OverlapSphere(walkPoint, 1f, WhatIsEnvironment).Length != 0) walkPointSet = false;
     }
     public void Chasing()
     {
@@ -168,7 +175,11 @@ public class MobAI : MonoBehaviour
 
     void DealDamage()
     {
-        if (player != null) PhotonView.Get(player).RPC(nameof(PlayerControls.DealDamage), PhotonView.Get(player).Owner, damage);
+        if (player != null)
+        {
+            PhotonView.Get(player).RPC(nameof(PlayerControls.DealDamage), PhotonView.Get(player).Owner, damage);
+            PlaySound();
+        }
         if (hasMultipleAnimations) animator.SetBool("IsAttacking", false);
     }
 
@@ -179,7 +190,7 @@ public class MobAI : MonoBehaviour
 
     private void PlaySound()
     {
-        if (soundPlayer != null) PhotonView.Get(this).RPC(nameof(RPCPlaySound), RpcTarget.All);
+        if (sound != null) PhotonView.Get(this).RPC(nameof(RPCPlaySound), RpcTarget.All);
     }
 
     [PunRPC]

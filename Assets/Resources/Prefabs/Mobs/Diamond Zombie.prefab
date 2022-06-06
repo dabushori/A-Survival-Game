@@ -117,14 +117,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  player: {fileID: 0}
-  soundPlayer: {fileID: 0}
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 64
   WhatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  WhatIsEnvironment:
+    serializedVersion: 2
+    m_Bits: 128
   damage: 45
   walkPointRange: 5
   timeBetweenAttacks: 2

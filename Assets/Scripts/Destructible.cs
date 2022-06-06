@@ -149,7 +149,7 @@ public class Destructible : MonoBehaviour
     [PunRPC]
     void RPCDamageSound()
     {
-        SFXManager.Instance.PlaySound(takeDamageSound, transform.position);
+        SFXManager.Instance.PlaySound(takeDamageSound, transform.position, 2f);
     }
 
     [PunRPC]
