@@ -53,8 +53,20 @@ public class TimeController : MonoBehaviour
 
     private TimeSpan sunsetTime;
 
+    private int day;
+    private bool changedDay;
+    [SerializeField]
+    TMP_Text dayText;
+
+    public int GetDay()
+    {
+        return day;
+    }
+
     private void Start()
     {
+        day = 0;
+        changedDay = false;
         sunLight = GameObject.Find("SunLight").GetComponent<Light>();
         moonLight = GameObject.Find("MoonLight").GetComponent<Light>();
 
@@ -72,6 +84,26 @@ public class TimeController : MonoBehaviour
         RotateSun();
         UpdateLight();
         UpdateSky();
+        UpdateDay();
+    }
+
+    private void UpdateDay()
+    {
+        TimeSpan newDay = new TimeSpan(12, 0, 0);
+        TimeSpan now = currentTime.TimeOfDay;
+        if (now > newDay)
+        {
+            if (!changedDay)
+            {
+                changedDay = true;
+                day++;
+                dayText.text = "Day: " + day.ToString();
+            }
+        }
+        else
+        {
+            changedDay = false;
+        }
     }
 
     private void UpdateLight()

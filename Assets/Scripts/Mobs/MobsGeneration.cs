@@ -91,6 +91,50 @@ public class MobsGeneration : MonoBehaviour
             previousFriendlySpawnTime = Time.time;
             SpawnMob(false);
         }
+        UpdateDifficulty();
+    }
+
+    private int lastDay;
+    private void UpdateDifficulty()
+    {
+        int day = GameStateController.timeController.GetDay();
+        if (day == lastDay) return;
+        switch(day)
+        {
+            case 3:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 12;
+                break;
+            case 5:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 10;
+                break;
+            case 7:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 9;
+                break;
+            case 9:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 8;
+                break;
+            case 11:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 7;
+                break;
+            case 13:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 5;
+                break;
+            case 15:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 3;
+                break;
+            case 20:
+                MAX_HOSTILE_MOBS_CAPACITY += 20;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 2;
+                break;
+        }
+        lastDay = day;
     }
 
     private void Awake()
