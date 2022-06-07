@@ -129,9 +129,9 @@ MonoBehaviour:
   damage: 45
   walkPointRange: 5
   timeBetweenAttacks: 2
-  sightRange: 15
-  attackRange: 1.5
-  sound: {fileID: 8300000, guid: 6240cfb1220708045afb46ad21e0873c, type: 3}
+  sightRange: 20
+  attackRange: 1.4
+  sound: {fileID: 8300000, guid: 53ac696a976f80443aa3d767e92c3f7e, type: 3}
   timeBetweenSounds: 10
 --- !u!195 &3188317328622183901
 NavMeshAgent:
@@ -143,7 +143,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

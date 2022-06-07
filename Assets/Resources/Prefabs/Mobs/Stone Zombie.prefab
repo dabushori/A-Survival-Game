@@ -129,7 +129,7 @@ MonoBehaviour:
   damage: 35
   walkPointRange: 3
   timeBetweenAttacks: 2
-  sightRange: 10
+  sightRange: 20
   attackRange: 1.7
   sound: {fileID: 8300000, guid: 6240cfb1220708045afb46ad21e0873c, type: 3}
   timeBetweenSounds: 10
