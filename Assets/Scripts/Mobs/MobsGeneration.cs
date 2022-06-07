@@ -97,6 +97,7 @@ public class MobsGeneration : MonoBehaviour
     private int lastDay;
     private void UpdateDifficulty()
     {
+        if (GameStateController.timeController == null) return;
         int day = GameStateController.timeController.GetDay();
         if (day == lastDay) return;
         switch(day)
