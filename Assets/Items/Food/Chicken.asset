@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chicken
   m_EditorClassIdentifier: 
   name: Chicken
-  icon: {fileID: 21300000, guid: 1bdb9c7d4ccd0dd40b80cc1f421d25b5, type: 3}
+  icon: {fileID: 21300000, guid: d74647f439a1ade46a8db491a8b7a50f, type: 3}
   job: 4
   breakDamage: 0
   breakLevel: 0

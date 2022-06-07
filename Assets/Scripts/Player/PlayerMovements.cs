@@ -431,10 +431,10 @@ public class PlayerMovements : MonoBehaviour
     }
 
     [SerializeField]
-    GameObject playerMesh;
+    GameObject[] playerMeshes;
     public void SetCharacterVisible(bool isVisible)
     {
-        playerMesh.SetActive(isVisible);
+        foreach (var i in playerMeshes) i.SetActive(isVisible);
     }
 
     [SerializeField]

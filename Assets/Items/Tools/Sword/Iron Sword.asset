@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron Sword
   m_EditorClassIdentifier: 
   name: Iron Sword
-  icon: {fileID: 21300000, guid: b53f31000526f9543b0f1a46e9f7acc0, type: 3}
+  icon: {fileID: 21300000, guid: 131800b868607234ca600ab4cb42384b, type: 3}
   job: 2
   breakDamage: 0
   breakLevel: 0

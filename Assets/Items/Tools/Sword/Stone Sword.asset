@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stone Sword
   m_EditorClassIdentifier: 
   name: Stone sword
-  icon: {fileID: 21300000, guid: 829bbecacdf5c524fae027ac179c905a, type: 3}
+  icon: {fileID: 21300000, guid: 1518ad09be4931244bef82f88b720f54, type: 3}
   job: 2
   breakDamage: 0
   breakLevel: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wooden Axe
   m_EditorClassIdentifier: 
   name: Wooden Axe
-  icon: {fileID: 21300000, guid: 62a67858b668e2f4b9f24a15c76c2e06, type: 3}
+  icon: {fileID: 21300000, guid: da7b8069695aa92418ecceccac389ec9, type: 3}
   job: 1
   breakDamage: 30
   breakLevel: 0
