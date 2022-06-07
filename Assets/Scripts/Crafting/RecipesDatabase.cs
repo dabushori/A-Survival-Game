@@ -15,6 +15,7 @@ public class RecipesDatabase
         for (int i = 0; i < recipe.ingredients.Length; ++i)
         {
             if (inventory.GetAmountOfItem(recipe.ingredients[i]) < recipe.amounts[i]) return false;
+            if (inventory.isFull()) return false;
         }
         return true;
     }
