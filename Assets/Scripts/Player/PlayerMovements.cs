@@ -19,7 +19,7 @@ public class PlayerMovements : MonoBehaviour
             mouse = new Vector2(mouse.x * GameStateController.SensitivityX, mouse.y * GameStateController.SensitivityY) * Time.deltaTime;
 
             xRotation -= mouse.y;
-            xRotation = Mathf.Clamp(xRotation, -90, 90);
+            xRotation = Mathf.Clamp(xRotation, -90, 50);
             Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
             playerBody.transform.Rotate(Vector3.up * mouse.x);
@@ -298,6 +298,7 @@ public class PlayerMovements : MonoBehaviour
         if (inventory.ChosenItem != null && inventory.ChosenItem.itemToHold != null)
         {
             if (currentItem == inventory.ChosenItem.itemToHold) return;
+            currentItem = inventory.ChosenItem.itemToHold;
             playerControls.HoldItem(inventory.ChosenItem.itemToHold.name);
         }
     }
@@ -428,6 +429,12 @@ public class PlayerMovements : MonoBehaviour
         crosserObject.SetActive(true);
     }
 
+    [SerializeField]
+    GameObject playerMesh;
+    public void SetCharacterVisible(bool isVisible)
+    {
+        playerMesh.SetActive(isVisible);
+    }
 
     [SerializeField]
     PhotonView photonView;
@@ -451,6 +458,9 @@ public class PlayerMovements : MonoBehaviour
         inventory = Inventory.Instance;
         inventoryObject.SetActive(false);
         stopMenuObject.SetActive(false);
+        SetCharacterVisible(false);
+
+        // testing
         Invoke(nameof(Init), 3);
     }
 
