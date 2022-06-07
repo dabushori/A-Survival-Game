@@ -21,4 +21,5 @@ public class GameStateController : MonoBehaviour
     public static string goldsPath = "World/Gold/";
     public static string diamondsPath = "World/Diamond/";
     public static string furniturePath = "Prefabs/Furniture/";
+    public static string itemsToHoldPath = "Prefabs/3DItems/";
 }

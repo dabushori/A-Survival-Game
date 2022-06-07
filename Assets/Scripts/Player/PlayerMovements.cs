@@ -44,7 +44,11 @@ public class PlayerMovements : MonoBehaviour
     private LayerMask GROUND_LAYER;
     void UpdateGravity()
     {
-        if (Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = -2f;
+        if (Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0)
+        {
+            velocity.y = -2f;
+            animator.SetBool("IsJumping", false);
+        }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(Vector3.up * velocity.y * Time.deltaTime);
     }
@@ -55,7 +59,11 @@ public class PlayerMovements : MonoBehaviour
     {
         if (!isInInventory && !isInStopMenu)
         {
-            if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+            if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0)
+            {
+                velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+                animator.SetBool("IsJumping", true);
+            }
         }
     }
 
@@ -77,14 +85,17 @@ public class PlayerMovements : MonoBehaviour
     private float hitStartTime;
     public void Hit(InputAction.CallbackContext ctx)
     {
+        if (isInInventory || isInStopMenu) return;
         if (ctx.started)
         {
             isHitKeyPressed = true;
+            animator.SetBool("IsHitting", true);
             hitStartTime = Time.time;
         }
         else if (ctx.canceled)
         {
             isHitKeyPressed = false;
+            animator.SetBool("IsHitting", false);
             hitStartTime = 0;
         }
     }
@@ -107,9 +118,8 @@ public class PlayerMovements : MonoBehaviour
         {
             hit.transform.gameObject.GetComponent<Destructible>().Break(inventory);
             hitStartTime = Time.time;
-        }
-
-
+        } 
+        
         if (!isHit && // will use item mining speed
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MINING_DISTANCE, MOBS_LAYER, QueryTriggerInteraction.Collide))
         {
@@ -123,6 +133,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void Use(InputAction.CallbackContext ctx)
     {
+        if (isInInventory || isInStopMenu) return;
         if (ctx.started)
         {
             isUse = true;
@@ -202,6 +213,7 @@ public class PlayerMovements : MonoBehaviour
                     if (playerHealth.Health != playerHealth.MaxHealth)
                     {
                         canEat = false;
+                        animator.SetTrigger("IsEating");
                         playerHealth.AddHealth(currentItem.hpBonus);
                         inventory.RemoveFromInventory(currentItem, 1);
                         Invoke(nameof(ResetCanEat), EATING_TIME);
@@ -279,17 +291,14 @@ public class PlayerMovements : MonoBehaviour
     }
 
     [SerializeField]
-    Transform itemPlaceHolder;
-
+    PlayerControls playerControls;
+    GameObject currentItem;
     public void HoldCurrentItem()
     {
-        foreach (Transform childTransform in itemPlaceHolder.GetComponentInChildren<Transform>())
-        {
-            Destroy(childTransform.gameObject);
-        }
         if (inventory.ChosenItem != null && inventory.ChosenItem.itemToHold != null)
         {
-            Instantiate(inventory.ChosenItem.itemToHold, itemPlaceHolder);
+            if (currentItem == inventory.ChosenItem.itemToHold) return;
+            playerControls.HoldItem(inventory.ChosenItem.itemToHold.name);
         }
     }
 
@@ -308,18 +317,30 @@ public class PlayerMovements : MonoBehaviour
         // Gravity 
         UpdateGravity();
 
-        Vector3 movingVec = Vector3.zero;
         if (!isInInventory && !isInStopMenu)
         {
+            Vector3 movingVec = Vector3.zero;
             movingVec = (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x);
             movingVec.y = 0;
             // Hit Logic
             if (isHitKeyPressed) Hit();
             // Use Logic
             if (isUse) Use();
-        }
-        controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
 
+            if (!isSprinting)
+            {
+                animator.SetBool("IsSprinting", false);
+                if (movingVec.x == 0 && movingVec.z == 0) animator.SetBool("IsWalking", false);
+                else animator.SetBool("IsWalking", true);
+            } else
+            {
+                animator.SetBool("IsWalking", false);
+                if (movingVec.x == 0 && movingVec.z == 0) animator.SetBool("IsSprinting", false);
+                else animator.SetBool("IsSprinting", true);
+            }
+            controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
+
+        }
         if (inventory != null)
         {
             WearCurrentArmor();
@@ -412,6 +433,8 @@ public class PlayerMovements : MonoBehaviour
     PhotonView photonView;
     [SerializeField]
     GameObject[] localPlayerLogic;
+    [SerializeField]
+    Animator animator;
     private void Awake()
     {
         if (!photonView.IsMine)
@@ -435,5 +458,6 @@ public class PlayerMovements : MonoBehaviour
     {
         foreach (var r in RecipesDatabase.furnaceRecipes) Inventory.Instance.AddToInventory(r.craftedItem, 10);
         foreach (var r in RecipesDatabase.anvilRecipes) Inventory.Instance.AddToInventory(r.craftedItem, 10);
+        playerHealth.DealDamage(90);
     }
 }

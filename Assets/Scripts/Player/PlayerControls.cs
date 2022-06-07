@@ -17,6 +17,23 @@ public class PlayerControls : MonoBehaviour
         GetComponentInChildren<PlayerHealth>().DealDamage(damage);
     }
 
+    [SerializeField]
+    Transform itemPlaceHolder;
+
+    [PunRPC]
+    public void HoldItem(string name)
+    {
+        if (PhotonView.Get(this).Owner == PhotonNetwork.LocalPlayer)
+        {
+            PhotonView.Get(this).RPC(nameof(HoldItem), RpcTarget.Others, name);
+        }
+        foreach (Transform childTransform in itemPlaceHolder.GetComponentInChildren<Transform>())
+        {
+            Destroy(childTransform.gameObject);
+        }
+        Instantiate(Resources.Load(GameStateController.itemsToHoldPath + name, typeof(GameObject)), itemPlaceHolder);
+    }
+
     private void OnApplicationQuit()
     {
         if (PhotonNetwork.IsMasterClient)
