@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEditor;
+using System.Collections;
+using System.Threading.Tasks;
 
 public class RoomRegistration : MonoBehaviourPunCallbacks
 {
@@ -51,6 +53,8 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions();
         ExitGames.Client.Photon.Hashtable properties = new ExitGames.Client.Photon.Hashtable();
         properties["seed"] = worldSeed;
+        properties["playersInGame"] = 0;
+        properties["readyPlayers"] = 0;
         options.CustomRoomProperties = properties;
         PhotonNetwork.CreateRoom(name, options);
     }
@@ -200,6 +204,7 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
         leaveButton.interactable = false;
         PhotonNetwork.CurrentRoom.IsOpen = false;
         //PhotonNetwork.LoadLevel("World");
+        //LevelManager.Instance.LoadScene();
         PhotonView.Get(this).RPC("StartWorld", RpcTarget.All);
     }
 
@@ -224,10 +229,23 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     [PunRPC]
     public void StartWorld()
     {
-        PhotonNetwork.LoadLevel("World");
+        LoadScene();
+        //PhotonNetwork.LoadLevel("World");
+    }
+    
+    [SerializeField]
+    GameObject loadingPage;
+    private async void LoadScene()
+    {
+        var scene = SceneManager.LoadSceneAsync("World");
+        scene.allowSceneActivation = false;
+        roomMenu.SetActive(false);
+        loadingPage.SetActive(true);
+        scene.allowSceneActivation = true;
     }
 
-    public void resetFailedMessages()
+
+        public void resetFailedMessages()
     {
         failedToJoinText.text = "";
         failedToCreateText.text = "";

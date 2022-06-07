@@ -1,10 +1,14 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
+    PhotonView pv;
+    public void Awake()
+    {
+        pv = PhotonView.Get(this);
+    }
     [PunRPC]
     public void ReturnAllToMenu()
     {
@@ -23,9 +27,9 @@ public class PlayerControls : MonoBehaviour
     [PunRPC]
     public void HoldItem(string name)
     {
-        if (PhotonView.Get(this).Owner == PhotonNetwork.LocalPlayer)
+        if (pv.IsMine)
         {
-            PhotonView.Get(this).RPC(nameof(HoldItem), RpcTarget.Others, name);
+            pv.RPC(nameof(HoldItem), RpcTarget.Others, name);
         }
         foreach (Transform childTransform in itemPlaceHolder.GetComponentInChildren<Transform>())
         {
@@ -38,7 +42,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonView.Get(this).RPC(nameof(PlayerControls.ReturnAllToMenu), RpcTarget.Others);
+            pv.RPC(nameof(PlayerControls.ReturnAllToMenu), RpcTarget.Others);
             StartCoroutine(AssureAllPlayersExited());
         }
     }
@@ -55,10 +59,58 @@ public class PlayerControls : MonoBehaviour
     [PunRPC]
     public void PlayEatingSound()
     {
-        if (PhotonView.Get(this).Owner == PhotonNetwork.LocalPlayer)
+        if (pv.IsMine)
         {
-            PhotonView.Get(this).RPC(nameof(PlayEatingSound), RpcTarget.Others);
+            pv.RPC(nameof(PlayEatingSound), RpcTarget.Others);
         }
         SFXManager.Instance.PlaySound(eatingSound, transform.position, 0.8f);
+    }
+
+    [PunRPC]
+    public void SpawnedPlayer()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            pv.RPC(nameof(SpawnedPlayer), RpcTarget.MasterClient);
+            return;
+        }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.CurrentRoom.CustomProperties;
+            properties["playersInGame"] = (int)properties["playersInGame"] + 1;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(properties);
+            pv.RPC(nameof(AddSpawnedPlayers), RpcTarget.All);
+            return;
+        }
+    }
+
+    [PunRPC]
+    public void AddSpawnedPlayers()
+    {
+        WorldGeneration.Instance.SpawnedPlayer();
+    }
+
+
+
+    [PunRPC]
+    public void ReadyPlayer()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            pv.RPC(nameof(ReadyPlayer), RpcTarget.MasterClient);
+        } 
+        else
+        {
+            ExitGames.Client.Photon.Hashtable properties = PhotonNetwork.CurrentRoom.CustomProperties;
+            properties["readyPlayers"] = (int)properties["readyPlayers"] + 1;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(properties);
+            if ((int)properties["readyPlayers"] == PhotonNetwork.CurrentRoom.PlayerCount) pv.RPC(nameof(FadeScreen), RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    public void FadeScreen()
+    {
+        WorldGeneration.Instance.FadeScreen();
     }
 }

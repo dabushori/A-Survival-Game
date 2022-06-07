@@ -2,6 +2,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 
 public class WorldGeneration : MonoBehaviour
 {
@@ -138,22 +139,49 @@ public class WorldGeneration : MonoBehaviour
         PhotonNetwork.Instantiate("Prefabs/World/TimeController", Vector3.zero, Quaternion.identity).GetComponent<TimeController>();
     }
 
-    [SerializeField]
-    GameObject playerPrefab;
-
+    private GameObject player;
     public void SpawnPlayer()
     {
         // Instantiate(playerPrefab, new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity);
         Hashtable props = new Hashtable();
-        GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/FirstPersonPlayer", new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2), Quaternion.identity) as GameObject;
+        Vector2 point = Random.insideUnitCircle * 50;
+        player = PhotonNetwork.Instantiate("Prefabs/Player/FirstPersonPlayer", new Vector3(point.x + GameStateController.worldDepth / 2, 5, point.y + GameStateController.worldWidth / 2), Quaternion.identity) as GameObject;
         int viewID = player.GetComponent<PhotonView>().ViewID;
         props["local_player"] = viewID;
         PhotonNetwork.SetPlayerCustomProperties(props);
+        //disable UI
+        player.GetComponentInChildren<Canvas>().enabled = false;
+        player.GetComponentInChildren<PlayerControls>().SpawnedPlayer();
     }
+
+    public static WorldGeneration Instance;
+
+    [SerializeField]
+    TMP_Text playersText;
+    [SerializeField]
+    Canvas loadingScreen;
+    public void SpawnedPlayer()
+    {
+        playersText.text = "Players Ready: " + (int)PhotonNetwork.CurrentRoom.CustomProperties["playersInGame"] + "/" + PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+        if ((int)PhotonNetwork.CurrentRoom.CustomProperties["playersInGame"] == PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            player.GetComponentInChildren<PlayerControls>().ReadyPlayer();
+        }
+    }
+
+    public void FadeScreen()
+    {
+        loadingScreen.GetComponentInChildren<Animation>().Play("FadeScreen");
+        player.GetComponentInChildren<Canvas>().enabled = true;
+        GetComponentInChildren<AudioSource>().Play();
+    }
+
+
 
     System.Random random;
     void Start()
     {
+        Instance = this;
         worldSeed = ((int)PhotonNetwork.CurrentRoom.CustomProperties["seed"]) % 1000000;
         random = new System.Random(worldSeed);
         Random.InitState(worldSeed);
@@ -162,5 +190,7 @@ public class WorldGeneration : MonoBehaviour
         GenerateWorld();
 
         SpawnPlayer();
+
+        //PhotonNetwork.CurrentRoom.PlayerCount.ToString();
     }
 }
