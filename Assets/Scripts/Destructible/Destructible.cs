@@ -177,4 +177,12 @@ public class Destructible : MonoBehaviour
     {
         PhotonNetwork.Destroy(gameObject);
     }
+
+    private void Update()
+    {
+        if (photonView.IsMine && HP <= 0)
+        {
+            DestroyMe();
+        }
+    }
 }
