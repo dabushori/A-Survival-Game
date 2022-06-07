@@ -48,4 +48,17 @@ public class PlayerControls : MonoBehaviour
         while (PhotonNetwork.CurrentRoom.PlayerCount > 1) yield return null;
         PhotonNetwork.LoadLevel("Menu");
     }
+
+    [SerializeField]
+    AudioClip eatingSound;
+
+    [PunRPC]
+    public void PlayEatingSound()
+    {
+        if (PhotonView.Get(this).Owner == PhotonNetwork.LocalPlayer)
+        {
+            PhotonView.Get(this).RPC(nameof(PlayEatingSound), RpcTarget.Others);
+        }
+        SFXManager.Instance.PlaySound(eatingSound, transform.position, 0.8f);
+    }
 }

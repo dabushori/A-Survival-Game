@@ -217,6 +217,7 @@ public class PlayerMovements : MonoBehaviour
                         playerHealth.AddHealth(currentItem.hpBonus);
                         inventory.RemoveFromInventory(currentItem, 1);
                         Invoke(nameof(ResetCanEat), EATING_TIME);
+                        playerControls.PlayEatingSound();
                     }
                 }
             }
