@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Crafting Table
   m_EditorClassIdentifier: 
   name: Crafting Table
-  icon: {fileID: 21300000, guid: 7c1f4f2187435364382b0d7a590bcacd, type: 3}
+  icon: {fileID: 21300000, guid: df4031d53936fd84f80f2f3147873e6e, type: 3}
   job: 0
   breakDamage: 0
   breakLevel: 0

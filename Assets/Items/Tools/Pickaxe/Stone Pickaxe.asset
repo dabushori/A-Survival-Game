@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stone Pickaxe
   m_EditorClassIdentifier: 
   name: Stone Pickaxe
-  icon: {fileID: 21300000, guid: 4e436824a6db6764d8c8cb5999c41608, type: 3}
+  icon: {fileID: 21300000, guid: 6da5e59c96e24dd40985b653b82fe4ec, type: 3}
   job: 1
   breakDamage: 35
   breakLevel: 2

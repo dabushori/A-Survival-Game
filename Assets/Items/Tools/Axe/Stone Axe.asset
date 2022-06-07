@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stone Axe
   m_EditorClassIdentifier: 
   name: Stone Axe
-  icon: {fileID: 21300000, guid: 365068fda6e17074da167f39f6fc9613, type: 3}
+  icon: {fileID: 21300000, guid: 1ef142bdffb80f243bf4c0b1bf309fee, type: 3}
   job: 1
   breakDamage: 35
   breakLevel: 0

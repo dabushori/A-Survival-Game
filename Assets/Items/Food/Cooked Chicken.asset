@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cooked Chicken
   m_EditorClassIdentifier: 
   name: Cooked Chicken
-  icon: {fileID: 21300000, guid: 1bdb9c7d4ccd0dd40b80cc1f421d25b5, type: 3}
+  icon: {fileID: 21300000, guid: ab20a9905f61a5845afa2bb850d7f099, type: 3}
   job: 4
   breakDamage: 0
   breakLevel: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold Pickaxe
   m_EditorClassIdentifier: 
   name: Gold Pickaxe
-  icon: {fileID: 21300000, guid: b77e5f338f4cb9c429d151fec0e2b922, type: 3}
+  icon: {fileID: 21300000, guid: d5524634c8c73d94cbdfe0f5cbaf836f, type: 3}
   job: 1
   breakDamage: 40
   breakLevel: 3
