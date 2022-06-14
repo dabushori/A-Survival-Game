@@ -133,9 +133,9 @@ public class PlayerMovements : MonoBehaviour
 
     public void Use(InputAction.CallbackContext ctx)
     {
-        if (isInInventory || isInStopMenu) return;
         if (ctx.started)
         {
+            if (isInInventory || isInStopMenu) return;
             isUse = true;
         }
         else if (ctx.canceled)
