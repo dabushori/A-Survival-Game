@@ -176,10 +176,22 @@ public class WorldGeneration : MonoBehaviour
         loadingScreen.GetComponentInChildren<Animation>().Play("FadeScreen");
         player.GetComponentInChildren<Canvas>().enabled = true;
         player.GetComponentInChildren<PlayerMovements>().isInLoadingScreen = false;
+        ShowDay();
         GetComponentInChildren<AudioSource>().Play();
     }
 
-
+    private void ShowDay()
+    {
+        if (GameStateController.timeController == null)
+        {
+            Debug.Log("000");
+            Invoke(nameof(ShowDay),1f);
+        } else
+        {
+            Debug.Log("111");
+            GameStateController.timeController.ShowDay();
+        }
+    }
 
     System.Random random;
     void Start()

@@ -63,6 +63,11 @@ public class TimeController : MonoBehaviour
         return day;
     }
 
+    public void ShowDay()
+    {
+        dayText.gameObject.SetActive(true);
+    }
+
     private void Start()
     {
         day = 0;
