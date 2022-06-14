@@ -177,7 +177,7 @@ public class WorldGeneration : MonoBehaviour
         Invoke(nameof(RemoveScreen), 2f);
         player.GetComponentInChildren<Canvas>().enabled = true;
         player.GetComponentInChildren<PlayerMovements>().isInLoadingScreen = false;
-        ShowDay();
+        ShowDayCounter();
         GetComponentInChildren<AudioSource>().Play();
     }
 
@@ -186,15 +186,13 @@ public class WorldGeneration : MonoBehaviour
         loadingScreen.GetComponentInChildren<Canvas>().enabled = false;
     }
 
-    private void ShowDay()
+    private void ShowDayCounter()
     {
         if (GameStateController.timeController == null)
         {
-            Debug.Log("000");
-            Invoke(nameof(ShowDay),1f);
+            Invoke(nameof(ShowDayCounter),1f);
         } else
         {
-            Debug.Log("111");
             GameStateController.timeController.ShowDay();
         }
     }

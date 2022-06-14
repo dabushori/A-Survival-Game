@@ -44,8 +44,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         Health -= (int) (damage * (100 - defenseLevel)) / 100;
     }
 
-    public void AddHealth(int helathToAdd)
+    public void AddHealth(int healthToAdd)
     {
-        Health += helathToAdd;
+        Health += healthToAdd;
     }
 }

@@ -212,18 +212,23 @@ public class PlayerMovements : MonoBehaviour
                 {
                     if (playerHealth.Health != playerHealth.MaxHealth)
                     {
+                        inventory.RemoveFromInventory(currentItem, 1);
                         canEat = false;
                         animator.SetTrigger("IsEating");
-                        playerHealth.AddHealth(currentItem.hpBonus);
-                        inventory.RemoveFromInventory(currentItem, 1);
-                        Invoke(nameof(ResetCanEat), EATING_TIME);
+                        Invoke(nameof(DelayEating), EATING_TIME);
+                        healthToAdd = currentItem.hpBonus;
                         playerControls.PlayEatingSound();
                     }
                 }
             }
         }
     }
-
+    private int healthToAdd = 0;
+    private void DelayEating()
+    {
+        if (playerHealth.Health > 0) playerHealth.AddHealth(healthToAdd);
+        ResetCanEat();
+    }
 
     [SerializeField]
     Transform characterBoneRoot;
