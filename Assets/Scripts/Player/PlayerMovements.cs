@@ -302,6 +302,11 @@ public class PlayerMovements : MonoBehaviour
             currentItem = inventory.ChosenItem.itemToHold;
             playerControls.HoldItem(inventory.ChosenItem.itemToHold.name);
         }
+        else
+        {
+            currentItem = null;
+            playerControls.HoldItem(null);
+        }
     }
 
     void ResetCanChooseItem()

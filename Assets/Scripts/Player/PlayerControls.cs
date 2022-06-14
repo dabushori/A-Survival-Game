@@ -35,7 +35,7 @@ public class PlayerControls : MonoBehaviour
         {
             Destroy(childTransform.gameObject);
         }
-        Instantiate(Resources.Load(GameStateController.itemsToHoldPath + name, typeof(GameObject)), itemPlaceHolder);
+        if (name != null) Instantiate(Resources.Load(GameStateController.itemsToHoldPath + name, typeof(GameObject)), itemPlaceHolder);
     }
 
     private void OnApplicationQuit()
