@@ -30,7 +30,7 @@ public class PlayerControls : MonoBehaviour
         {
             pv.RPC(nameof(PlayTakingDamageSound), RpcTarget.Others);
         }
-        SFXManager.Instance.PlaySound(takingDamageSound, transform.position, 0.8f);
+        SFXManager.Instance.PlaySound(takingDamageSound, transform.position, 1.5f);
     }
 
     [SerializeField]

@@ -166,7 +166,7 @@ public class MobAI : MonoBehaviour
             if (hasMultipleAnimations) animator.SetBool("IsAttacking", true);
             Collider[] attackPlayers = Physics.OverlapSphere(transform.position, attackRange, WhatIsPlayer);
             // attack
-            Invoke(nameof(DealDamage), timeBetweenAttacks / 2);
+            Invoke(nameof(DealDamage), 0.2f);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -177,12 +177,12 @@ public class MobAI : MonoBehaviour
     {
         if (player != null)
         {
+            PlaySound();
             Collider[] inDamageRangePlayer = Physics.OverlapSphere(transform.position, attackRange, WhatIsPlayer);
             if (inDamageRangePlayer?.Length != 0)
             {
                 PhotonView.Get(player).RPC(nameof(PlayerControls.DealDamage), PhotonView.Get(player).Owner, damage);
             }
-            PlaySound();
         }
         if (hasMultipleAnimations) animator.SetBool("IsAttacking", false);
     }
