@@ -41,6 +41,8 @@ public class WorldGeneration : MonoBehaviour
 
     [SerializeField]
     private WorldData worldData; // the world data (all its tiles)
+    [SerializeField]
+    Transform tilesParent;
     void GenerateWorld()
     {
         // calculate the number of vertices of the tile in each axis using its mesh
@@ -64,7 +66,7 @@ public class WorldGeneration : MonoBehaviour
                   gameObject.transform.position.y,
                   gameObject.transform.position.z + zTileIndex * tileDepth);
                 // instantiate a new Tile
-                GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
+                GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity, tilesParent) as GameObject;
                 tile.transform.parent = gameObject.transform;
                 // update the world seed
                 tile.GetComponent<TileGeneration>().worldSeed = worldSeed;
@@ -190,7 +192,5 @@ public class WorldGeneration : MonoBehaviour
         GenerateWorld();
 
         SpawnPlayer();
-
-        //PhotonNetwork.CurrentRoom.PlayerCount.ToString();
     }
 }

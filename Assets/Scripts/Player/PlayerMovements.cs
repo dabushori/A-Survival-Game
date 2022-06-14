@@ -307,6 +307,7 @@ public class PlayerMovements : MonoBehaviour
         }
         else
         {
+            if (currentItem == null) return;
             currentItem = null;
             playerControls.HoldItem(null);
         }

@@ -235,7 +235,7 @@ public class RoomRegistration : MonoBehaviourPunCallbacks
     
     [SerializeField]
     GameObject loadingPage;
-    private async void LoadScene()
+    private void LoadScene()
     {
         var scene = SceneManager.LoadSceneAsync("World");
         scene.allowSceneActivation = false;

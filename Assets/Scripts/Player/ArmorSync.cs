@@ -10,6 +10,7 @@ public class ArmorSync : MonoBehaviour
     [PunRPC]
     public void EnableArmor()
     {
+        if (gameObject.activeSelf) return;
         if (PhotonView.Get(gameObject).IsMine)
         {
             PhotonView.Get(gameObject).RPC(nameof(EnableArmor), RpcTarget.Others);
@@ -23,6 +24,7 @@ public class ArmorSync : MonoBehaviour
     [PunRPC]
     public void DisableArmor()
     {
+        if (!gameObject.activeSelf) return;
         if (PhotonView.Get(gameObject).IsMine)
         {
             PhotonView.Get(gameObject).RPC(nameof(DisableArmor), RpcTarget.Others);
@@ -35,17 +37,24 @@ public class ArmorSync : MonoBehaviour
 
     [SerializeField]
     List<Material> armorMats;
+    int currentIndex = -1;
 
     [PunRPC]
     public void SetMaterialByIndex(int matIndex)
     {
         gameObject.SetActive(true);
+        currentIndex = matIndex;
         GetComponent<SkinnedMeshRenderer>().material = armorMats[matIndex];
     }
 
 
     public void SetMaterial(Material m) 
     {
-        if (GetComponent<SkinnedMeshRenderer>().material != m) PhotonView.Get(gameObject).RPC(nameof(SetMaterialByIndex), RpcTarget.All, armorMats.IndexOf(m));
+        int matIndex = armorMats.IndexOf(m);
+        if (currentIndex != matIndex)
+        {
+            SetMaterialByIndex(matIndex);
+            PhotonView.Get(gameObject).RPC(nameof(SetMaterialByIndex), RpcTarget.Others, matIndex);
+        }
     }
 }
