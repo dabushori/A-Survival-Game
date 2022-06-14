@@ -13,7 +13,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void Look(InputAction.CallbackContext ctx)
     {
-        if (!isInInventory && playerHealth.Health > 0 && !isInStopMenu)
+        if (!isInLoadingScreen && !isInInventory && playerHealth.Health > 0 && !isInStopMenu)
         {
             Vector2 mouse = ctx.ReadValue<Vector2>();
             mouse = new Vector2(mouse.x * GameStateController.SensitivityX, mouse.y * GameStateController.SensitivityY) * Time.deltaTime;
@@ -272,7 +272,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void ChooseItem(InputAction.CallbackContext ctx)
     {
-        if (canChooseItem && !isInInventory && !isInStopMenu && ctx.performed)
+        if (canChooseItem && !isInLoadingScreen && !isInInventory && !isInStopMenu && ctx.performed)
         {
             canChooseItem = false;
             Invoke(nameof(ResetCanChooseItem), 0.2f);
@@ -286,7 +286,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void ChangeItem(InputAction.CallbackContext ctx)
     {
-        if (!isInInventory && !isInStopMenu && ctx.performed)
+        if (!isInInventory && !isInLoadingScreen && !isInStopMenu && ctx.performed)
         {
             float scrollY = ctx.ReadValue<float>();
             if (scrollY > 0) inventory.ChooseNextItem();
@@ -318,8 +318,11 @@ public class PlayerMovements : MonoBehaviour
         canChooseItem = true;
     }
 
+    public bool isInLoadingScreen = true;
+
     private void Update()
     {
+        if (isInLoadingScreen) return;
         if (playerHealth.Health <= 0)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -365,7 +368,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void ToggleInventory(InputAction.CallbackContext ctx)
     {
-        if (!isInStopMenu && ctx.performed)
+        if (!isInStopMenu && !isInLoadingScreen && ctx.performed)
         {
             if (isInInventory)
             {
@@ -388,7 +391,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void ToggleInventory()
     {
-        if (!isInStopMenu)
+        if (!isInLoadingScreen && !isInStopMenu)
         {
             if (isInInventory)
             {
@@ -412,7 +415,7 @@ public class PlayerMovements : MonoBehaviour
     public GameObject stopMenuObject;
     public void ToggleStopMenu(InputAction.CallbackContext ctx)
     {
-        if (!isInInventory && ctx.performed)
+        if (!isInInventory && !isInLoadingScreen && ctx.performed)
         {
             if (isInStopMenu)
             {

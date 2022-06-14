@@ -175,6 +175,7 @@ public class WorldGeneration : MonoBehaviour
     {
         loadingScreen.GetComponentInChildren<Animation>().Play("FadeScreen");
         player.GetComponentInChildren<Canvas>().enabled = true;
+        player.GetComponentInChildren<PlayerMovements>().isInLoadingScreen = false;
         GetComponentInChildren<AudioSource>().Play();
     }
 
