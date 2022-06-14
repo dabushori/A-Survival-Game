@@ -42,15 +42,9 @@ public class PlayerControls : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            pv.RPC(nameof(PlayerControls.ReturnAllToMenu), RpcTarget.Others);
-            StartCoroutine(AssureAllPlayersExited());
+            pv.RPC(nameof(ReturnAllToMenu), RpcTarget.Others);
+            PhotonNetwork.SendAllOutgoingCommands();
         }
-    }
-
-    private IEnumerator AssureAllPlayersExited()
-    {
-        while (PhotonNetwork.CurrentRoom.PlayerCount > 1) yield return null;
-        PhotonNetwork.LoadLevel("Menu");
     }
 
     [SerializeField]
