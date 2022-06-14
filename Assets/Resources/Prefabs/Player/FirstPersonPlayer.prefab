@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0ac68840551bf548bce0d0b238e3a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  takingDamageSound: {fileID: 8300000, guid: 8fddafba25b70cc4eaf590eeeffb459b, type: 3}
   itemPlaceHolder: {fileID: 6191997712093600440}
   eatingSound: {fileID: 8300000, guid: 90d2714bb9355c14f908fc6fc0653d60, type: 3}
 --- !u!1 &8710761594736655239

@@ -18,7 +18,19 @@ public class PlayerControls : MonoBehaviour
     [PunRPC]
     public void DealDamage(int damage)
     {
+        PlayTakingDamageSound();
         GetComponentInChildren<PlayerHealth>().DealDamage(damage);
+    }
+
+    [SerializeField]
+    AudioClip takingDamageSound;
+    public void PlayTakingDamageSound()
+    {
+        if (pv.IsMine)
+        {
+            pv.RPC(nameof(PlayTakingDamageSound), RpcTarget.Others);
+        }
+        SFXManager.Instance.PlaySound(takingDamageSound, transform.position, 0.8f);
     }
 
     [SerializeField]
@@ -59,6 +71,7 @@ public class PlayerControls : MonoBehaviour
         }
         SFXManager.Instance.PlaySound(eatingSound, transform.position, 0.8f);
     }
+
 
     [PunRPC]
     public void SpawnedPlayer()
