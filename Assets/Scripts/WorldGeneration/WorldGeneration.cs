@@ -174,10 +174,16 @@ public class WorldGeneration : MonoBehaviour
     public void FadeScreen()
     {
         loadingScreen.GetComponentInChildren<Animation>().Play("FadeScreen");
+        Invoke(nameof(RemoveScreen), 2f);
         player.GetComponentInChildren<Canvas>().enabled = true;
         player.GetComponentInChildren<PlayerMovements>().isInLoadingScreen = false;
         ShowDay();
         GetComponentInChildren<AudioSource>().Play();
+    }
+
+    private void RemoveScreen()
+    {
+        loadingScreen.GetComponentInChildren<Canvas>().enabled = false;
     }
 
     private void ShowDay()
