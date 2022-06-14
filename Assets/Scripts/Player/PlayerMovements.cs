@@ -228,7 +228,6 @@ public class PlayerMovements : MonoBehaviour
     [SerializeField]
     Transform characterBoneRoot;
 
-    // helmet, 
     [SerializeField]
     GameObject[] armor;
 
@@ -239,15 +238,19 @@ public class PlayerMovements : MonoBehaviour
         foreach (var slot in armorSlots)
         {
             GameObject currArmor = armor[(int)((ArmorSlot)slot).bodyPart];
+            ArmorSync armorSync = currArmor.GetComponent<ArmorSync>();
             if (slot.Amount > 0)
             {
-                currArmor.SetActive(true);
-                Material m = slot.Item.itemToHold.GetComponent<Renderer>().sharedMaterial;
-                currArmor.GetComponent<ArmorSync>().SetMaterial(m);
+                if (armorSync != null)
+                {
+                    armorSync.EnableArmor();
+                    Material m = slot.Item.itemToHold.GetComponent<Renderer>().sharedMaterial;
+                    armorSync.SetMaterial(m);
+                }
             }
             else
             {
-                currArmor.SetActive(false);
+                armorSync.DisableArmor();
             }
         }
     }

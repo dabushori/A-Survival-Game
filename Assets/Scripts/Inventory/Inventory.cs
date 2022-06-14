@@ -9,9 +9,7 @@ public class Inventory
     private static Inventory instance = new Inventory();
     private Inventory() { }
     
-    /**
-     * singleton
-     */
+    // singelton
     public static Inventory Instance
     {
         get

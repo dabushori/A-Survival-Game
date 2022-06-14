@@ -8,11 +8,11 @@ public class ArmorSync : MonoBehaviour
     PhotonView photonView;
 
     [PunRPC]
-    private void OnEnable()
+    public void EnableArmor()
     {
         if (PhotonView.Get(gameObject).IsMine)
         {
-            PhotonView.Get(gameObject).RPC(nameof(OnEnable), RpcTarget.Others);
+            PhotonView.Get(gameObject).RPC(nameof(EnableArmor), RpcTarget.Others);
         }
         else
         {
@@ -21,11 +21,11 @@ public class ArmorSync : MonoBehaviour
     }
 
     [PunRPC]
-    private void OnDisable()
+    public void DisableArmor()
     {
         if (PhotonView.Get(gameObject).IsMine)
         {
-            PhotonView.Get(gameObject).RPC(nameof(OnDisable), RpcTarget.Others);
+            PhotonView.Get(gameObject).RPC(nameof(DisableArmor), RpcTarget.Others);
         }
         else
         {
@@ -39,6 +39,7 @@ public class ArmorSync : MonoBehaviour
     [PunRPC]
     public void SetMaterialByIndex(int matIndex)
     {
+        gameObject.SetActive(true);
         GetComponent<SkinnedMeshRenderer>().material = armorMats[matIndex];
     }
 
