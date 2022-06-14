@@ -24,6 +24,8 @@ public class PlayerControls : MonoBehaviour
 
     [SerializeField]
     AudioClip takingDamageSound;
+
+    [PunRPC]
     public void PlayTakingDamageSound()
     {
         if (pv.IsMine)
