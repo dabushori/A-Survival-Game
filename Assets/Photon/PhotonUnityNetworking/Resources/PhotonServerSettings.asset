@@ -40,10 +40,6 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - StartWorld
-  - SpawnPlayer
-  - DestoryObject_RPC
-  - CreateObject_RPC
-  - DestoryObject
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
