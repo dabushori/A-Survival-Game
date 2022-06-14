@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: 
   name: Apple
-  icon: {fileID: 21300000, guid: 9676f3cd883f5aa44971a4556eb381e8, type: 3}
+  icon: {fileID: 21300000, guid: 69f7a92703c0aef498e3115d7d8da71f, type: 3}
   job: 4
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 5
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 1105760525757012, guid: bfec01bc3e4d0444dbe595b4f55c6730, type: 3}

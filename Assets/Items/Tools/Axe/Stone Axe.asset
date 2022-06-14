@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stone Axe
   m_EditorClassIdentifier: 
   name: Stone Axe
-  icon: {fileID: 21300000, guid: 365068fda6e17074da167f39f6fc9613, type: 3}
+  icon: {fileID: 21300000, guid: 1ef142bdffb80f243bf4c0b1bf309fee, type: 3}
   job: 1
   breakDamage: 35
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 2488915889958085675, guid: ff83197d75bad9642b85fd7c495ccaee, type: 3}

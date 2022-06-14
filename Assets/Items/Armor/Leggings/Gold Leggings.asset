@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold Leggings
   m_EditorClassIdentifier: 
   name: Gold Leggings
-  icon: {fileID: 21300000, guid: 05b27fb71266bab4b8dad2317ff336ef, type: 3}
+  icon: {fileID: 21300000, guid: 402081c5676e44d4597c215249ff3251, type: 3}
   job: 8
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 587251819171431668, guid: ac0b91b1d4829bc489dc1ca7b8d50cbb, type: 3}

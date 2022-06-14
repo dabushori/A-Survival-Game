@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Furnace
   m_EditorClassIdentifier: 
   name: Furnace
-  icon: {fileID: 21300000, guid: 4c08d6b598ca65b4e92cea4d295d023a, type: 3}
+  icon: {fileID: 21300000, guid: c6e27fbe2deae3c4198b6892351b52fb, type: 3}
   job: 0
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 1
   placedObject: {fileID: 7282861657440183851, guid: 961df95f87294b04c92ed74a8191c223, type: 3}
+  itemToHold: {fileID: 7282861657440183851, guid: 6a18fa3aea54af04d8ec893d6c92014d, type: 3}

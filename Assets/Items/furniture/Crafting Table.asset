@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Crafting Table
   m_EditorClassIdentifier: 
   name: Crafting Table
-  icon: {fileID: 21300000, guid: 7c1f4f2187435364382b0d7a590bcacd, type: 3}
+  icon: {fileID: 21300000, guid: df4031d53936fd84f80f2f3147873e6e, type: 3}
   job: 0
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 1
   placedObject: {fileID: 9082146223236299002, guid: 9b6f0eb9999e28948b28d0c9bb0150dd, type: 3}
+  itemToHold: {fileID: 9082146223236299002, guid: 34d029602e1912e4cae7b29cbc78e8ca, type: 3}

@@ -40,6 +40,26 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - StartWorld
+  - SetLights
+  - DestroyObject
+  - AllToLobby
+  - ReturnAllToMenu
+  - DealDamage
+  - OnDisable
+  - OnEnable
+  - SetMaterial
+  - SetMaterialByIndex
+  - RPCDamageSound
+  - RPCPlaySound
+  - DestroyMob
+  - HoldItem
+  - EatSound
+  - PlayEatingSound
+  - SpawnedPlayer
+  - DeleteScreen
+  - FadeScreen
+  - ReadyPlayer
+  - AddSpawnedPlayers
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -23,6 +23,24 @@ public class Inventory
     [SerializeField] InventorySlot[] inventorySlots;
     [SerializeField] InventorySlot[] hotbarSlots;
     [SerializeField] InventorySlot[] armorSlots;
+
+    public InventorySlot[] GetArmorSlots()
+    {
+        return armorSlots;
+    }
+
+    public bool isFull()
+    {
+        foreach(InventorySlot slot in inventorySlots)
+        {
+            if (slot.Item == null) return false;
+        }
+        foreach (InventorySlot slot in hotbarSlots)
+        {
+            if (slot.Item == null) return false;
+        }
+        return true;
+    }
     /**
      * connect the slots in the incentory to the game slots
      */

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
 public class TimeController : MonoBehaviour
 {
@@ -52,12 +53,29 @@ public class TimeController : MonoBehaviour
 
     private TimeSpan sunsetTime;
 
+    private int day;
+    private bool changedDay;
+    [SerializeField]
+    TMP_Text dayText;
+
+    public int GetDay()
+    {
+        return day;
+    }
+
     private void Start()
     {
+        day = 0;
+        changedDay = false;
+        sunLight = GameObject.Find("SunLight").GetComponent<Light>();
+        moonLight = GameObject.Find("MoonLight").GetComponent<Light>();
+
         currentTime = DateTime.Now.Date + TimeSpan.FromHours(startHour);
 
         sunriseTime = TimeSpan.FromHours(sunriseHour);
         sunsetTime = TimeSpan.FromHours(sunsetHour);
+
+        GameStateController.timeController = this;
     }
 
     private void Update()
@@ -66,6 +84,26 @@ public class TimeController : MonoBehaviour
         RotateSun();
         UpdateLight();
         UpdateSky();
+        UpdateDay();
+    }
+
+    private void UpdateDay()
+    {
+        TimeSpan newDay = new TimeSpan(12, 0, 0);
+        TimeSpan now = currentTime.TimeOfDay;
+        if (now > newDay)
+        {
+            if (!changedDay)
+            {
+                changedDay = true;
+                day++;
+                dayText.text = "Day: " + day.ToString();
+            }
+        }
+        else
+        {
+            changedDay = false;
+        }
     }
 
     private void UpdateLight()
@@ -78,7 +116,6 @@ public class TimeController : MonoBehaviour
         // change the ambient light
         RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, lightChangeCurve.Evaluate(doProduct));
     }
-
 
     private void UpdateTimeOfDay()
     {

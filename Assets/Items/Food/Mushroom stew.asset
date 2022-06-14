@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mushroom stew
   m_EditorClassIdentifier: 
   name: Mushroom stew
-  icon: {fileID: 21300000, guid: e70e2c03cd5882f4d9431cde9aab5792, type: 3}
+  icon: {fileID: 21300000, guid: 243aa45b7e557694d86a3a49a8e3dfc2, type: 3}
   job: 4
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 13
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 1528508235545930, guid: fcb2c2b33094cf54591f330bc73def25, type: 3}

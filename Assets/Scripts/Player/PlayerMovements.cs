@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -20,7 +19,7 @@ public class PlayerMovements : MonoBehaviour
             mouse = new Vector2(mouse.x * GameStateController.SensitivityX, mouse.y * GameStateController.SensitivityY) * Time.deltaTime;
 
             xRotation -= mouse.y;
-            xRotation = Mathf.Clamp(xRotation, -90, 90);
+            xRotation = Mathf.Clamp(xRotation, -90, 50);
             Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
             playerBody.transform.Rotate(Vector3.up * mouse.x);
@@ -36,7 +35,6 @@ public class PlayerMovements : MonoBehaviour
     public void Move(InputAction.CallbackContext ctx)
     {
         movingDirection = ctx.ReadValue<Vector2>();
-        // movingDirection = Camera.main.transform.forward * dir.y + Camera.main.transform.right * dir.x;
     }
 
     [SerializeField]
@@ -46,7 +44,11 @@ public class PlayerMovements : MonoBehaviour
     private LayerMask GROUND_LAYER;
     void UpdateGravity()
     {
-        if (Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = -2f;
+        if (Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0)
+        {
+            velocity.y = -2f;
+            animator.SetBool("IsJumping", false);
+        }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(Vector3.up * velocity.y * Time.deltaTime);
     }
@@ -57,8 +59,11 @@ public class PlayerMovements : MonoBehaviour
     {
         if (!isInInventory && !isInStopMenu)
         {
-            // if (ctx.performed) controller.Move(Vector3.up * jumpPower);
-            if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0) velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+            if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GROUND_LAYER) && velocity.y < 0)
+            {
+                velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+                animator.SetBool("IsJumping", true);
+            }
         }
     }
 
@@ -80,14 +85,17 @@ public class PlayerMovements : MonoBehaviour
     private float hitStartTime;
     public void Hit(InputAction.CallbackContext ctx)
     {
+        if (isInInventory || isInStopMenu) return;
         if (ctx.started)
         {
             isHitKeyPressed = true;
+            animator.SetBool("IsHitting", true);
             hitStartTime = Time.time;
         }
         else if (ctx.canceled)
         {
             isHitKeyPressed = false;
+            animator.SetBool("IsHitting", false);
             hitStartTime = 0;
         }
     }
@@ -109,11 +117,9 @@ public class PlayerMovements : MonoBehaviour
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide))
         {
             hit.transform.gameObject.GetComponent<Destructible>().Break(inventory);
-            // hit.transform.gameObject.GetComponent<Destructible>().Hit(50); // use item damage - currently for testing
             hitStartTime = Time.time;
-        }
-
-
+        } 
+        
         if (!isHit && // will use item mining speed
             Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MINING_DISTANCE, MOBS_LAYER, QueryTriggerInteraction.Collide))
         {
@@ -127,6 +133,7 @@ public class PlayerMovements : MonoBehaviour
 
     public void Use(InputAction.CallbackContext ctx)
     {
+        if (isInInventory || isInStopMenu) return;
         if (ctx.started)
         {
             isUse = true;
@@ -139,8 +146,9 @@ public class PlayerMovements : MonoBehaviour
 
     bool canEat = true;
     bool canPlace = true;
+    bool canWear = true;
     [SerializeField]
-    float EATING_TIME, PLACING_TIME; // time between eatings
+    float EATING_TIME, PLACING_TIME, WEARING_TIME; // time between eatings
     [SerializeField]
     private LayerMask SURFACE_LAYER;
     [SerializeField]
@@ -170,31 +178,76 @@ public class PlayerMovements : MonoBehaviour
         // use logic
         Item currentItem = inventory.ChosenItem;
         if (currentItem == null) return;
-        if (currentItem.placeable && canPlace)
+        if (currentItem.placeable)
         {
-            // place
-            if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
+            if (canPlace)
             {
-                canPlace = false;
-                Vector3 cameraForward = Camera.main.transform.forward;
-                cameraForward.y = 0;
-                Instantiate(currentItem.placedObject, hit.point, Quaternion.LookRotation(cameraForward));
-                inventory.RemoveFromInventory(currentItem, 1);
-                Invoke(nameof(ResetCanPlace), PLACING_TIME);
+                // place
+                if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out hit, MAX_PLACING_DISTANCE, SURFACE_LAYER, QueryTriggerInteraction.Collide) && hit.distance > MIN_PLACING_DISTANCE)
+                {
+                    canPlace = false;
+                    Vector3 cameraForward = Camera.main.transform.forward;
+                    cameraForward.y = 0;
+                    PhotonNetwork.InstantiateRoomObject(GameStateController.furniturePath + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
+                    inventory.RemoveFromInventory(currentItem, 1);
+                    Invoke(nameof(ResetCanPlace), PLACING_TIME);
+                }
             }
         }
         else
         {
             if (currentItem.job == Jobs.ARMOR)
             {
-                inventory.WearArmor();
+                if (canWear)
+                {
+                    canWear = false;
+                    inventory.WearArmor();
+                    WearCurrentArmor();
+                    Invoke(nameof(ResetCanWear), WEARING_TIME);
+                }
             }
-            else if (currentItem.job == Jobs.FOOD && canEat)
+            else if (currentItem.job == Jobs.FOOD)
             {
-                canEat = false;
-                playerHealth.AddHealth(currentItem.hpBonus);
-                inventory.RemoveFromInventory(currentItem, 1);
-                Invoke(nameof(ResetCanEat), EATING_TIME);
+                if (canEat)
+                {
+                    if (playerHealth.Health != playerHealth.MaxHealth)
+                    {
+                        canEat = false;
+                        animator.SetTrigger("IsEating");
+                        playerHealth.AddHealth(currentItem.hpBonus);
+                        inventory.RemoveFromInventory(currentItem, 1);
+                        Invoke(nameof(ResetCanEat), EATING_TIME);
+                        playerControls.PlayEatingSound();
+                    }
+                }
+            }
+        }
+    }
+
+
+    [SerializeField]
+    Transform characterBoneRoot;
+
+    // helmet, 
+    [SerializeField]
+    GameObject[] armor;
+
+    public void WearCurrentArmor()
+    {
+        var armorSlots = inventory.GetArmorSlots();
+        if (armorSlots == null) return;
+        foreach (var slot in armorSlots)
+        {
+            GameObject currArmor = armor[(int)((ArmorSlot)slot).bodyPart];
+            if (slot.Amount > 0)
+            {
+                currArmor.SetActive(true);
+                Material m = slot.Item.itemToHold.GetComponent<Renderer>().sharedMaterial;
+                currArmor.GetComponent<ArmorSync>().SetMaterial(m);
+            }
+            else
+            {
+                currArmor.SetActive(false);
             }
         }
     }
@@ -203,19 +256,29 @@ public class PlayerMovements : MonoBehaviour
     {
         canEat = true;
     }
+    void ResetCanWear()
+    {
+        canWear = true;
+    }
     void ResetCanPlace()
     {
         canPlace = true;
     }
 
+    bool canChooseItem = true;
+
     public void ChooseItem(InputAction.CallbackContext ctx)
     {
-        if (!isInInventory && !isInStopMenu && ctx.performed)
+        if (canChooseItem && !isInInventory && !isInStopMenu && ctx.performed)
         {
+            canChooseItem = false;
+            Invoke(nameof(ResetCanChooseItem), 0.2f);
             string digit = ((KeyControl)ctx.control).keyCode.ToString();
-            if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed)) inventory.ChooseItem(digitPressed - 1);
+            if (int.TryParse(digit[digit.Length - 1].ToString(), out int digitPressed))
+            {
+                inventory.ChooseItem(digitPressed - 1);
+            }
         }
-        // ctx.action.GetBindingIndex();
     }
 
     public void ChangeItem(InputAction.CallbackContext ctx)
@@ -228,11 +291,29 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    PlayerControls playerControls;
+    GameObject currentItem;
+    public void HoldCurrentItem()
+    {
+        if (inventory.ChosenItem != null && inventory.ChosenItem.itemToHold != null)
+        {
+            if (currentItem == inventory.ChosenItem.itemToHold) return;
+            currentItem = inventory.ChosenItem.itemToHold;
+            playerControls.HoldItem(inventory.ChosenItem.itemToHold.name);
+        }
+    }
+
+    void ResetCanChooseItem()
+    {
+        canChooseItem = true;
+    }
+
     private void Update()
     {
         if (playerHealth.Health <= 0)
         {
-            DeathHold();
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
         // Gravity 
@@ -240,20 +321,34 @@ public class PlayerMovements : MonoBehaviour
 
         if (!isInInventory && !isInStopMenu)
         {
-            Vector3 movingVec = (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x);
+            Vector3 movingVec = Vector3.zero;
+            movingVec = (Camera.main.transform.forward * movingDirection.y + Camera.main.transform.right * movingDirection.x);
             movingVec.y = 0;
-            controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
             // Hit Logic
             if (isHitKeyPressed) Hit();
             // Use Logic
             if (isUse) Use();
+
+            if (!isSprinting)
+            {
+                animator.SetBool("IsSprinting", false);
+                if (movingVec.x == 0 && movingVec.z == 0) animator.SetBool("IsWalking", false);
+                else animator.SetBool("IsWalking", true);
+            } else
+            {
+                animator.SetBool("IsWalking", false);
+                if (movingVec.x == 0 && movingVec.z == 0) animator.SetBool("IsSprinting", false);
+                else animator.SetBool("IsSprinting", true);
+            }
+            controller.Move(Time.deltaTime * (isSprinting ? sprintSpeed : speed) * movingVec);
+
+        }
+        if (inventory != null)
+        {
+            WearCurrentArmor();
+            HoldCurrentItem();
         }
 
-    }
-
-    public void DeathHold()
-    {
-        Cursor.lockState = CursorLockMode.None;
     }
 
     bool isInInventory = false;
@@ -335,11 +430,45 @@ public class PlayerMovements : MonoBehaviour
         crosserObject.SetActive(true);
     }
 
+    [SerializeField]
+    GameObject[] playerMeshes;
+    public void SetCharacterVisible(bool isVisible)
+    {
+        foreach (var i in playerMeshes) i.SetActive(isVisible);
+    }
+
+    [SerializeField]
+    PhotonView photonView;
+    [SerializeField]
+    GameObject[] localPlayerLogic;
+    [SerializeField]
+    Animator animator;
     private void Awake()
     {
+        if (!photonView.IsMine)
+        {
+            foreach (GameObject obj in localPlayerLogic)
+            {
+                Destroy(obj);
+            }
+            Destroy(gameObject);
+            return;
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         inventory = Inventory.Instance;
         inventoryObject.SetActive(false);
         stopMenuObject.SetActive(false);
+        SetCharacterVisible(false);
+
+        // testing
+        Invoke(nameof(Init), 3);
+    }
+
+    private void Init()
+    {
+        foreach (var r in RecipesDatabase.furnaceRecipes) Inventory.Instance.AddToInventory(r.craftedItem, 10);
+        foreach (var r in RecipesDatabase.anvilRecipes) Inventory.Instance.AddToInventory(r.craftedItem, 10);
+        playerHealth.DealDamage(90);
     }
 }

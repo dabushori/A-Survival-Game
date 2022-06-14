@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron
   m_EditorClassIdentifier: 
   name: Iron
-  icon: {fileID: 21300000, guid: 97407133318d21d47b382319e58eb206, type: 3}
+  icon: {fileID: 21300000, guid: 0d9fd2bc5985cfe49b4f3a0d5f8b4987, type: 3}
   job: 0
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 7405846476849542632, guid: 6656498ae9dcc60469b244d9a312c94f, type: 3}

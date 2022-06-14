@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold Chestplate
   m_EditorClassIdentifier: 
   name: Gold Chestplate
-  icon: {fileID: 21300000, guid: 05b27fb71266bab4b8dad2317ff336ef, type: 3}
+  icon: {fileID: 21300000, guid: b312200d815592f46a40309b3a3cad60, type: 3}
   job: 8
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 4893198226802663649, guid: 1294d4e138a29a14a8e04e24a4fab177, type: 3}

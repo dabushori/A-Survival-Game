@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold Sword
   m_EditorClassIdentifier: 
   name: Gold Sword
-  icon: {fileID: 21300000, guid: 05440bcba04e7ff4db8b398e5d61417d, type: 3}
+  icon: {fileID: 21300000, guid: 63c7338b8aa0ae443a248ebb312e15b6, type: 3}
   job: 2
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 2427603880065461573, guid: 24c30e22fae9ceb44ae8367f4bfea101, type: 3}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wooden Pickaxe
   m_EditorClassIdentifier: 
   name: Wooden Pickaxe
-  icon: {fileID: 21300000, guid: 332af923666d47f438da3ff23281ac0e, type: 3}
+  icon: {fileID: 21300000, guid: 83fee9002a6dff7499b0bdda11155100, type: 3}
   job: 1
   breakDamage: 30
   breakLevel: 1
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 2651747729594002529, guid: d7dbaf60fc0205f45a3022336c9111a3, type: 3}

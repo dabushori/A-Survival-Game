@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -7,26 +5,44 @@ using UnityEngine.UI;
 public class AudioSettings : MonoBehaviour
 {
     [SerializeField]
-    Slider volume;
+    Slider volumeSlider;
     [SerializeField]
-    Slider music;
+    Slider musicSlider;
+    [SerializeField]
+    Slider gameSlider;
+    [SerializeField]
+    Slider sfxSlider;
 
     private void Start()
     {
-        volume.value = GameStateController.VolumeMixer;
-        music.value = GameStateController.MusicMixer;
+        audioMixer.GetFloat("volume", out float volume);
+        volumeSlider.value = volume;
+        audioMixer.GetFloat("music", out float music);
+        musicSlider.value = music;
+        audioMixer.GetFloat("game", out float game);
+        gameSlider.value = game;
+        audioMixer.GetFloat("sfx", out float sfx);
+        sfxSlider.value = sfx;
     }
 
     public AudioMixer audioMixer;
     public void SetVolume(float volume)
     {
-        GameStateController.VolumeMixer = volume;
         audioMixer.SetFloat("volume", volume);
     }
 
     public void SetMusic(float music)
     {
-        GameStateController.MusicMixer = music;
         audioMixer.SetFloat("music", music);
+    }
+
+    public void SetGame(float game)
+    {
+        audioMixer.SetFloat("game", game);
+    }
+    
+    public void SetSFX(float sfx)
+    {
+        audioMixer.SetFloat("sfx", sfx);
     }
 }

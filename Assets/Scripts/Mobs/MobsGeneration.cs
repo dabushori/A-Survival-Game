@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class MobsGeneration : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class MobsGeneration : MonoBehaviour
 
     public int spawnRadiusMax, spawnRadiusMin;
 
-    public LayerMask hostileMobsLayer, friendlyMobsLayer;
+    public LayerMask hostileMobsLayer, friendlyMobsLayer, whatIsEnvironment;
 
     public void SpawnMob(bool isHotile)
     {
@@ -26,16 +27,17 @@ public class MobsGeneration : MonoBehaviour
         {
             // choose a random spawn location
             Vector2 location = Random.insideUnitCircle * spawnRadiusMax;
-            if (Vector2.Distance(location, new Vector2(transform.position.x, transform.position.z)) < spawnRadiusMin)
+            Vector3 mobPosition = new Vector3(location.x, 0, location.y) + transform.position;
+            if (Vector3.Distance(mobPosition, new Vector3(transform.position.x, 0, transform.position.z)) < spawnRadiusMin)
             {
                 continue;
             }
-            Vector3 mobPosition = new Vector3(location.x, 0, location.y) + transform.position;
         
             // check spawn rules
             if (CanSpawnMob(mob, isHotile, mobPosition))
             {
-                Instantiate(mob.mobObject, mobPosition, Quaternion.identity);
+                PhotonNetwork.InstantiateRoomObject(GameStateController.mobsPath + mob.mobName, mobPosition, Quaternion.identity);
+                //Instantiate(mob.mobObject, mobPosition, Quaternion.identity);
             }
         }
     }
@@ -58,6 +60,8 @@ public class MobsGeneration : MonoBehaviour
 
     public bool CanSpawnMob(MobData mobData, bool isHostile, Vector3 position)
     {
+        if (GameStateController.timeController == null) return false;
+        if (Physics.OverlapSphere(position, 2f, whatIsEnvironment).Length != 0) return false;
         if (mobData.onlyAtNight)
         {
             return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&
@@ -67,9 +71,10 @@ public class MobsGeneration : MonoBehaviour
         }
         return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&
             (isHostile ?
-            (Physics.OverlapSphere(transform.position, spawnRadiusMax, hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) : 
+            (Physics.OverlapSphere(transform.position, spawnRadiusMax, hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) :
             (Physics.OverlapSphere(transform.position, spawnRadiusMax, friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY));
     }
+    
 
 
     float previousHostileSpawnTime = -Mathf.Infinity, previousFriendlySpawnTime = -Mathf.Infinity;
@@ -81,11 +86,56 @@ public class MobsGeneration : MonoBehaviour
             previousHostileSpawnTime = Time.time;
             SpawnMob(true);
         }
-        if (Time.time - previousFriendlySpawnTime > HOSTILE_MOB_SPAWN_CYCLE_TIME)
+        if (Time.time - previousFriendlySpawnTime > FRIENDLY_MOB_SPAWN_CYCLE_TIME)
         {
             previousFriendlySpawnTime = Time.time;
             SpawnMob(false);
         }
+        UpdateDifficulty();
+    }
+
+    private int lastDay;
+    private void UpdateDifficulty()
+    {
+        if (GameStateController.timeController == null) return;
+        int day = GameStateController.timeController.GetDay();
+        if (day == lastDay) return;
+        switch(day)
+        {
+            case 3:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 12;
+                break;
+            case 5:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 10;
+                break;
+            case 7:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 9;
+                break;
+            case 9:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 8;
+                break;
+            case 11:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 7;
+                break;
+            case 13:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 5;
+                break;
+            case 15:
+                MAX_HOSTILE_MOBS_CAPACITY += 5;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 3;
+                break;
+            case 20:
+                MAX_HOSTILE_MOBS_CAPACITY += 20;
+                HOSTILE_MOB_SPAWN_CYCLE_TIME = 2;
+                break;
+        }
+        lastDay = day;
     }
 
     private void Awake()

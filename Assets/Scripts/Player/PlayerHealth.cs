@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class PlayerHealth : MonoBehaviour
+
+public class PlayerHealth : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     Slider healthBar;
@@ -26,6 +28,15 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
+
+    public int MaxHealth
+    {
+        get
+        {
+            return (int) healthBar.maxValue;
+        }
+    }
+
 
     public void DealDamage(int damage)
     {

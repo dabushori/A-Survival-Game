@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold Boots
   m_EditorClassIdentifier: 
   name: Gold Boots
-  icon: {fileID: 21300000, guid: 05b27fb71266bab4b8dad2317ff336ef, type: 3}
+  icon: {fileID: 21300000, guid: 2dce60372c0d8404ebe892d54031a0e0, type: 3}
   job: 8
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 1792954005775139977, guid: 558e468a2a014e84ea2c9a6b7b71c9a6, type: 3}

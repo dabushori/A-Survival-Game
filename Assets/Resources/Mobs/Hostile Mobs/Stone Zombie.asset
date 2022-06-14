@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ba1bac91d59dd47ae753f46df7f46a, type: 3}
   m_Name: Stone Zombie
   m_EditorClassIdentifier: 
+  mobName: Stone Zombie
   groupSizeMin: 1
   groupSizeMax: 2
   mobObject: {fileID: 5091242709008108106, guid: 5f02485c5bcc56544b78027c057985be, type: 3}

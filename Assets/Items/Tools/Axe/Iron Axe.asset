@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron Axe
   m_EditorClassIdentifier: 
   name: Iron Axe
-  icon: {fileID: 21300000, guid: a2bcf18f37c9d9f4d9cfdc37c8afa8d4, type: 3}
+  icon: {fileID: 21300000, guid: 5a61ff51f4096b1459cb232b0a1550be, type: 3}
   job: 1
   breakDamage: 50
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 2488915889958085675, guid: e2099984161efcd49ae3dd544f171538, type: 3}

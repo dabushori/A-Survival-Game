@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Linq;
 using UnityEngine;
 
@@ -14,12 +15,15 @@ public class InventoryUI : MonoBehaviour
     /**
      * Creating the entire UI of the inventory
      */
-    void Start()
+    void Awake()
     {
-        inventory = Inventory.Instance;
-        inventorySlots = itemsParent.GetComponentsInChildren<InventorySlot>();
-        hotbarSlots = hotbarParent.GetComponentsInChildren<InventorySlot>();
-        armorSlots = armorParent.GetComponentsInChildren<InventorySlot>();
-        inventory.setSlots(inventorySlots, hotbarSlots, armorSlots);
+        if (PhotonView.Get(transform.parent.parent.gameObject).IsMine)
+        {
+            inventory = Inventory.Instance;
+            inventorySlots = itemsParent.GetComponentsInChildren<InventorySlot>();
+            hotbarSlots = hotbarParent.GetComponentsInChildren<InventorySlot>();
+            armorSlots = armorParent.GetComponentsInChildren<InventorySlot>();
+            inventory.setSlots(inventorySlots, hotbarSlots, armorSlots);
+        }
     }
 }

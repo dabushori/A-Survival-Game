@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron Pickaxe
   m_EditorClassIdentifier: 
   name: Iron Pickaxe
-  icon: {fileID: 21300000, guid: 91de487c3e1de4e42bcc4659da134422, type: 3}
+  icon: {fileID: 21300000, guid: f4e5f53b859aaab4a83791acfd28b7a3, type: 3}
   job: 1
   breakDamage: 50
   breakLevel: 4
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 2651747729594002529, guid: c851e4ee00dc75a40811dd9c28e557c2, type: 3}

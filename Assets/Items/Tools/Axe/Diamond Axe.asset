@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Diamond Axe
   m_EditorClassIdentifier: 
   name: Diamond Axe
-  icon: {fileID: 21300000, guid: aeae5a73dad6b8748b982632ee2fb57a, type: 3}
+  icon: {fileID: 21300000, guid: 5f056f1d569fc4f4dadff6d972de78d3, type: 3}
   job: 1
   breakDamage: 65
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 2488915889958085675, guid: c8abccebf51185b4097c6c21f9537b03, type: 3}

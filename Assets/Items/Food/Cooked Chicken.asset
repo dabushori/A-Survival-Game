@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58f363ef4a54e9498b7926d6cc1832f, type: 3}
+  m_Name: Cooked Chicken
+  m_EditorClassIdentifier: 
+  name: Cooked Chicken
+  icon: {fileID: 21300000, guid: ab20a9905f61a5845afa2bb850d7f099, type: 3}
+  job: 4
+  breakDamage: 0
+  breakLevel: 0
+  hitDamage: 0
+  bodyPart: 0
+  defenseLevel: 0
+  hpBonus: 20
+  placeable: 0
+  placedObject: {fileID: 0}
+  itemToHold: {fileID: 2834595618098478615, guid: d1e3a6c529e9c4ecc9260a8dcbc4e6bc, type: 3}

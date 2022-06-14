@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Diamond Chestplate
   m_EditorClassIdentifier: 
   name: Diamond Chestplate
-  icon: {fileID: 21300000, guid: 05b27fb71266bab4b8dad2317ff336ef, type: 3}
+  icon: {fileID: 21300000, guid: 2c1e4a4bcb2d4b04ea9daddc997be75a, type: 3}
   job: 8
   breakDamage: 0
   breakLevel: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   hpBonus: 0
   placeable: 0
   placedObject: {fileID: 0}
+  itemToHold: {fileID: 4893198226802663649, guid: 0db116d4e5323484a9895365bd5b23f0, type: 3}
