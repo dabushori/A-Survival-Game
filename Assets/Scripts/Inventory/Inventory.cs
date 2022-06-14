@@ -221,6 +221,8 @@ public class Inventory
      */
     public void SwitchItems(InventorySlot srcSlot, InventorySlot dstSlot)
     {
+        if (selectedSlot == null) return;
+
         Item i1 = srcSlot.Item;
         int amount1 = srcSlot.Amount;
 
@@ -231,6 +233,8 @@ public class Inventory
         else srcSlot.ClearSlot();
         if (i1 != null && amount1 > 0) dstSlot.AddItem(i1, amount1);
         else dstSlot.ClearSlot();
+
+        selectedSlot = null;
     }
     /**
      * put the item in the armor inventory
