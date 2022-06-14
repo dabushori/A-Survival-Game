@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -81,21 +82,11 @@ public class Destructible : MonoBehaviour
         if (Item.CanBreak(toolBreakLevel, levelNeededToBreak))
         {
             photonView.RPC(nameof(RPCDamageSound), RpcTarget.All);
+            BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6, transform);
+            PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
             if (hp > 0)
             {
-                DealDamage(damage);
-                BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6, transform);
-                PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-            }
-            if (hp <= 0)
-            {
-                BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6, transform);
-                PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-                DestroyObject();
-                for (int i = 0; i < items.Length; ++i)
-                {
-                    inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
-                }
+                DealDamage(damage, PhotonNetwork.LocalPlayer);
             }
         }
     }
@@ -115,34 +106,38 @@ public class Destructible : MonoBehaviour
         }
         photonView.RPC(nameof(RPCDamageSound), RpcTarget.All);
 
+        BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y * mobScaleParticle, transform);
+        PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
         if (hp > 0)
         {
-            DealDamage(damage);
-            BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y * mobScaleParticle, transform);
-            PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-        }
-        if (hp <= 0)
-        {
-            BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y * mobScaleParticle, transform);
-            PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
-            DestroyObject();
-            for (int i = 0; i < items.Length; ++i)
-            {
-                inventory.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
-            }
+            DealDamage(damage, PhotonNetwork.LocalPlayer);
         }
     }
 
     [PunRPC]
-    void DealDamage(int damage)
+    void GiveItemsToUser()
+    {
+        // give items to the user
+        for (int i = 0; i < items.Length; ++i)
+        {
+            Inventory.Instance.AddToInventory(items[i], Random.Range(minItemsToGive[i], maxItemsToGive[i] + 1));
+        }
+    }
+
+    [PunRPC]
+    void DealDamage(int damage, Player sender)
     {
         if (photonView.IsMine)
         {
             hp -= damage;
+            if (hp <= 0)
+            {
+                DestroyObject(sender);
+            }
         }
         else
         {
-            photonView.RPC(nameof(DealDamage), photonView.Owner, damage);
+            photonView.RPC(nameof(DealDamage), photonView.Owner, damage, sender);
         }
     }
 
@@ -152,25 +147,18 @@ public class Destructible : MonoBehaviour
         SFXManager.Instance.PlaySound(takeDamageSound, transform.position, 2f);
     }
 
-    [PunRPC]
-    void DestroyObject()
+    void DestroyObject(Player destroyer)
     {
-        if (photonView.IsMine)
+        if (animator != null)
         {
-            if (animator != null)
-            {
-                animator.SetBool("IsDead", true);
-                Invoke(nameof(DestroyMe), deathLength);
-            }
-            else
-            {
-                Invoke(nameof(DestroyMe), 0.1f);
-            }
-        } 
+            animator.SetBool("IsDead", true);
+            Invoke(nameof(DestroyMe), deathLength);
+        }
         else
         {
-            photonView.RPC(nameof(DestroyObject), photonView.Owner);
+            Invoke(nameof(DestroyMe), 0);
         }
+        photonView.RPC(nameof(GiveItemsToUser), destroyer);
     }
 
     void DestroyMe()
