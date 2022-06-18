@@ -477,15 +477,5 @@ public class PlayerMovements : MonoBehaviour
         inventoryObject.SetActive(false);
         stopMenuObject.SetActive(false);
         SetCharacterVisible(false);
-
-        // testing
-        Invoke(nameof(Init), 3);
-    }
-
-    private void Init()
-    {
-        foreach (var r in RecipesDatabase.furnaceRecipes) Inventory.Instance.AddToInventory(r.craftedItem, 10);
-        foreach (var r in RecipesDatabase.anvilRecipes) Inventory.Instance.AddToInventory(r.craftedItem, 10);
-        playerHealth.DealDamage(90);
     }
 }
