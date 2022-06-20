@@ -158,7 +158,7 @@ public class PlayerMovements : MonoBehaviour
     public void Use()
     {
         if (Physics.Raycast(gameObject.transform.position, Camera.main.transform.forward, out RaycastHit hit, MINING_DISTANCE, DISTRUCTIBLE_LAYER, QueryTriggerInteraction.Collide)) {
-           if (hit.transform.gameObject.TryGetComponent<RecipeCraftingMenuItem>(out RecipeCraftingMenuItem menuItem))
+            if (hit.transform.gameObject.TryGetComponent<RecipeCraftingMenuItem>(out RecipeCraftingMenuItem menuItem))
             {
                 switch (menuItem.menuType)
                 {
@@ -174,6 +174,7 @@ public class PlayerMovements : MonoBehaviour
                 }
                 ToggleInventory();
             }
+            return;
         }
         // use logic
         Item currentItem = inventory.ChosenItem;
@@ -188,7 +189,7 @@ public class PlayerMovements : MonoBehaviour
                     canPlace = false;
                     Vector3 cameraForward = Camera.main.transform.forward;
                     cameraForward.y = 0;
-                    PhotonNetwork.InstantiateRoomObject(GameStateController.furniturePath + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
+                    PhotonNetwork.Instantiate(GameStateController.furniturePath + currentItem.name, hit.point, Quaternion.LookRotation(cameraForward));
                     inventory.RemoveFromInventory(currentItem, 1);
                     Invoke(nameof(ResetCanPlace), PLACING_TIME);
                 }
