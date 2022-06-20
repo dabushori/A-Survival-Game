@@ -83,20 +83,25 @@ public class MobsGeneration : MonoBehaviour
     {
         if (Time.time - previousHostileSpawnTime > HOSTILE_MOB_SPAWN_CYCLE_TIME)
         {
-            if (GameStateController.timeController.IsNight())
+            if (GameStateController.timeController != null)
             {
-                previousHostileSpawnTime = Time.time;
-                SpawnMob(true);
-            } else
-            {
-                // spawn hostile one in five times when at night it is one to one
-                int rand = Random.Range(0, 5);
-                if (rand == 0)
+                if (GameStateController.timeController.IsNight())
                 {
                     previousHostileSpawnTime = Time.time;
                     SpawnMob(true);
+                } 
+                else
+                {
+                    // spawn hostile one in five times when at night it is one to one
+                    int rand = Random.Range(0, 5);
+                    if (rand == 0)
+                    {
+                        previousHostileSpawnTime = Time.time;
+                        SpawnMob(true);
+                    }
                 }
-            }
+
+            } 
         }
         if (Time.time - previousFriendlySpawnTime > FRIENDLY_MOB_SPAWN_CYCLE_TIME)
         {
