@@ -26,6 +26,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
             {
                 endScreen.SetActive(true);
             }
+            if (healthBar.value == MaxHealth)
+            {
+                endScreen.SetActive(false);
+            }
         }
     }
 

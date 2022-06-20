@@ -28,4 +28,9 @@ public class DeathMenu : MonoBehaviourPunCallbacks
         while (PhotonNetwork.CurrentRoom.PlayerCount > 1) yield return null;
         PhotonNetwork.LoadLevel("Menu");
     }
+
+    public void Revive()
+    {
+        GetComponentInParent<PlayerControls>().Revive();
+    }
 }

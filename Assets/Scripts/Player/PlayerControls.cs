@@ -122,4 +122,19 @@ public class PlayerControls : MonoBehaviour
     {
         WorldGeneration.Instance.FadeScreen();
     }
+
+    public void Revive()
+    {
+        StartCoroutine("TeleportSpawn");
+    }
+
+    private IEnumerator TeleportSpawn()
+    {
+        gameObject.transform.position = new Vector3(GameStateController.worldDepth / 2, 5, GameStateController.worldWidth / 2);
+        yield return new WaitForSeconds(0.3f);
+        PlayerHealth p = GetComponentInChildren<PlayerHealth>();
+        p.AddHealth(p.MaxHealth);
+        Inventory.Instance.ClearInventory();
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 }

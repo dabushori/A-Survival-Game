@@ -258,4 +258,20 @@ public class Inventory
         }
         return sum;
     }
+
+    public void ClearInventory()
+    {
+        foreach (InventorySlot slot in hotbarSlots)
+        {
+            slot.ClearSlot();
+        }
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            slot.ClearSlot();
+        }
+        foreach (InventorySlot slot in armorSlots)
+        {
+            slot.ClearSlot();
+        }
+    }
 }
