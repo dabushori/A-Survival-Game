@@ -17,7 +17,7 @@ public class ArmorSlot : InventorySlot
     public override void OnDrop(BaseEventData data)
     {
         // if the item is an armor item and it is the right bodypart
-        if (inventory.selectedSlot.Item.IsSuitableForJob(Jobs.ARMOR) && inventory.selectedSlot.Item.bodyPart == bodyPart)
+        if (inventory.selectedSlot.Item != null && inventory.selectedSlot.Item.IsSuitableForJob(Jobs.ARMOR) && inventory.selectedSlot.Item.bodyPart == bodyPart)
         {
             inventory.SwitchItems(this); // switch items
         }
