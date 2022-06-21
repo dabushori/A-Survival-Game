@@ -319,7 +319,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8710761594736655260}
         m_TargetAssemblyTypeName: PlayerMovements, Assembly-CSharp
-        m_MethodName: ToggleStopMenu
+        m_MethodName: CloseMenuByButton
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

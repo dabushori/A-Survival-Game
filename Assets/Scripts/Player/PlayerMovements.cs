@@ -85,9 +85,9 @@ public class PlayerMovements : MonoBehaviour
     private float hitStartTime;
     public void Hit(InputAction.CallbackContext ctx)
     {
-        if (isInInventory || isInStopMenu) return;
         if (ctx.started)
         {
+            if (isInInventory || isInStopMenu) return;
             isHitKeyPressed = true;
             animator.SetBool("IsHitting", true);
             hitStartTime = Time.time;
@@ -390,9 +390,17 @@ public class PlayerMovements : MonoBehaviour
                 isInInventory = true;
                 inventoryObject.SetActive(true);
                 crosserObject.SetActive(false);
-
             }
+            ResetAnimations();
         }
+    }
+
+    void ResetAnimations()
+    {
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsSprinting", false);
+        animator.SetBool("IsJumping", false);
+        animator.SetBool("IsHitting", false);
     }
 
     public void ToggleInventory()
@@ -414,6 +422,7 @@ public class PlayerMovements : MonoBehaviour
                 inventoryObject.SetActive(true);
                 crosserObject.SetActive(false);
             }
+            ResetAnimations();
         }
     }
 
@@ -437,15 +446,43 @@ public class PlayerMovements : MonoBehaviour
                 stopMenuObject.SetActive(true);
                 crosserObject.SetActive(false);
             }
+            ResetAnimations();
         }
     }
 
-    public void CloseMenuByButton()
+    public void ToggleStopMenu()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        isInStopMenu = false;
-        stopMenuObject.SetActive(false);
-        crosserObject.SetActive(true);
+        if (!isInInventory && !isInLoadingScreen)
+        {
+            if (isInStopMenu)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                isInStopMenu = false;
+                stopMenuObject.SetActive(false);
+                crosserObject.SetActive(true);
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                isInStopMenu = true;
+                stopMenuObject.SetActive(true);
+                crosserObject.SetActive(false);
+            }
+            ResetAnimations();
+        }
+    }
+
+    public void CloseMenuByButton(InputAction.CallbackContext ctx)
+    {
+        if (!ctx.performed) return;
+        if (isInInventory)
+        {
+            ToggleInventory();
+        }
+        else
+        {
+            ToggleStopMenu();
+        }
     }
 
     [SerializeField]
