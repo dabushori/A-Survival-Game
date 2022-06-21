@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  onlyAtNight: 0
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -127,7 +128,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 35
-  walkPointRange: 3
+  walkPointRange: 10
   timeBetweenAttacks: 2
   sightRange: 20
   attackRange: 1.7

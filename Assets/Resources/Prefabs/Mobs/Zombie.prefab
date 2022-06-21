@@ -128,7 +128,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   damage: 20
-  walkPointRange: 4
+  walkPointRange: 15
   timeBetweenAttacks: 2
   sightRange: 20
   attackRange: 1.2

@@ -154,8 +154,24 @@ public class MobAI : MonoBehaviour
         float newX = Random.Range(-walkPointRange, walkPointRange);
         float newZ = Random.Range(-walkPointRange, walkPointRange);
         walkPoint = new Vector3(transform.position.x + newX, transform.position.y, transform.position.z + newZ);
-        // checking if the poisnt is on the ground
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, WhatIsGround)) walkPointSet = true;
+
+        // find the height of the target point by its x and y
+        walkPointSet = true;
+        if (Physics.Raycast(walkPoint, Vector3.down, out RaycastHit hit, float.MaxValue, WhatIsGround))
+        {
+            walkPoint.y = hit.point.y;
+        }
+        else if (Physics.Raycast(walkPoint, Vector3.up, out hit, float.MaxValue, WhatIsGround))
+        {
+            walkPoint.y = hit.point.y;
+        } else
+        {
+            walkPointSet = false;
+            Debug.Log("Walk Point Not Found");
+            return;
+        }
+        Debug.Log("Walk Point: " + walkPoint);
+
         if (Physics.OverlapSphere(walkPoint, 1f, WhatIsEnvironment).Length != 0) walkPointSet = false;
     }
     public void Chasing()
