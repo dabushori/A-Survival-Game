@@ -12928,11 +12928,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430340016}
   m_CullTransparentMesh: 1
---- !u!1 &1436236578 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8843643798466002397, guid: c53ba83714742804fb68e356a4c17417, type: 3}
-  m_PrefabInstance: {fileID: 1970490673}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1439360322
 GameObject:
   m_ObjectHideFlags: 0
@@ -15955,23 +15950,22 @@ MonoBehaviour:
   roomNameInput_create: {fileID: 1564232793}
   createButton: {fileID: 265592824}
   failedToCreateText: {fileID: 1375037002}
+  roomNameInput_join: {fileID: 879365344}
+  joinButton: {fileID: 1969243757}
+  failedToJoinText: {fileID: 604980524}
   roomName: {fileID: 1381028396}
   roomSeed: {fileID: 1545986280}
+  startButton: {fileID: 1970490675}
+  leaveButton: {fileID: 730938291}
   roomMenu: {fileID: 1970490674}
   createMenu: {fileID: 330787109}
   joinMenu: {fileID: 1581919787}
   openMenu: {fileID: 1582937459}
   mainMenu: {fileID: 56060412}
-  startButton: {fileID: 1436236578}
-  leaveButton: {fileID: 730938291}
+  loadingPage: {fileID: 625217343}
   playersAmount: {fileID: 1413132838}
   contentTransform: {fileID: 1554664813}
   playerItemPrefab: {fileID: 1925220373450761139, guid: 602de8f4c5b308445b56113deba78c5f, type: 3}
-  roomNameInput_join: {fileID: 879365344}
-  joinButton: {fileID: 1969243757}
-  failedToJoinText: {fileID: 604980524}
-  startButtonNO: {fileID: 1970490675}
-  loadingPage: {fileID: 625217343}
 --- !u!114 &1673791725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18800,7 +18794,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8843643798466002211, guid: c53ba83714742804fb68e356a4c17417, type: 3}
   m_PrefabInstance: {fileID: 1970490673}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436236578}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}

@@ -371,6 +371,7 @@ MonoBehaviour:
   controller: {fileID: 8710761594365420441}
   gravity: -19.62
   jumpPower: 1
+  isInLoadingScreen: 1
   MINING_DISTANCE: 2
   MOB_HITTING_DISTANCE: 2
   MIN_PLACING_DISTANCE: 2
@@ -389,11 +390,10 @@ MonoBehaviour:
   - {fileID: 6657532484844437319}
   - {fileID: 6395227842081449681}
   playerControls: {fileID: 7306178471303033369}
-  isInLoadingScreen: 1
   coordinates: {fileID: 8498598411070062414}
+  stopMenuObject: {fileID: 9112941401409766018}
   inventoryObject: {fileID: 3140909824261237916}
   crosserObject: {fileID: 8373838384845069258}
-  stopMenuObject: {fileID: 9112941401409766018}
   playerMeshes:
   - {fileID: 4229544393704942890}
   - {fileID: 2106292096705530959}
