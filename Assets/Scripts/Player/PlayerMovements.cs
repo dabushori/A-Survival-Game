@@ -187,7 +187,7 @@ public class PlayerMovements : MonoBehaviour
         if (!isInInventory && !isInStopMenu)
         {
             // Check that the player is on the ground and jumps
-            if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GameStateController.surfaceLayer) && velocity.y < 0)
+            if (ctx.performed && Physics.CheckSphere(playerBody.transform.position, 0.5f, GameStateController.groundLayers) && velocity.y < 0)
             {
                 // v = sqrt(-2 * F * g)
                 velocity.y = Mathf.Sqrt(-2f * jumpPower * gravity);
