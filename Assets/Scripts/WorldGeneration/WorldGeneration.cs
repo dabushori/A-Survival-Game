@@ -208,7 +208,7 @@ public class WorldGeneration : MonoBehaviour
     /*
      * the function calls the player
      */
-    public void FadeScreen()
+    public void StartGame()
     {
         // fade the loading screen
         loadingScreen.GetComponentInChildren<Animation>().Play("FadeScreen");
