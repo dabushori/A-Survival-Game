@@ -173,8 +173,8 @@ public class PlayerMovements : MonoBehaviour
                         break;
                 }
                 ToggleInventory();
+                return;
             }
-            return;
         }
         // use logic
         Item currentItem = inventory.ChosenItem;
