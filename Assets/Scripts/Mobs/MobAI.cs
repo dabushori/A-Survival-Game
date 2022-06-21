@@ -9,6 +9,8 @@ public class MobAI : MonoBehaviour
 
     GameObject player;
 
+    public bool onlyAtNight;
+
     public LayerMask WhatIsGround, WhatIsPlayer, WhatIsEnvironment;
 
     // stats
@@ -52,14 +54,14 @@ public class MobAI : MonoBehaviour
     [PunRPC]
     void DestroyMob()
     {
-        if (mobPV.IsMine)
+        PhotonNetwork.Destroy(gameObject);
+        /*if (mobPV.IsMine)
         {
-            PhotonNetwork.Destroy(gameObject);
         }
         else
         {
             mobPV.RPC(nameof(DestroyMob), mobPV.Owner);
-        }
+        }*/
     }
 
     public void Awake()
@@ -80,8 +82,14 @@ public class MobAI : MonoBehaviour
         animator = GetComponent<Animator>();
         hasMultipleAnimations = animator.HasState(0, Animator.StringToHash("attack"));
     }
+
     public void Update()
     {
+        if (onlyAtNight && GameStateController.timeController != null && !GameStateController.timeController.IsNight())
+        {
+            DestroyMob();
+            return;
+        }
         if (!mobPV.IsMine || !agent.isOnNavMesh) return;
         if (GetComponent<Destructible>().HP <= 0) return;
         Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer).OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();

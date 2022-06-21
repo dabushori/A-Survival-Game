@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  onlyAtNight: 1
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 64
