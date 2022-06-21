@@ -3,15 +3,23 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
-    public Image icon;
-    public Button removeButton;
-    public TMPro.TMP_InputField amountView;
-    public bool isHotbar = false;
-    protected Item item;
-    protected int amount;
-    protected Inventory inventory;
+    [SerializeField]
+    Image icon; // icon of the item
 
-    /**
+    [SerializeField]
+    Button removeButton; // remove button for removing items
+
+    [SerializeField]
+    TMPro.TMP_InputField amountView; // amount of the item
+
+    [SerializeField]
+    bool isHotbar = false; // is this slot hotbar
+
+    protected Item item; // the item in the slot
+    protected int amount; // the amount of the item
+    protected Inventory inventory; // the inventory that the slot belongs to
+
+    /*
      * Singelton inventory
      */
     private void Start()
@@ -19,6 +27,9 @@ public class InventorySlot : MonoBehaviour
         inventory = Inventory.Instance;
     }
 
+    /*
+     * Getter Setter to the item
+     */
     public Item Item
     {
         get
@@ -27,6 +38,7 @@ public class InventorySlot : MonoBehaviour
         }
         private set
         {
+            // if the item is null disable the visuals
             if (value == null)
             {
                 icon.enabled = false; 
@@ -40,7 +52,9 @@ public class InventorySlot : MonoBehaviour
             }
         }
     }
-
+    /*
+     * Getter Setter to the item
+     */
     public int Amount
     {
         get
@@ -49,6 +63,7 @@ public class InventorySlot : MonoBehaviour
         }
         private set
         {
+            // if the amount is 0 disable the visuals
             if (value == 0)
             {
                 amountView.text = "";
@@ -64,7 +79,7 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    /**
+    /*
      * increase amount of item by 1 in the slot
      */
     public void IncAmount(int amount = 1)
@@ -72,7 +87,7 @@ public class InventorySlot : MonoBehaviour
         Amount += amount;
     }
 
-    /**
+    /*
      * decrease amount of item by 1 in the slot
      */
     public void DecAmount(int amount = 1)
@@ -81,7 +96,7 @@ public class InventorySlot : MonoBehaviour
         if (Amount == 0) ClearSlot();
     }
 
-    /**
+    /*
      * add item to the slot
      */
     public void AddItem(Item newItem, int newAmount)
@@ -95,7 +110,7 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    /**
+    /*
      * clear the slot from the item
      */
     public void ClearSlot()
@@ -109,7 +124,7 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    /**
+    /*
      * remove 1 of the item from the slot
      */
     public void onRemoveButton()
@@ -117,15 +132,17 @@ public class InventorySlot : MonoBehaviour
         inventory.RemoveFromInventory(item, 1);
     }
 
-    /**
+    /*
      * drag and drop functions to move items in the inventory
      */
     public void OnDrag(BaseEventData data)
     {
+        // select the first slot
         inventory.selectedSlot = this;
     }
     public virtual void OnDrop(BaseEventData data)
     {
+        // select second slot and switch the two items in the slots
         inventory.SwitchItems(this);
     }
 }
