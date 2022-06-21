@@ -134,6 +134,9 @@ MonoBehaviour:
   attackRange: 1.4
   sound: {fileID: 8300000, guid: 53ac696a976f80443aa3d767e92c3f7e, type: 3}
   timeBetweenSounds: 10
+  worldObjects:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!195 &3188317328622183901
 NavMeshAgent:
   m_ObjectHideFlags: 0

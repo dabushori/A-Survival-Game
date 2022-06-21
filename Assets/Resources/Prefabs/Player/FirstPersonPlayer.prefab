@@ -442,8 +442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MAX_HOSTILE_MOBS_CAPACITY: 40
   MAX_FRIENDLY_MOBS_CAPACITY: 15
-  hostileMobsList: []
-  friendlyMobsList: []
   spawnRadiusMax: 50
   spawnRadiusMin: 25
   hostileMobsLayer:
