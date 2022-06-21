@@ -1,4 +1,6 @@
 using Photon.Pun;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -326,6 +328,14 @@ public class PlayerMovements : MonoBehaviour
 
     public bool isInLoadingScreen = true;
 
+    public TMP_Text coordinates;
+
+    void UpdateCoordinates()
+    {
+        Vector3 pos = playerBody.transform.position;
+        coordinates.text = String.Format("X: {0} Y: {1} Z: {2}", Math.Round(pos.x, 0), Math.Round(pos.y, 0), Math.Round(pos.z, 0));
+    }
+
     private void Update()
     {
         if (isInLoadingScreen) return;
@@ -336,6 +346,7 @@ public class PlayerMovements : MonoBehaviour
         }
         // Gravity 
         UpdateGravity();
+        UpdateCoordinates();
 
         if (!isInInventory && !isInStopMenu)
         {
