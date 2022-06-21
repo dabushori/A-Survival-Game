@@ -370,29 +370,17 @@ MonoBehaviour:
   sprintSpeed: 7
   controller: {fileID: 8710761594365420441}
   gravity: -19.62
-  GROUND_LAYER:
-    serializedVersion: 2
-    m_Bits: 192
   jumpPower: 1
-  DISTRUCTIBLE_LAYER:
-    serializedVersion: 2
-    m_Bits: 128
   MINING_DISTANCE: 2
-  MOBS_LAYER:
-    serializedVersion: 2
-    m_Bits: 1536
   MOB_HITTING_DISTANCE: 2
+  MIN_PLACING_DISTANCE: 2
+  MAX_PLACING_DISTANCE: 5
   MINING_TIME: 1
   HITTING_TIME: 0.8
-  DEFAULT_BREAKING_DAMAGE: 0
   EATING_TIME: 1.2
   PLACING_TIME: 1
   WEARING_TIME: 0.1
-  SURFACE_LAYER:
-    serializedVersion: 2
-    m_Bits: 192
-  MIN_PLACING_DISTANCE: 2
-  MAX_PLACING_DISTANCE: 5
+  CHOOSE_ITEM_TIME: 0.2
   craftingMenuInitializer: {fileID: 8373838384405540753}
   characterBoneRoot: {fileID: 1724410244190864323}
   armor:
@@ -444,15 +432,6 @@ MonoBehaviour:
   MAX_FRIENDLY_MOBS_CAPACITY: 15
   spawnRadiusMax: 50
   spawnRadiusMin: 25
-  hostileMobsLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  friendlyMobsLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  whatIsEnvironment:
-    serializedVersion: 2
-    m_Bits: 128
   HOSTILE_MOB_SPAWN_CYCLE_TIME: 15
   FRIENDLY_MOB_SPAWN_CYCLE_TIME: 15
 --- !u!1 &8710761594916082493
