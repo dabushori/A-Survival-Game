@@ -16,6 +16,7 @@ public class GameStateController : MonoBehaviour
 
     public static string mobsPath = "Prefabs/Mobs/";
     public static string treesPath = "World/Trees/";
+    public static string mushroomPath = "World/Mushroom/";
     public static string rocksPath = "World/Rocks/";
     public static string ironsPath = "World/Iron/";
     public static string goldsPath = "World/Gold/";

@@ -130,6 +130,7 @@ public class WorldGeneration : MonoBehaviour
     {
         GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, GameStateController.treesPath, 12);
         GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 7, GameStateController.rocksPath, 6);
+        GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 10, GameStateController.mushroomPath, 1);
         GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 10, GameStateController.ironsPath, 6);
         GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 18, GameStateController.goldsPath, 6);
         GenerateObjects(levelDepth, levelWidth, levelScale, distanceBetweenVertices, 30, GameStateController.diamondsPath, 6);

@@ -82,7 +82,7 @@ public class Destructible : MonoBehaviour
         if (Item.CanBreak(toolBreakLevel, levelNeededToBreak))
         {
             photonView.RPC(nameof(RPCDamageSound), RpcTarget.All);
-            BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6, transform);
+            if (breakParticlesPrefab != null) BreakParticles.CreateBreakParticles(breakParticlesPrefab, transform.position + Vector3.up * transform.lossyScale.y / 6, transform);
             PointsHandler.CreateFloatingPoints(floatingPointsPrefab, transform.position + Vector3.up * transform.lossyScale.y / 2, "-" + damage.ToString());
             if (hp > 0)
             {
