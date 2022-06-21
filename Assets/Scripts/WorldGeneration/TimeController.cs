@@ -162,6 +162,15 @@ public class TimeController : MonoBehaviour
 
     private void RotateSun()
     {
+        if (sunLight == null || moonLight == null)
+        {
+            TrySetLights();
+            if (sunLight == null || moonLight == null)
+            {
+                return;
+            }
+        }
+
         float lightRotation;
 
         if (currentTime.TimeOfDay > sunriseTime && currentTime.TimeOfDay < sunsetTime)
