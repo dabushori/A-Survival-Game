@@ -111,8 +111,22 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    void TrySetLights()
+    {
+        sunLight = GameObject.Find("SunLight").GetComponent<Light>();
+        moonLight = GameObject.Find("MoonLight").GetComponent<Light>();
+    }
+
     private void UpdateLight()
     {
+        if (sunLight == null || moonLight == null)
+        {
+            TrySetLights();
+            if (sunLight == null || moonLight == null)
+            {
+                return;
+            }
+        }
         // compare the difference between the vectors (between 1 and -1)
         float doProduct = Vector3.Dot(sunLight.transform.forward, Vector3.down);
         // calculate intesity of light for day and night
