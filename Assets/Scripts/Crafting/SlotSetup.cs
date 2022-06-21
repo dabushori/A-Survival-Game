@@ -1,8 +1,10 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
+/*
+ * A class to set up the parameters of an item slot in a recipe
+ */
 public class SlotSetup : MonoBehaviour
 {
     [SerializeField]
@@ -10,6 +12,9 @@ public class SlotSetup : MonoBehaviour
     [SerializeField]
     protected Image icon;
 
+    /*
+     * Set up the parameters of the slot
+     */
     public void SetUp(int amount, Sprite icon)
     {
         this.amount.text = amount.ToString();
