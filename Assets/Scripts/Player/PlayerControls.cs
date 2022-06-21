@@ -125,6 +125,7 @@ public class PlayerControls : MonoBehaviour
 
     public void Revive()
     {
+        HoldItem(null);
         StartCoroutine("TeleportSpawn");
     }
 

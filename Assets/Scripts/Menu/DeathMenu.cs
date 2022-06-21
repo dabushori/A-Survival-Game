@@ -15,12 +15,16 @@ public class DeathMenu : MonoBehaviourPunCallbacks
 
     public void ReturnToMenu()
     {
+        GetComponentInParent<PlayerControls>().HoldItem(null);
         if (PhotonNetwork.IsMasterClient)
         {
             parentPV.RPC(nameof(PlayerControls.ReturnAllToMenu), RpcTarget.Others);
             StartCoroutine(AssureAllPlayersExited());
         }
-        else PhotonNetwork.LoadLevel("Menu");
+        else
+        {
+            PhotonNetwork.LoadLevel("Menu");
+        }
     }
 
     private IEnumerator AssureAllPlayersExited()
