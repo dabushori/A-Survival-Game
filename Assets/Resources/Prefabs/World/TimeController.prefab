@@ -279,13 +279,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3667558aa0f94cc479fda0f5c3c2f70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeMultiplayer: 288
+  timeMultiplayer: 144
   startHour: 12
   sunLight: {fileID: 0}
   sunriseHour: 7
   sunsetHour: 20
   dayAmbientLight: {r: 0.51067996, g: 0.5521786, b: 0.7169812, a: 0}
-  nightAmbientLight: {r: 0.20652366, g: 0.260738, b: 0.3679245, a: 0}
+  nightAmbientLight: {r: 0.16647384, g: 0.20043589, b: 0.2735849, a: 0}
   lightChangeCurve:
     serializedVersion: 2
     m_Curve:
@@ -319,9 +319,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxSunLightIntensity: 0.6
+  maxSunLightIntensity: 0.5
   moonLight: {fileID: 0}
-  maxMoonLightIntensity: 0.3
+  maxMoonLightIntensity: 0.2
   daySky: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   nightSky: {fileID: 2100000, guid: 16bc8a9d5451ca44d8f70575adbece3a, type: 2}
   dayText: {fileID: 1404908064531349011}
