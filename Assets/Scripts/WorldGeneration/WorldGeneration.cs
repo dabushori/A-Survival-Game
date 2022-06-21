@@ -15,6 +15,8 @@ public class WorldGeneration : MonoBehaviour
 
     [SerializeField]
     private GameObject tilePrefab;
+    [SerializeField]
+    private GameObject Walls;
 
     public int worldSeed;
 
@@ -78,9 +80,10 @@ public class WorldGeneration : MonoBehaviour
         float distanceBetweenVertices = (float)tileDepth / (float)tileDepthInVertices;
         if (PhotonNetwork.IsMasterClient) GenerateGameObjects(tileDepthInVertices * mapDepthInTiles, tileWidthInVertices * mapWidthInTiles, mapScale, distanceBetweenVertices);
         
-        GameStateController.worldDepth = tileDepthInVertices * mapDepthInTiles;
-        GameStateController.worldWidth = tileWidthInVertices * mapWidthInTiles;
-
+        GameStateController.worldDepth = 10 * mapDepthInTiles;
+        GameStateController.worldWidth = 10 * mapWidthInTiles;
+        // spawn walls
+        Instantiate(Walls, Vector3.zero, Quaternion.identity, tilesParent);
         gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 

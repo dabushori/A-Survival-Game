@@ -113,6 +113,7 @@ MonoBehaviour:
   mapDepthInTiles: 50
   mapScale: 5
   tilePrefab: {fileID: 3935098571071159304, guid: 6524f92b73226e24fad4dad78a01c951, type: 3}
+  Walls: {fileID: 2367107707443532352, guid: 16abc80c92e419a418678f293fda18ab, type: 3}
   worldSeed: 2147483647
   waves:
   - seed: 5613
