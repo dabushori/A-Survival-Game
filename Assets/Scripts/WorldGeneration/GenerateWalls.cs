@@ -1,16 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Create the invisible world limits
+ */
 public class GenerateWalls : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // The width (and height) of a tile
     [SerializeField]
     int tileWidth;
+
+    // Generate the invisible world limits so players won't fall of the world
     void Awake()
     {
-        transform.position = new Vector3(GameStateController.worldDepth / 2 - tileWidth / 2, 0, GameStateController.worldWidth / 2 - tileWidth / 2);
+        // Move the (empty) object to the middle of the map
+        transform.position = new Vector3((GameStateController.worldDepth - tileWidth) / 2, 0, (GameStateController.worldWidth - tileWidth) / 2);
+
+        // Get the invisible walls objects and modify them to wrap the world
         BoxCollider[] walls = GetComponentsInChildren<BoxCollider>();
+
         walls[0].gameObject.transform.position = transform.position + new Vector3(0, 25, GameStateController.worldDepth / 2);
         walls[0].gameObject.transform.localScale = new Vector3(GameStateController.worldWidth, 50, 0);
 

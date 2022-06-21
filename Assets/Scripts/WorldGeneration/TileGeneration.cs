@@ -1,48 +1,42 @@
 using UnityEngine;
 
+/*
+ * Generation of a specific tile given its position in the world
+ */
 public class TileGeneration : MonoBehaviour
 {
-
+    // The MeshRenderer of the current tile
     [SerializeField]
-    private MeshRenderer tileRenderer;
-    
+    MeshRenderer tileRenderer;
+
+    // The MeshFilter of the current tile
     [SerializeField]
-    private MeshFilter meshFilter;
-    
+    MeshFilter meshFilter;
+
+    // The MeshColliderthe current tile
     [SerializeField]
-    private MeshCollider meshCollider;
-    
+    MeshCollider meshCollider;
+
+    // The height multiplier (noise values are between 0 to 1, the height multiplier sets the maximum height possible)
     [SerializeField]
-    private float mapScale;
+    float heightMultiplier;
 
-    public int worldSeed;
-
+    // The color map to color different heights
     [SerializeField]
-    private float heightMultiplier;
+    Texture2D colorMap;
 
-    [SerializeField]
-    private Texture2D colorMap;
-
-    public class TileData
-    {
-        public float[,] heightMap;
-        public Mesh mesh;
-        public TileData(float[,] heightMap, Mesh mesh)
-        {
-            this.heightMap = heightMap;
-            this.mesh = mesh;
-        }
-    }
-
-
+    // Get the color given the height using the color map
     private Color GetColor(float height)
     {
-        // move the height to [0,50] range
+        // Move the height to [0,50] range
         int h = Mathf.RoundToInt(height * 50f);
-        // choose the corresponding pixel from the biome texture
+        // Choose the corresponding pixel from the biome texture
         return colorMap.GetPixel(h, 50 - h);
     }
 
+    /*
+     * Color the tile by the heights using the color map (yellow-brown for lower places and green for higher places)
+     */
     private Texture2D BuildTexture(float[,] heightMap)
     {
         int tileDepth = heightMap.GetLength(0);
@@ -52,63 +46,77 @@ public class TileGeneration : MonoBehaviour
         {
             for (int xIndex = 0; xIndex < tileWidth; xIndex++)
             {
-                // transform the 2D map index is an Array index
+                // Transform the 2D map index is an Array index
                 int colorIndex = zIndex * tileWidth + xIndex;
                 float height = heightMap[zIndex, xIndex];
-                // assign the color according to the terrain type
+                // Assign the color according to the height
                 colorMap[colorIndex] = GetColor(height);
             }
         }
-        // create a new texture and set its pixel colors
-        Texture2D tileTexture = new Texture2D(tileWidth, tileDepth);
-        tileTexture.wrapMode = TextureWrapMode.Clamp;
+        // Create a new texture and set its pixel colors
+        Texture2D tileTexture = new Texture2D(tileWidth, tileDepth)
+        {
+            wrapMode = TextureWrapMode.Clamp
+        };
         tileTexture.SetPixels(colorMap);
         tileTexture.Apply();
         return tileTexture;
     }
 
-    private void UpdateMeshVertices(float[,] heightMap)
+    /*
+     * Update the current tile's mesh vertices to the given heights
+     */
+    void UpdateMeshVertices(float[,] heightMap)
     {
         int tileDepth = heightMap.GetLength(0);
         int tileWidth = heightMap.GetLength(1);
         Vector3[] meshVertices = meshFilter.mesh.vertices;
-        // iterate through all the heightMap coordinates, updating the vertex index
+        
         int vertexIndex = 0;
+        // Iterate through all the heightMap coordinates, updating the vertex index
         for (int zIndex = 0; zIndex < tileDepth; zIndex++)
         {
             for (int xIndex = 0; xIndex < tileWidth; xIndex++)
             {
+                // vertexIndex = zIndex * tileDepth + xIndex
+                // A little optimization is to increment it by 1 in every iteration rether than calculating it
+                
                 float height = heightMap[zIndex, xIndex];
                 Vector3 vertex = meshVertices[vertexIndex];
-                // change the vertex Y coordinate, proportional to the height value
-                meshVertices[vertexIndex] = new Vector3(vertex.x, height, vertex.z);
-                vertexIndex++;
+                
+                // Change the vertex Y coordinate, proportional to the height value
+                meshVertices[vertexIndex++] = new Vector3(vertex.x, height, vertex.z);
             }
         }
-        // update the vertices in the mesh and update its properties
+        // Update the vertices in the mesh and update its properties
         meshFilter.mesh.vertices = meshVertices;
         meshFilter.mesh.RecalculateBounds();
         meshFilter.mesh.RecalculateNormals();
-        // update the mesh collider
+        // Update the mesh collider
         meshCollider.sharedMesh = meshFilter.mesh;
     }
 
-    public TileData GenerateTile(int mapScale, NoiseMapGeneration.Wave[] waves)
+    /*
+     * Generate the current tile
+     */
+    public void GenerateTile(int mapScale, NoiseMapGeneration.Wave[] waves, int worldSeed)
     {
-        this.mapScale = mapScale;
-        // calculate tile depth and width based on the mesh vertices
+        // Calculate tile depth and width based on the mesh vertices
         Vector3[] meshVertices = meshFilter.mesh.vertices;
         int tileDepth = (int)Mathf.Sqrt(meshVertices.Length);
         int tileWidth = tileDepth;
-        // calculate the offsets based on the tile position
+        
+        // Calculate the offsets based on the tile position
         float offsetX = -gameObject.transform.position.x;
         float offsetZ = -gameObject.transform.position.z;
-        // generate a heightMap using noise
+
+        // Generate a heightMap using the NoiseMapGeneration class and the offsets
         float[,] heightMap = NoiseMapGeneration.GenerateNoiseMap(tileDepth, tileWidth, mapScale, offsetX, offsetZ, waves, worldSeed);
 
-        // build a Texture2D from the height map
+        // Build a Texture2D from the height map
         tileRenderer.material.mainTexture = BuildTexture(heightMap);
 
+        // Set the heights of the vertices of the tiles
         for (int i = 0; i < heightMap.GetLength(0); ++i)
         {
             for (int j = 0; j < heightMap.GetLength(1); ++j)
@@ -117,9 +125,7 @@ public class TileGeneration : MonoBehaviour
             }
         }
 
-        // update the tile mesh vertices according to the height map
+        // Update the tile mesh vertices according to the height map
         UpdateMeshVertices(heightMap);
-
-        return new TileData(heightMap, meshFilter.mesh);
     }
 }
