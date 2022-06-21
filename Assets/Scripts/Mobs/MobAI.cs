@@ -45,9 +45,6 @@ public class MobAI : MonoBehaviour
     [SerializeField]
     float timeBetweenSounds; // the time between each sound
 
-    [SerializeField]
-    LayerMask worldObjects; // layer mask for the world objects
-
     Animator animator; // animator of the mob
     bool hasMultipleAnimations; // bool that know if the mob has multiple animations
 
@@ -58,7 +55,7 @@ public class MobAI : MonoBehaviour
      */
     void AssureValidPosition()
     {
-        if (Physics.OverlapSphere(transform.position, GetComponent<CapsuleCollider>().radius, worldObjects).Length > 0)
+        if (Physics.OverlapSphere(transform.position, GetComponent<CapsuleCollider>().radius, GameStateController.worldObjectsLayer).Length > 0)
         {
             // if not in valid position: destroy the mob
             DestroyMob();
