@@ -32,7 +32,9 @@ public class GameStateController : MonoBehaviour
     // Layer masks of different object types
     public static LayerMask surfaceLayer = 1 << 6;
     public static LayerMask worldObjectsLayer = 1 << 7;
+    public static LayerMask groundLayers = 1 << 6 | 1 << 7;
     public static LayerMask playersLayer = 1 << 8;
     public static LayerMask hostileMobsLayer = 1 << 9;
     public static LayerMask friendlyMobsLayer = 1 << 10;
+    public static LayerMask mobsLayer = 1 << 9 | 1 << 10;
 }
