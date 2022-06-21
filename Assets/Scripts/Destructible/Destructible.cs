@@ -75,7 +75,7 @@ public class Destructible : MonoBehaviour
             {
                 if (clip.name == "anim_death")
                 {
-                    deathLength = clip.length + 0.3f;
+                    deathLength = clip.length * 2;
                     break;
                 }
             }
@@ -222,13 +222,14 @@ public class Destructible : MonoBehaviour
         // If animator is not null, which means that the death animation exists, destory the object after the animation is played
         if (animator != null)
         {
+            Debug.Log("Animation Length: " + deathLength);
             animator.SetBool("IsDead", true);
             Invoke(nameof(DestroyMe), deathLength);
         }
         // Otherwise, destroy it now
         else
         {
-            DestroyMe();
+            Invoke(nameof(DestroyMe), 0);
         }
 
         // Give the items to the user who destroyed the object by sending him the GiveItemsToUser RPC
@@ -241,14 +242,5 @@ public class Destructible : MonoBehaviour
     void DestroyMe()
     {
         PhotonNetwork.Destroy(gameObject);
-    }
-
-    private void Update()
-    {
-        // If somehow the object is not destroyed yet, destroy it.
-        if (photonView.IsMine && HP <= 0)
-        {
-            DestroyMe();
-        }
     }
 }
