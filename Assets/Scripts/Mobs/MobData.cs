@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/*
+ * The class saves the mob data (for the generation)
+ */
 [CreateAssetMenu(fileName = "New MobsData", menuName = "Game Data/MobData")]
 public class MobData : ScriptableObject
 {

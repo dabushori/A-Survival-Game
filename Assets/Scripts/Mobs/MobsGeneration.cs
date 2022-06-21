@@ -6,28 +6,45 @@ using Photon.Pun;
 
 public class MobsGeneration : MonoBehaviour
 {
-    public int MAX_HOSTILE_MOBS_CAPACITY, MAX_FRIENDLY_MOBS_CAPACITY;
-    public List<MobData> hostileMobsList;
-    public List<MobData> friendlyMobsList;
+    [SerializeField]
+    int MAX_HOSTILE_MOBS_CAPACITY; // the max amount of mobs the player can have around him
+    [SerializeField]
+    int MAX_FRIENDLY_MOBS_CAPACITY; // the max amount of mobs the player can have around him
+    List<MobData> hostileMobsList; // data of all the hostile mobs
+    List<MobData> friendlyMobsList; // data of all the friendly mobs
 
-    int sumOfHostileWeights, sumOfFriendlyWeights;
+    int sumOfHostileWeights, sumOfFriendlyWeights; // the sum of all the weights of all the mobs (used for chosing who to spawn)
 
-    public int spawnRadiusMax, spawnRadiusMin;
+    [SerializeField]
+    int spawnRadiusMax; // max radius of spawn
+    [SerializeField]
+    int spawnRadiusMin; // min radius of spawn
 
-    public LayerMask hostileMobsLayer, friendlyMobsLayer, whatIsEnvironment;
+    [SerializeField]
+    LayerMask hostileMobsLayer; // layer masks of hostile mobs
+    [SerializeField]
+    LayerMask friendlyMobsLayer; // layer masks of friendly mobs
+    [SerializeField]
+    LayerMask whatIsEnvironment; // layer masks of different objects
 
+
+    /*
+     * The function spawn the mob (hostile or not depending on isHostile)
+     */
     public void SpawnMob(bool isHotile)
     {
         // select random mob
         MobData mob = SelectRandomMob(isHotile);
-
+        // choose the amount of the mob to spawn
         int numOfMobs = Random.Range(mob.groupSizeMin, mob.groupSizeMax + 1);
 
+        // choose a random spawn location for each mob
         for (int i = 0; i < numOfMobs; ++i)
         {
-            // choose a random spawn location
+            // random location around the player (adding to transform.position)
             Vector2 location = Random.insideUnitCircle * spawnRadiusMax;
             Vector3 mobPosition = new Vector3(location.x, 0, location.y) + transform.position;
+            // if the mob is closer than the minRadius we dont spawn him and move to the next mob
             if (Vector3.Distance(mobPosition, new Vector3(transform.position.x, 0, transform.position.z)) < spawnRadiusMin)
             {
                 continue;
@@ -37,38 +54,52 @@ public class MobsGeneration : MonoBehaviour
             if (CanSpawnMob(mob, isHotile, mobPosition))
             {
                 PhotonNetwork.InstantiateRoomObject(GameStateController.mobsPath + mob.mobName, mobPosition, Quaternion.identity);
-                //Instantiate(mob.mobObject, mobPosition, Quaternion.identity);
             }
         }
     }
 
+    /*
+     * The function select a random mob to spawn depending on weights (hostile or not depending on isHostile)
+     */
     MobData SelectRandomMob(bool isHotile)
     {
+        // put the mobs and sumofwights according to if hostile or not
         int sumOfWeights = isHotile ? sumOfHostileWeights : sumOfFriendlyWeights;
         List<MobData> mobsList = isHotile ? hostileMobsList : friendlyMobsList;
+        // random number for choosing mob
         int rnd = Random.Range(0, sumOfWeights + 1);
         foreach (MobData md in mobsList)
         {
+            // if the mob weight is more than rnd choose the mob
             if (rnd <= md.weight)
             {
                 return md;
             }
+            // remove from rnd the mob wiight and move to the next mob
             rnd -= md.weight;
         }
+        // if no mob was chosen just choose the last mob
         return mobsList[mobsList.Count - 1];
     }
 
+    /*
+     * The function checks if we will be able to spawn the mob according to his data, position and if he is hostile.
+     */
     public bool CanSpawnMob(MobData mobData, bool isHostile, Vector3 position)
     {
         if (GameStateController.timeController == null) return false;
+        // if the mob is to close to a game object
         if (Physics.OverlapSphere(position, 2f, whatIsEnvironment).Length != 0) return false;
+        // if the mob can only spawn at night
         if (mobData.onlyAtNight)
         {
+            // check if the mob is in the map, if it's night and if the mob pass the capacity around the player
             return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&
                 GameStateController.timeController.IsNight() && (isHostile ?
             (Physics.OverlapSphere(transform.position, spawnRadiusMax, hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) :
             (Physics.OverlapSphere(transform.position, spawnRadiusMax, friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY));
         }
+        // check if the mob is in the map and if the mob pass the capacity around the player
         return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&
             (isHostile ?
             (Physics.OverlapSphere(transform.position, spawnRadiusMax, hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) :
@@ -77,14 +108,20 @@ public class MobsGeneration : MonoBehaviour
     
 
 
-    float previousHostileSpawnTime = -Mathf.Infinity, previousFriendlySpawnTime = -Mathf.Infinity;
-    public float HOSTILE_MOB_SPAWN_CYCLE_TIME, FRIENDLY_MOB_SPAWN_CYCLE_TIME;
+    float previousHostileSpawnTime = -Mathf.Infinity, previousFriendlySpawnTime = -Mathf.Infinity; // last spawn time
+    [SerializeField]
+    float HOSTILE_MOB_SPAWN_CYCLE_TIME;// in how much time the mobs spawn
+    [SerializeField]
+    float FRIENDLY_MOB_SPAWN_CYCLE_TIME; // in how much time the mobs spawn
+
     public void Update()
     {
+        // spawn mobs every HOSTILE/FRIENDLY_MOB_SPAWN_CYCLE_TIME
         if (Time.time - previousHostileSpawnTime > HOSTILE_MOB_SPAWN_CYCLE_TIME)
         {
             if (GameStateController.timeController != null)
             {
+                // spawn hostile mobs 5 times faster on average at night
                 if (GameStateController.timeController.IsNight())
                 {
                     previousHostileSpawnTime = Time.time;
@@ -108,15 +145,18 @@ public class MobsGeneration : MonoBehaviour
             previousFriendlySpawnTime = Time.time;
             SpawnMob(false);
         }
+        // update the difficulty according to the day it is
         UpdateDifficulty();
     }
 
-    private int lastDay;
+    int lastDay;
     private void UpdateDifficulty()
     {
+        // if already changed difficulty today return
         if (GameStateController.timeController == null) return;
         int day = GameStateController.timeController.GetDay();
         if (day == lastDay) return;
+        // change difficulty according to the day
         switch(day)
         {
             case 3:
@@ -157,9 +197,10 @@ public class MobsGeneration : MonoBehaviour
 
     private void Awake()
     {
+        // save the mobdata
         hostileMobsList = new List<MobData>(Resources.LoadAll("Mobs/Hostile Mobs", typeof(MobData)).Cast<MobData>());
         friendlyMobsList = new List<MobData>(Resources.LoadAll("Mobs/Friendly Mobs", typeof(MobData)).Cast<MobData>());
-
+        // sum the weights of the mobs for when we want to spawn them randomaly
         sumOfHostileWeights = 0;
         foreach(MobData md in hostileMobsList)
         {
