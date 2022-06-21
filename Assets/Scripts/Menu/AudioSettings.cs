@@ -2,19 +2,23 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+/*
+ * The class is in charge of the audio settings
+ */
 public class AudioSettings : MonoBehaviour
 {
     [SerializeField]
-    Slider volumeSlider;
+    Slider volumeSlider; // volume slider
     [SerializeField]
-    Slider musicSlider;
+    Slider musicSlider; // music slider
     [SerializeField]
-    Slider gameSlider;
+    Slider gameSlider; // game slider
     [SerializeField]
-    Slider sfxSlider;
+    Slider sfxSlider; // sfx slider
 
     private void Start()
     {
+        // sync the sliders to the current value of the mixers
         audioMixer.GetFloat("volume", out float volume);
         if (volume == -80f) volumeSlider.value = -50f;
         else volumeSlider.value = volume;
@@ -32,25 +36,39 @@ public class AudioSettings : MonoBehaviour
         else sfxSlider.value = sfx;
     }
 
-    public AudioMixer audioMixer;
+    [SerializeField]
+    AudioMixer audioMixer; // the audio mixer we use in teh game
+
+    /*
+     * change the volume level
+     */
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("volume", volume);
         if (volume == -50f) audioMixer.SetFloat("volume", -80f);
     }
 
+    /*
+     * change the music level
+     */
     public void SetMusic(float music)
     {
         audioMixer.SetFloat("music", music);
         if (music == -50f) audioMixer.SetFloat("music", -80f);
     }
 
+    /*
+     * change the game sound level
+     */
     public void SetGame(float game)
     {
         audioMixer.SetFloat("game", game);
         if (game == -50f) audioMixer.SetFloat("game", -80f);
     }
-    
+
+    /*
+     * change the sfx sound level
+     */
     public void SetSFX(float sfx)
     {
         audioMixer.SetFloat("sfx", sfx);
