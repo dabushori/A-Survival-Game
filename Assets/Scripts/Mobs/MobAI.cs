@@ -15,13 +15,6 @@ public class MobAI : MonoBehaviour
     [SerializeField]
     bool onlyAtNight; // can the mob be alive only at night
 
-    [SerializeField]
-    LayerMask WhatIsGround; // layer masks for ground
-    [SerializeField]
-    LayerMask WhatIsPlayer; // layer masks for players
-    [SerializeField]
-    LayerMask WhatIsEnvironment; // layer masks for objects
-
     // stats
     [SerializeField]
     int damage; // projectile damage
@@ -84,11 +77,11 @@ public class MobAI : MonoBehaviour
     {
         mobPV = GetComponent<PhotonView>();
         // here we will only find hits with the surface layer
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, float.MaxValue, WhatIsGround))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, float.MaxValue, GameStateController.surfaceLayer))
         {
             transform.position = hit.point;
         }
-        else if (Physics.Raycast(transform.position, Vector3.up, out hit, float.MaxValue, WhatIsGround))
+        else if (Physics.Raycast(transform.position, Vector3.up, out hit, float.MaxValue, GameStateController.surfaceLayer))
         {
             transform.position = hit.point;
         }
@@ -116,8 +109,8 @@ public class MobAI : MonoBehaviour
         if (GetComponent<Destructible>().HP <= 0) return;
 
         // checking for any players in the ranges
-        Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer).OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
-        Collider[] attackPlayers = Physics.OverlapSphere(transform.position, attackRange, WhatIsPlayer);
+        Collider[] sightPlayers = Physics.OverlapSphere(transform.position, sightRange, GameStateController.playersLayer).OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
+        Collider[] attackPlayers = Physics.OverlapSphere(transform.position, attackRange, GameStateController.playersLayer);
 
         playerInSightRange = sightPlayers?.Length != 0;
         playerInAttackRange = attackPlayers?.Length != 0;
@@ -145,7 +138,7 @@ public class MobAI : MonoBehaviour
         }
 
         // play sound if there is a player in sight range
-        Collider[] soundPlayers = Physics.OverlapSphere(transform.position, sightRange, WhatIsPlayer).OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
+        Collider[] soundPlayers = Physics.OverlapSphere(transform.position, sightRange, GameStateController.playersLayer).OrderBy(c => (transform.position - c.transform.position).sqrMagnitude).ToArray();
         bool playerInSoundRange = soundPlayers?.Length != 0;
         if (playerInSoundRange)
         {
@@ -224,11 +217,11 @@ public class MobAI : MonoBehaviour
 
         // find the height of the target point by its x and y
         walkPointSet = true;
-        if (Physics.Raycast(walkPoint, Vector3.down, out RaycastHit hit, float.MaxValue, WhatIsGround))
+        if (Physics.Raycast(walkPoint, Vector3.down, out RaycastHit hit, float.MaxValue, GameStateController.surfaceLayer))
         {
             walkPoint.y = hit.point.y;
         }
-        else if (Physics.Raycast(walkPoint, Vector3.up, out hit, float.MaxValue, WhatIsGround))
+        else if (Physics.Raycast(walkPoint, Vector3.up, out hit, float.MaxValue, GameStateController.surfaceLayer))
         {
             walkPoint.y = hit.point.y;
         }
@@ -238,7 +231,7 @@ public class MobAI : MonoBehaviour
             return;
         }
         // if the mob will hit an object we cancel the walk point
-        if (Physics.OverlapSphere(walkPoint, 1f, WhatIsEnvironment).Length != 0) walkPointSet = false;
+        if (Physics.OverlapSphere(walkPoint, 1f, GameStateController.worldObjectsLayer).Length != 0) walkPointSet = false;
     }
 
     /*
@@ -280,7 +273,7 @@ public class MobAI : MonoBehaviour
             // play sound when attacking
             PlaySound();
             // check if the player is still in damage range
-            Collider[] inDamageRangePlayer = Physics.OverlapSphere(transform.position, attackRange, WhatIsPlayer);
+            Collider[] inDamageRangePlayer = Physics.OverlapSphere(transform.position, attackRange, GameStateController.playersLayer);
             // if in damage range send rpc to the player owner to deal him damage
             if (inDamageRangePlayer?.Length != 0)
             {

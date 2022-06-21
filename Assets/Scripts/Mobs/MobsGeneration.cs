@@ -20,14 +20,6 @@ public class MobsGeneration : MonoBehaviour
     [SerializeField]
     int spawnRadiusMin; // min radius of spawn
 
-    [SerializeField]
-    LayerMask hostileMobsLayer; // layer masks of hostile mobs
-    [SerializeField]
-    LayerMask friendlyMobsLayer; // layer masks of friendly mobs
-    [SerializeField]
-    LayerMask whatIsEnvironment; // layer masks of different objects
-
-
     /*
      * The function spawn the mob (hostile or not depending on isHostile)
      */
@@ -89,21 +81,21 @@ public class MobsGeneration : MonoBehaviour
     {
         if (GameStateController.timeController == null) return false;
         // if the mob is to close to a game object
-        if (Physics.OverlapSphere(position, 2f, whatIsEnvironment).Length != 0) return false;
+        if (Physics.OverlapSphere(position, 2f, GameStateController.worldObjectsLayer).Length != 0) return false;
         // if the mob can only spawn at night
         if (mobData.onlyAtNight)
         {
             // check if the mob is in the map, if it's night and if the mob pass the capacity around the player
             return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&
                 GameStateController.timeController.IsNight() && (isHostile ?
-            (Physics.OverlapSphere(transform.position, spawnRadiusMax, hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) :
-            (Physics.OverlapSphere(transform.position, spawnRadiusMax, friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY));
+            (Physics.OverlapSphere(transform.position, spawnRadiusMax, GameStateController.hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) :
+            (Physics.OverlapSphere(transform.position, spawnRadiusMax, GameStateController.friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY));
         }
         // check if the mob is in the map and if the mob pass the capacity around the player
         return position.x > 0 && position.z > 0 && position.x < GameStateController.worldWidth && position.z < GameStateController.worldDepth &&
             (isHostile ?
-            (Physics.OverlapSphere(transform.position, spawnRadiusMax, hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) :
-            (Physics.OverlapSphere(transform.position, spawnRadiusMax, friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY));
+            (Physics.OverlapSphere(transform.position, spawnRadiusMax, GameStateController.hostileMobsLayer).Length < MAX_HOSTILE_MOBS_CAPACITY) :
+            (Physics.OverlapSphere(transform.position, spawnRadiusMax, GameStateController.friendlyMobsLayer).Length < MAX_FRIENDLY_MOBS_CAPACITY));
     }
     
 
