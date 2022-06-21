@@ -113,8 +113,10 @@ public class TimeController : MonoBehaviour
 
     void TrySetLights()
     {
-        sunLight = GameObject.Find("SunLight").GetComponent<Light>();
-        moonLight = GameObject.Find("MoonLight").GetComponent<Light>();
+        GameObject light = GameObject.Find("SunLight");
+        if (light != null) sunLight = light.GetComponent<Light>();
+        light = GameObject.Find("MoonLight");
+        if (light != null) moonLight = light.GetComponent<Light>();
     }
 
     private void UpdateLight()

@@ -55,13 +55,6 @@ public class MobAI : MonoBehaviour
     void DestroyMob()
     {
         PhotonNetwork.Destroy(gameObject);
-        /*if (mobPV.IsMine)
-        {
-        }
-        else
-        {
-            mobPV.RPC(nameof(DestroyMob), mobPV.Owner);
-        }*/
     }
 
     public void Awake()
@@ -167,10 +160,8 @@ public class MobAI : MonoBehaviour
         } else
         {
             walkPointSet = false;
-            Debug.Log("Walk Point Not Found");
             return;
         }
-        Debug.Log("Walk Point: " + walkPoint);
 
         if (Physics.OverlapSphere(walkPoint, 1f, WhatIsEnvironment).Length != 0) walkPointSet = false;
     }
