@@ -1411,6 +1411,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 739278944828655640, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
+      propertyPath: playerControls
+      value: 
+      objectReference: {fileID: 7306178471303033369}
     - target: {fileID: 739278944828655642, guid: 4dd70483923f3ec4487f34b1050b8ae4, type: 3}
       propertyPath: m_Layer
       value: 0

@@ -12,6 +12,9 @@ public class QuitMenu : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     Button leaveButton, stayButton; // leave and stay button
+
+    [SerializeField]
+    PlayerControls playerControls; // player controls component
     
     PhotonView parentPV; // player photon view
     private void Start()
@@ -24,6 +27,8 @@ public class QuitMenu : MonoBehaviourPunCallbacks
         // make the buttons uninteractable
         stayButton.interactable = false;
         leaveButton.interactable = false;
+        // destroy the last held item 
+        playerControls.HoldItem(null);
         // if it is the master: kick everyone to the main menu
         if (PhotonNetwork.IsMasterClient)
         {
