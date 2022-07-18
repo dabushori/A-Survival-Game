@@ -171,7 +171,7 @@ public class PlayerControls : MonoBehaviour
         WorldGeneration.Instance.StartGame();
     }
 
-    /**
+    /*
      * revive the player
      */
     public void Revive()

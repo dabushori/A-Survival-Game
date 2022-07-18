@@ -111,7 +111,7 @@ public class MobAI : MonoBehaviour
 
         playerInSightRange = sightPlayers?.Length != 0;
         playerInAttackRange = attackPlayers?.Length != 0;
-        // save the closest player as the taget
+        // save the closest player to the target
         player = playerInSightRange ? sightPlayers[0].transform.gameObject : null;
         // if there is no player in any range do patroling
         if (!playerInSightRange && !playerInAttackRange)

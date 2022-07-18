@@ -222,7 +222,6 @@ public class Destructible : MonoBehaviour
         // If animator is not null, which means that the death animation exists, destory the object after the animation is played
         if (animator != null)
         {
-            Debug.Log("Animation Length: " + deathLength);
             animator.SetBool("IsDead", true);
             Invoke(nameof(DestroyMe), deathLength);
         }

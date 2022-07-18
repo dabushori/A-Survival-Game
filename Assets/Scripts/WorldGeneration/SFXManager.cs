@@ -45,6 +45,6 @@ public class SFXManager : MonoBehaviour
         audioSource.spatialBlend = 1f;
         audioSource.volume = volume;
         audioSource.Play(); // play
-        Destroy(gameObject, clip.length * (Time.timeScale < 0.009999999776482582 ? 0.01f : Time.timeScale)); // destroy the object after it finishes playing
+        Destroy(gameObject, clip.length * (Time.timeScale < 0.01f ? 0.01f : Time.timeScale)); // destroy the object after it finishes playing
     }
 }
